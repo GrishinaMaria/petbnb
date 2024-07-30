@@ -10,6 +10,7 @@ import HooksPage from './pages/HooksPage/HooksPage';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { fetchRefresh } from './redux/thunkActions';
 import { unwrapResult } from '@reduxjs/toolkit';
+import InfoPetsitterPage from './pages/InfoPetsitterPage/InfoPetsitterPage';
 
 function App() {
   const user = useAppSelector((store) => store.userSlice.user);
@@ -47,6 +48,10 @@ function App() {
         {
           path: '/signup',
           element: <SignupPage />,
+        },
+        {
+          path: '/petsitterinfo',
+          element: <InfoPetsitterPage />,
         },
       ],
     },
