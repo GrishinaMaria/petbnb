@@ -19,13 +19,11 @@ export default function Navbar() {
       <div className={styles.left}>
         <Link to="/">На главную</Link>
       </div>
-      <div className={styles.left}>
-        <Link to="/hooks">Хуки</Link>
-      </div>
       <div className={styles.right}>
         {user?.username ? (
           <>
-            <Link to="/">{user.username}</Link>
+            <Link to="/account/owner">{user.username} Owner</Link>
+            <Link to="/account/sitter">{user.username} Sitter</Link>
             <p className={styles.fake__link} onClick={logoutHandler}>
               Выйти
             </p>
