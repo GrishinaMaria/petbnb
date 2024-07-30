@@ -4,7 +4,6 @@ import entrySlice from './entrySlice';
 
 const storeOptions = {
   reducer: {
-    entrySlice,
     userSlice
   },
 };
