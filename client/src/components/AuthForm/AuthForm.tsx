@@ -71,6 +71,7 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
               name="password"
               value={inputs?.password}
               placeholder="Пароль"
+        
             />
           </>
         )}
@@ -82,6 +83,7 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
               name="username"
               value={inputs?.username}
               placeholder="Имя пользователя"
+          
             />
             <Input
               onChange={changeHandler}
@@ -90,6 +92,7 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
               name="email"
               value={inputs?.email}
               placeholder="Эл.почта"
+             
             />
             <Input
               onChange={changeHandler}
