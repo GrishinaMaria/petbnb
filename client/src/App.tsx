@@ -9,11 +9,15 @@ import HomePage from './pages/HomePage/HomePage';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { fetchRefresh } from './redux/thunkActions';
 import { unwrapResult } from '@reduxjs/toolkit';
+
+import InfoPetsitterPage from './pages/InfoPetsitterPage/InfoPetsitterPage';
+
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
 import AccountOwner from './pages/Account/AccountOwner';
 import AccountSitter from './pages/Account/AccountSitter';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
@@ -56,6 +60,12 @@ const dispatch = useAppDispatch();
           path: '/signup',
           element: <SignupPage />,
         },
+
+        {
+          path: '/petsitterinfo',
+          element: <InfoPetsitterPage />,
+        },
+
         // {
         //   element: <ProtectedRoute isAllowed={user?.role === 'owner'} />,
         //   children: [
@@ -91,6 +101,7 @@ const dispatch = useAppDispatch();
           ),
         },
         { path: '*', element: <NotFoundPage /> },
+
       ],
     },
   ]);
