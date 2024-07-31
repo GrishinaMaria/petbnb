@@ -22,6 +22,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import PeSittersList from './components/PetSittersList/PeSittersList';
 import SittersMap from './components/SittersMap/SittersMap';
+import NewAccountSitter from './pages/Account/NewAccountSitter';
+import NewAccountOwner from './pages/Account/NewAccountOwner';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -63,19 +65,35 @@ const dispatch = useAppDispatch();
           path: '/signup',
           element: <SignupPage />,
         },
-        {
-          path: '/account/owner',
-          element: (
-            <ProtectedRoute isAllowed={user?.role === 'owner'}>
-              <AccountOwner user={user} />
-            </ProtectedRoute>
-          ),
-        },
+        // {
+        //   path: '/account/owner',
+        //   element: (
+        //     <ProtectedRoute isAllowed={user?.role === 'owner'}>
+        //       <AccountOwner user={user} />
+        //     </ProtectedRoute>
+        //   ),
+        // },
+        // {
+        //   path: '/account/sitter',
+        //   element: (
+        //     <ProtectedRoute isAllowed={user?.role === 'sitter'}>
+        //       <AccountSitter user={user} />
+        //     </ProtectedRoute>
+        //   ),
+        // },
         {
           path: '/account/sitter',
           element: (
             <ProtectedRoute isAllowed={user?.role === 'sitter'}>
-              <AccountSitter user={user} />
+              <NewAccountSitter user={user} />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: '/account/owner',
+          element: (
+            <ProtectedRoute isAllowed={user?.role === 'owner'}>
+              <NewAccountOwner user={user} />
             </ProtectedRoute>
           ),
         },
@@ -84,6 +102,10 @@ const dispatch = useAppDispatch();
          {
           path: '/search',
           element: <PeSittersList/>,
+        },
+        {
+          path: '/aboutpetsitter/:sitterId',
+          element: <InfoPetsitterPage/>,
         },
      
       ],
