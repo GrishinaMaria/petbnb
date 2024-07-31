@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 
@@ -10,7 +11,7 @@ return (
     <h2 style={{color: 'black'}}>{sitter.title}</h2>
     <p style={{color: 'black'}}>{sitter.animal }</p>
     </div>
-    <button>Подробнее</button>
+    <Link to="/petsitterinfo"><button>Подробнее</button></Link>
  </div>
  );
 

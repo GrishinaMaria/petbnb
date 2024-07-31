@@ -58,6 +58,17 @@ const arraySitters = [
     createdAt: '2024-06-11T08:18:10.039Z',
     updatedAt: '2024-06-11T08:18:10.039Z',
   },
+  {
+    id: 6,
+    title: 'Петя',
+    animal: 'собаки',
+    corX: 55.9,
+    corY: 37.9,
+    'Services': [{прогулка: true}, {кормление: true}, {игра: true}],
+    img: 'https://www.kino-teatr.ru/movie/posters/big/0/24930.jpg',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
+  },
 ];
 
 const PeSittersList = (): JSX.Element => {
