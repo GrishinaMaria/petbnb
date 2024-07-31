@@ -20,6 +20,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
+import PeSittersList from './components/PetSittersList/PeSittersList';
+import SittersMap from './components/SittersMap/SittersMap';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -102,6 +104,11 @@ const dispatch = useAppDispatch();
         },
         { path: '*', element: <NotFoundPage /> },
 
+         {
+          path: '/search',
+          element: <PeSittersList/>,
+        },
+     
       ],
     },
   ]);
