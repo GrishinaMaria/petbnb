@@ -9,6 +9,9 @@ import HomePage from './pages/HomePage/HomePage';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { fetchRefresh } from './redux/thunkActions';
 import { unwrapResult } from '@reduxjs/toolkit';
+
+import InfoPetsitterPage from './pages/InfoPetsitterPage/InfoPetsitterPage';
+
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import ProtectedRoute from './components/hoc/ProtectedRoute';
 import AccountOwner from './pages/Account/AccountOwner';
@@ -16,6 +19,9 @@ import AccountSitter from './pages/Account/AccountSitter';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+
+import PeSittersList from './components/PetSittersList/PeSittersList';
+import SittersMap from './components/SittersMap/SittersMap';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -74,6 +80,12 @@ const dispatch = useAppDispatch();
           ),
         },
         { path: '*', element: <NotFoundPage /> },
+
+         {
+          path: '/search',
+          element: <PeSittersList/>,
+        },
+     
       ],
     },
   ]);
