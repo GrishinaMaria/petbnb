@@ -72,6 +72,8 @@ const PeSittersList = (): JSX.Element => {
         } else {
             setValue(''); 
         }
+        
+
     };
     const handleServicesSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setServicesFilter(event.target.value);
@@ -98,16 +100,16 @@ const PeSittersList = (): JSX.Element => {
     <>
         <form>
             <label>
-                <input type='checkbox' value={'кошки'} name='кошки' onChange={handleCheckboxChange}/>
+                <input type='radio' value={'кошки'} name='кошки' checked={value == 'кошки' ? true : false} onChange={handleCheckboxChange}/>
                 <p>кошки</p>
             </label>
                <label>
-                <input type='checkbox' value={'собаки'} name='собаки' onChange={handleCheckboxChange}/>
+                <input type='radio' value={'собаки'} name='собаки' checked={value == 'собаки' ? true : false} onChange={handleCheckboxChange}/>
                 <p>собаки</p>
             </label>
             <label>
                     
-                    <select value={servicesFilter} onChange={handleServicesSelectChange}>
+                    <select  value={servicesFilter} onChange={handleServicesSelectChange} style={{color: 'black', width: '200px'}}>
                         <option value=''></option>
                         <option value='прогулка'>прогулка</option>
                         <option value='кормление'>кормление</option>

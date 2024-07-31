@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './AuthForm.module.css';
-import { Input, Button } from '@chakra-ui/react';
+import { Input, Button, Select } from '@chakra-ui/react';
 import { setAccessToken } from '../../axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
@@ -11,6 +11,7 @@ type Inputs = {
   username?: string;
   email: string;
   password: string;
+  role?: "owner" | "sitter",
 };
 
 type AuthFormProps = {
@@ -23,6 +24,7 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
     username: '',
     email: '',
     password: '',
+    role: type === "signup" ? "owner" : undefined,
   });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -38,10 +40,15 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
       .then(unwrapResult)
       .then((result) => {
         setAccessToken(result.accessToken);
-      });
-
-    navigate('/');
-  };
+        if (inputs.role === "owner") {
+          navigate("/account/owner");
+      } else if (inputs.role === "sitter") {
+          navigate("/account/sitter");
+      } else {
+          navigate("/");
+      }
+});
+};
 
   return (
     <form onSubmit={submitHandler} className={styles.wrapper}>
@@ -92,6 +99,16 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
               value={inputs?.password}
               placeholder="Пароль"
             />
+              <Select
+              onChange={changeHandler}
+              value={inputs.role}
+              name="role"
+              placeholder="роль"
+              style={{backgroundColor: "#2D3748"}}
+            >
+              <option value="owner" style={{backgroundColor: "#4A5568"}}>owner</option>
+              <option value="sitter" style={{backgroundColor: "#4A5568"}}>sitter</option>
+            </Select>
           </>
         )}
       </div>
