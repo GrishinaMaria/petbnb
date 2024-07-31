@@ -20,6 +20,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
+import PeSittersList from './components/PetSittersList/PeSittersList';
+import SittersMap from './components/SittersMap/SittersMap';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -32,11 +34,12 @@ const dispatch = useAppDispatch();
         setAccessToken(result.accessToken);
       });
   }, []);
-  console.log("********user", user);
+
+  // console.log("********user", user);
   
-  const userr ={...user, role: 'sitter'}
+  // const userr ={...user, role: 'owner'}
  
-  console.log("********userr", userr);
+  // console.log("********userr", user);
  
  
   const router = createBrowserRouter([
@@ -60,34 +63,10 @@ const dispatch = useAppDispatch();
           path: '/signup',
           element: <SignupPage />,
         },
-
-        {
-          path: '/petsitterinfo',
-          element: <InfoPetsitterPage />,
-        },
-
-        // {
-        //   element: <ProtectedRoute isAllowed={user?.role === 'owner'} />,
-        //   children: [
-        //     {
-        //       path: '/account',
-        //       element: <AccountOwner user={user}  />,
-        //     },
-        //   ],
-        // },
-        // {
-        //   element: <ProtectedRoute isAllowed={user?.role === 'sitter'} />,
-        //   children: [
-        //     {
-        //       path: '/account',
-        //       element: <AccountSitter user={user}  />,
-        //     },
-        //   ],
-        // },
         {
           path: '/account/owner',
           element: (
-            <ProtectedRoute isAllowed={userr?.role === 'owner'}>
+            <ProtectedRoute isAllowed={user?.role === 'owner'}>
               <AccountOwner user={user} />
             </ProtectedRoute>
           ),
@@ -95,13 +74,18 @@ const dispatch = useAppDispatch();
         {
           path: '/account/sitter',
           element: (
-            <ProtectedRoute isAllowed={userr?.role === 'sitter'}>
+            <ProtectedRoute isAllowed={user?.role === 'sitter'}>
               <AccountSitter user={user} />
             </ProtectedRoute>
           ),
         },
         { path: '*', element: <NotFoundPage /> },
 
+         {
+          path: '/search',
+          element: <PeSittersList/>,
+        },
+     
       ],
     },
   ]);
