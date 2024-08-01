@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../../db/models");
+const { User, PetsitterService, Service } = require("../../db/models");
 const { verifyAccessToken } = require("../middlewares/verifyToken");
 
 router.patch("/", verifyAccessToken, async (req, res) => {
@@ -32,7 +32,8 @@ router.get("/all", async (req, res) => {
   try {
     const allSitters = await User.findAll({
       where: { role: "sitter" },
-      attributes: ["id", "username", "description", "experience", "photo", "geoX", "geoY", "city", "phone" ], 
+      attributes: ["id", "username", "description", "experience", "photo", "geoX", "geoY", "city", "phone"], 
+      include: {model: PetsitterService, as: "availableServices", include: {model: Service, as: 'service'}}
     });
     res.status(200).json({ allSitters });
   } catch (error) {

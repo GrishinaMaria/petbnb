@@ -1,8 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import PetSitterCard from '../PetSitterCard/PetSitterCard';
 import SittersMap from '../SittersMap/SittersMap';
-import { useAppSelector } from '../../redux/hooks';
 import axiosInstance from '../../axiosInstance';
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  Stack,
+  Select,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  Box,
+  Text,
+  Flex,
+} from '@chakra-ui/react';
 
 const arraySitters = [
   {
@@ -74,26 +88,25 @@ const arraySitters = [
 ];
 
 const PeSittersList = (): JSX.Element => {
-    // const user = useAppSelector((store) => store.userSlice.user);
-    // console.log(user.id);
+  
     
-    const [sitters, setSitters] = useState(arraySitters);
+    const [sitters, setSitters] = useState([]);
     const [servicesFilter, setServicesFilter] = useState('')
     const [value, setValue] = useState('')
-    // const [services, setServices] = useState([]);
-//     useEffect(() => {
-//         if (user.id) {
-//             axiosInstance
-//                 .get(`${import.meta.env.VITE_API}/petsitterServices/${user.id}`)
-//                 .then((res) => {
-//                     // console.log(res.data)
-//                     setServices(res.data);
-
-//                     console.log(res.data);
-//                 })
-//                 .catch((err) => console.error(err));
-//         }
-//   }, [user]);
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(400)
+  
+    const axiosPetsitters = async () => {
+        const { data } = await axiosInstance.get(`${import.meta.env.VITE_API}/petsitter/all`)
+        console.log(data);
+        
+        setSitters(data.allSitters);
+       
+        
+ }
+  useEffect(() => {
+      axiosPetsitters();
+  }, []);
 
         const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
@@ -112,27 +125,18 @@ const PeSittersList = (): JSX.Element => {
     const handleServicesSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setServicesFilter(event.target.value);
     };
+
     const filteredSitters = sitters.filter((sitter) => {
-        return value === '' || sitter.animal.toLowerCase() === value.toLowerCase();
-        
+      return  value === '' || sitter.availableServices.some((availableService)=> availableService.petType === value)
     }).filter((sitter) => {
-        if (!servicesFilter) {
-            return true;
-        } else {
-            return sitter['Services'].some(service => {
-    const keys = Object.keys(service);
-    if (keys.length > 0) {
-        const firstKey = keys[0];
-        return firstKey === servicesFilter && service[firstKey] === true;
-    }
-    return false;
-});
-        }
-    });
+        return servicesFilter === '' || sitter.availableServices.some((availableService)=> availableService.service.title === servicesFilter)
+    }).filter((sitter)=> {return sitter.availableServices.some((availableService)=> availableService.price >= minPrice && availableService.price <= maxPrice)})
+     
+
 
     return (
-    <>
-        <form>
+    <Flex>
+        {/* <form>
                <label>
                 <input type='radio' value={'все'} name='все' checked={value == '' ? true : false} onChange={had}/>
                 <p>все</p>
@@ -154,17 +158,82 @@ const PeSittersList = (): JSX.Element => {
                         <option value='игра'>игра</option>
                     </select>
                 </label>
+                <label>
+    Цена от {minPrice} до {maxPrice}
+    <input
+        type="range"
+        min={0}
+        max={400}
+        value={maxPrice}
+        onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+        style={{ marginLeft: '10px' }}
+    />
+</label>
         </form>
+  
         <div style={{display: 'flex'}}>
         
-        <div style={{marginRight: '200px', backgroundColor: 'white'}}>
-            {filteredSitters ? (filteredSitters.map((sitter)=> <PetSitterCard key={sitter.id} sitter={sitter}/>)) : <div>no sitters found</div>}
-            
+        <div style={{marginRight: '200px', backgroundColor: 'white', minWidth: '800px'}}>
+            {filteredSitters.length > 0 ? (filteredSitters.map((sitter)=> <PetSitterCard key={sitter.id} sitter={sitter}/>)) : <p style={{color: 'black'}}>Не найдено ситтеров по заданным параметрам</p>}
+
         </div>
                 
-                <SittersMap sitters={sitters} filtredSitters={filteredSitters } />
- </div>
- </>
+                <SittersMap sitters={sitters} />
+ </div> */}
+ <Flex direction="column">
+        <form>
+          <FormControl>
+            <FormLabel>Выберите тип животного:</FormLabel>
+            <RadioGroup>
+              <Stack direction="row">
+                <Radio name='все' value="все" checked={value == '' ? true : false} onChange={had}>Все</Radio>
+                <Radio name='кошки' value="кошки" checked={value == 'кошки' ? true : false} onChange={handleCheckboxChange}>Кошки</Radio>
+                <Radio name='собаки' value="собаки" checked={value == 'собаки' ? true : false} onChange={handleCheckboxChange}>Собаки</Radio>
+              </Stack>
+            </RadioGroup>
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Выберите вид услуг:</FormLabel>
+            <Select value={servicesFilter} onChange={handleServicesSelectChange}>
+              <option value="">Все виды услуг</option>
+              <option value="прогулка">Прогулка</option>
+              <option value="кормление">Кормление</option>
+              <option value="игра">Игра</option>
+            </Select>
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Цена от {minPrice} до {maxPrice}</FormLabel>
+            <Slider
+              min={0}
+              max={400}
+              value={maxPrice}
+              onChange={(value) => setMaxPrice(value)}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+          </FormControl>
+        </form>
+
+        <Box ml={8} flex={1}>
+          <Stack spacing={4}>
+            {filteredSitters.length > 0 ? (
+              filteredSitters.map((sitter) => (
+                <PetSitterCard key={sitter.id} sitter={sitter} />
+              ))
+            ) : (
+              <Text>Не найдено ситтеров по заданным параметрам</Text>
+            )}
+          </Stack>
+        </Box>
+      </Flex>
+       {sitters ? (<SittersMap sitters={sitters} />) : null}
+      
+ </Flex>
  );
 
 }

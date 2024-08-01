@@ -4,7 +4,7 @@ const { Service, PetsitterService } = require('../../db/models');
 router
     .get("/", async (req, res) => {
         try {
-            const services = await Service.findAll();
+            const services = await Service.findAll({include: {model: PetsitterService}});
             if (services) {
                 res.status(200).json(services);
                 return;

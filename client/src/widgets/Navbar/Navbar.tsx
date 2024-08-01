@@ -18,6 +18,7 @@ export default function Navbar() {
     <div className={styles.wrapper}>
       <div className={styles.left}>
         <Link to="/">На главную</Link>
+        <Link to="/search">Найти ситтера</Link>
       </div>
       <div className={styles.right}>
         {user?.username ? (

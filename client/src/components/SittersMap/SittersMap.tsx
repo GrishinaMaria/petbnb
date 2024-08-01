@@ -1,23 +1,25 @@
+/* eslint-disable no-inner-declarations */
 import React, { useEffect, useState } from 'react';
 // import ymaps, { Map } from 'yandex-maps';
 
 
-const SittersMap = ({ sitters, filtredSitters }): JSX.Element => {
+const SittersMap = ({ sitters }) => {
   
-    useEffect(() => {
-    ymaps.ready(init);
+  useEffect(() => {
+    if (sitters) {
+      ymaps.ready(init);
       console.log('Карта загрузилась', ymaps);
       function init() {
         const myMap = new ymaps.Map(
-            'map',
-            {
-              center: [30.593991, 114.300002],
-              zoom: 3,
-            },
-            {
-              searchControlProvider: 'yandex#search',
-            }
-          ),
+          'map',
+          {
+            center: [55.8, 36.8],
+            zoom: 3,
+          },
+          {
+            searchControlProvider: 'yandex#search',
+          }
+        ),
           objectManager = new ymaps.ObjectManager({
             // Чтобы метки начали кластеризоваться, выставляем опцию.
             clusterize: true,
@@ -36,27 +38,17 @@ const SittersMap = ({ sitters, filtredSitters }): JSX.Element => {
         myMap.geoObjects.add(objectManager);
           
           
-          let dataSitters;
-          if (filtredSitters) {
-          dataSitters = filtredSitters.map((el) => ({
+          
+        const dataSitters = sitters.map((el) => ({
           type: 'Feature',
           id: el.id,
-          geometry: { type: 'Point', coordinates: [el.corX, el.corY] },
+          geometry: { type: 'Point', coordinates: [el.geoX, el.geoY] },
           properties: {
-            balloonContentHeader: `<font size=3><b><a target='_blank' href= /tea/${el.id} > ${el.title}  </a></b></font>`,
-            hintContent: el.title,
-          },
-        }));    
-          }
-        dataSitters = sitters.map((el) => ({
-          type: 'Feature',
-          id: el.id,
-          geometry: { type: 'Point', coordinates: [el.corX, el.corY] },
-          properties: {
-            balloonContentHeader: `<font size=3><b><a target='_blank' href= /tea/${el.id} > ${el.title}  </a></b></font>`,
-            hintContent: el.title,
+            balloonContentHeader: `<font size=3><b><a target='_blank' href= /tea/${el.id} > ${el.username}  </a></b></font>`,
+            hintContent: el.username,
           },
         }));
+          
         const data = {
           type: 'FeatureCollection',
           features: dataSitters,
@@ -64,14 +56,18 @@ const SittersMap = ({ sitters, filtredSitters }): JSX.Element => {
       
         objectManager.add(data);
       }
-    }, [])
-    
-return (
+    }
+    }, [sitters])
+  
+  if (sitters) {
+  return (
 <>
     <div id='map' style={{width: '400px', height: '400px'}}></div>
       
 </>
  );
+
+  } 
 
 }
 export default SittersMap
