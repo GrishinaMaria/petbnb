@@ -22,8 +22,8 @@ export default function Navbar() {
       <div className={styles.right}>
         {user?.username ? (
           <>
-            <Link to="/account/owner">{user.username} Owner</Link>
-            <Link to="/account/sitter">{user.username} Sitter</Link>
+            {user.role === "owner" && <Link to="/account/owner">{user.username} Owner</Link>}
+            {user.role === "sitter" && <Link to="/account/sitter">{user.username} Sitter</Link>}
             <p className={styles.fake__link} onClick={logoutHandler}>
               Выйти
             </p>
