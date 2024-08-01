@@ -27,10 +27,24 @@ router.post('/', async (req, res) => {
 //         res.status(500).json({ error: message })
 //     }
 // });
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
         // const { sitterId } = req.params;
         const petsitterService = await PetsitterService.findAll({ include: {model: Service, as: 'service'} });
+        if (petsitterService) {
+            res.status(200).json(petsitterService);
+            return;
+        }
+        res.status(400).json({ message: 'petsitterService not found' });
+    } catch ({ message }) {
+        res.status(500).json({ error: message });
+    }
+});
+
+router.get('/:sitterId', async (req, res) => {
+    try {
+        const { sitterId } = req.params;
+        const petsitterService = await PetsitterService.findAll({ where: { sitterId }, include: {model: Service, as: 'service'} });
         if (petsitterService) {
             res.status(200).json(petsitterService);
             return;
