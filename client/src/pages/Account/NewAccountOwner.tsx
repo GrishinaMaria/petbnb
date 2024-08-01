@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosInstance";
 import { Modal, Container, Row, Col, Button } from "react-bootstrap";
 import PetCard from '../../components/PetCard';
-import PetModal from '../../components/PetModal';
+//import PetModal from '../../components/PetModal';
 import EditPetForm from "../../components/EditPetForm";
 
 const { VITE_API } = import.meta.env;
@@ -34,21 +34,32 @@ export default function NewAccountOwner({ user }) {
     setShowModal(true);
   };
 
-  const handleDeletePet = async (petId) => {
+ const handleSavePet = async (savedPet) => {
     try {
-      await axiosInstance.delete(`${VITE_API}/owneraccount/${petId}`);
-      setPets(pets.filter((pet) => pet.id !== petId));
+        if (currentPet) {
+            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`,savedPet);
+            setPets((prevPets) =>prevPets.map((pet) => (pet.id === data.id ? data : pet)));
+        } else {
+            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`,
+savedPet);
+            setPets((prevPets) => [...prevPets, data]);
+        }
+        setShowModal(false);
     } catch (error) {
-      console.log("Ошибка handleDeletePet", error);
+        console.error("Ошибка при сохранении питомца", error);
     }
-  };
+};
+
+const handleDeletePet = async (petId) => {
+  try {
+    await axiosInstance.delete(`${VITE_API}/owneraccount/${petId}`);
+    setPets((prev) => prev.filter((pet) => pet.id !== petId));
+  } catch (error) {
+    console.log("Ошибка удалени питомца", error);
+  }
+};
 
 
-  const handleSavePet = () => {
-    setShowModal(false);
-    // Заново загрузить список питомцев после сохранения
-    fetchPets();
-  };
 
   return (
     <Container>
@@ -64,6 +75,7 @@ export default function NewAccountOwner({ user }) {
           <Col key={pet.id} md={3}>
             <PetCard
               pet={pet}
+              user={user}
               onDelete={() => handleDeletePet(pet.id)}
               onEdit={() => handleEditPet(pet)}
             />
