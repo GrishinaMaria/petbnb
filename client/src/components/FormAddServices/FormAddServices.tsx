@@ -40,7 +40,10 @@ const { data } = await axiosInstance.post(`${import.meta.env.VITE_API}/petsitter
         setOneSitter((prev) => {
             return { ...prev, ['availableServices']: [...prev.availableServices, data.petsitterService] }
         });
-     onClose();       
+     onClose();
+    setPetType('');
+    setPrice(0);
+    setError('');       
         
     };
     const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +51,7 @@ const { data } = await axiosInstance.post(`${import.meta.env.VITE_API}/petsitter
     const newPrice = inputValue !== '' ? parseFloat(inputValue) : '';
     setPrice(newPrice); 
   };
+  
   return (
     <>
       <Button onClick={onOpen}>Open Modal</Button>
@@ -77,7 +81,7 @@ const { data } = await axiosInstance.post(`${import.meta.env.VITE_API}/petsitter
              <Stack key={service.id} spacing={[1, 5]} direction={['column', 'row']} color='blue'>
     
               <Checkbox  value={service.id}
-                      isChecked={service === service}
+                      isChecked={service === service} 
                       onChange={() => setService(service)}>{service.title}</Checkbox>
               </Stack>
                 )}
@@ -94,7 +98,7 @@ const { data } = await axiosInstance.post(`${import.meta.env.VITE_API}/petsitter
                 <Button colorScheme='blue' mr={3} onClick={onClose}>
                   Close
                 </Button>
-                <Button variant='ghost' colorScheme='blue' type='submit'>
+                <Button variant='ghost' colorScheme='blue' type='submit' >
                   Add Service
                 </Button>
               </ModalFooter>
