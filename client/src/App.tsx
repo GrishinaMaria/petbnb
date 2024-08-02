@@ -1,8 +1,8 @@
 import './App.css';
 import Root from './Root';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { setAccessToken } from './axiosInstance';
+import axiosInstance, { setAccessToken } from './axiosInstance';
 import SignupPage from './pages/SignupPage/SignupPage';
 import SigninPage from './pages/SigninPage/SigninPage';
 import HomePage from './pages/HomePage/HomePage';
@@ -19,11 +19,12 @@ import PeSittersList from './components/PetSittersList/PeSittersList';
 import SittersMap from './components/SittersMap/SittersMap';
 import NewAccountSitter from './pages/Account/NewAccountSitter';
 import NewAccountOwner from './pages/Account/NewAccountOwner';
+import AccountSitterPage from './pages/AccountSitterPage/AccountSitterPage';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
 const dispatch = useAppDispatch();
-
+  
   useEffect(() => {
     dispatch(fetchRefresh())
       .then(unwrapResult)
@@ -60,14 +61,14 @@ const dispatch = useAppDispatch();
           path: '/signup',
           element: <SignupPage />,
         },
-        {
-          path: '/account/sitter',
-          element: (
-            <ProtectedRoute isAllowed={user?.role === 'sitter'}>
-              <NewAccountSitter user={user} />
-            </ProtectedRoute>
-          ),
-        },
+        // {
+        //   path: '/account/sitter',
+        //   element: (
+        //     <ProtectedRoute isAllowed={user?.role === 'sitter'}>
+        //       <NewAccountSitter user={user} />
+        //     </ProtectedRoute>
+        //   ),
+        // },
         {
           path: '/account/owner',
           element: (
@@ -81,6 +82,14 @@ const dispatch = useAppDispatch();
          {
           path: '/search',
           element: <PeSittersList/>,
+        },
+         {
+          path: '/account/sitter',
+           element: (
+             <ProtectedRoute isAllowed={user?.role === 'sitter'}>
+               <AccountSitterPage user={user} />
+               </ProtectedRoute>
+               ),
         },
         {
           path: '/aboutpetsitter/:sitterId',

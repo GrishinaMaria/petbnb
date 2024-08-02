@@ -6,7 +6,7 @@ import { Box, Image } from '@chakra-ui/react'
 
 const PetSitterCard= ({sitter}): JSX.Element =>{
 return (
-<Box maxW='xs' maxH='600px' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+<Box maxW='xs' height='500px' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       <Image width='100%' height='70%' src={sitter.photo} alt='' />
 
       <Box p='6'>
