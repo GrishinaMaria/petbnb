@@ -16,6 +16,7 @@ import {
   Box,
   Text,
   Flex,
+  SimpleGrid,
 } from '@chakra-ui/react';
 
 const arraySitters = [
@@ -130,12 +131,12 @@ const PeSittersList = (): JSX.Element => {
       return  value === '' || sitter.availableServices.some((availableService)=> availableService.petType === value)
     }).filter((sitter) => {
         return servicesFilter === '' || sitter.availableServices.some((availableService)=> availableService.service.title === servicesFilter)
-    }).filter((sitter)=> {return sitter.availableServices.some((availableService)=> availableService.price >= minPrice && availableService.price <= maxPrice)})
+    }).filter((sitter)=> {return sitter.availableServices.some((availableService)=>  availableService.price >= minPrice && availableService.price <= maxPrice)})
      
 
 
     return (
-    <Flex>
+    <>
         {/* <form>
                <label>
                 <input type='radio' value={'все'} name='все' checked={value == '' ? true : false} onChange={had}/>
@@ -181,7 +182,7 @@ const PeSittersList = (): JSX.Element => {
                 <SittersMap sitters={sitters} />
  </div> */}
  <Flex direction="column">
-        <form>
+        <form style={{width: '400px'}}>
           <FormControl>
             <FormLabel>Выберите тип животного:</FormLabel>
             <RadioGroup>
@@ -204,7 +205,7 @@ const PeSittersList = (): JSX.Element => {
           </FormControl>
 
           <FormControl mt={4}>
-            <FormLabel>Цена от {minPrice} до {maxPrice}</FormLabel>
+            <FormLabel>Цена от {minPrice} до {maxPrice} руб/час</FormLabel>
             <Slider
               min={0}
               max={400}
@@ -214,26 +215,30 @@ const PeSittersList = (): JSX.Element => {
               <SliderTrack>
                 <SliderFilledTrack />
               </SliderTrack>
-              <SliderThumb />
+               <SliderThumb boxSize={4}>
+    <Box color='tomato' />
+  </SliderThumb>
             </Slider>
           </FormControl>
         </form>
 
         <Box ml={8} flex={1}>
-          <Stack spacing={4}>
-            {filteredSitters.length > 0 ? (
-              filteredSitters.map((sitter) => (
-                <PetSitterCard key={sitter.id} sitter={sitter} />
-              ))
-            ) : (
-              <Text>Не найдено ситтеров по заданным параметрам</Text>
-            )}
-          </Stack>
-        </Box>
+  <Stack spacing={4}>
+    {filteredSitters.length > 0 ? (
+      <SimpleGrid columns={ 3} spacing={4}>
+        {filteredSitters.map((sitter) => (
+          <PetSitterCard key={sitter.id} sitter={sitter} />
+        ))}
+      </SimpleGrid>
+    ) : (
+      <Text>Не найдено ситтеров по заданным параметрам</Text>
+    )}
+  </Stack>
+</Box>
       </Flex>
        {sitters ? (<SittersMap sitters={sitters} />) : null}
       
- </Flex>
+ </>
  );
 
 }
