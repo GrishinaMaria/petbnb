@@ -20,11 +20,11 @@ module.exports = {
         allowNull: false,
         onDelete: "cascade",
       },
-      petsitterserviceId: {
+      serviceId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "PetsitterServices",
+            tableName: "Services",
           },
           key: "id",
         },

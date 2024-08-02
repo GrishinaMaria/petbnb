@@ -12,7 +12,7 @@ router.use('/auth', authRouter);
 router.use('/petsitter', petsitterRouter);
 router.use('/services', serviceRouter);
 router.use('/petsitterServices', petsitterServiceRouter);
-router.use('/petsitterbooking', bookingRouter);
+router.use('/booking', bookingRouter);
 router.use('/owneraccount', petRouter);
 
 
