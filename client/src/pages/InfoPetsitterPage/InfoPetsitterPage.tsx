@@ -28,14 +28,13 @@ export default function InfoPetsitterPage() {
 
   const [services, setServices] = useState([]);
   const [petsitterInfo, setPetsitterInfo] = useState([]);
-  console.log(services);
 
   const [sitter, setSitter] = useState(null);
 
   const [selectedPet, setSelectedPet] = useState(null);
   const [dates, setDates] = useState({ startDate: "", endDate: "" });
 
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [totalSum, setTotalSum] = useState(0);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -44,7 +43,13 @@ export default function InfoPetsitterPage() {
       .get(`${VITE_API}/petsitterServices/${sitterId}`)
       .then((response) => {
         const petsitterServices = response.data;
-        const servicesData = petsitterServices.map((ps) => ps.service);
+        console.log(petsitterServices);
+
+        const servicesData = petsitterServices.map((ps) => ({
+          ...ps.service,
+          price: ps.price,
+          checked: false,
+        }));
 
         setServices(servicesData);
         // setCheckedItems(new Array(servicesData.length).fill(false));
@@ -69,26 +74,24 @@ export default function InfoPetsitterPage() {
     }
   }, [sitterId]);
 
-  // const [checkedItems, setCheckedItems] = useState(
-  //   new Array(services.length).fill(false)
-  // );
-  // console.log(checkedItems);
-console.log(services);
+
 
   const handleCheckboxChange = (serviceId) => {
     setServices((prev) => {
-      const searchItemIndex = prev.findIndex((item) => (item.id === serviceId));
-      console.log(serviceId, prev,searchItemIndex);
-
-      prev[searchItemIndex].checked = !prev[searchItemIndex].checked;
-      return [...prev];
+      const updatedServices = prev.map((item) =>
+        item.id === serviceId ? { ...item, checked: !item.checked } : item
+      );
+      return updatedServices;
     });
-    // setCheckedItems((prevCheckedItems) => {
-    //   const newCheckedItems = [...prevCheckedItems];
-    //   newCheckedItems[serviceId] = !newCheckedItems[serviceId];
-    //   return newCheckedItems;
-    // });
   };
+
+  useEffect(() => {
+    const totPrice = services.reduce(
+      (sum, item) => sum + (item.checked ? item.price : 0),
+      0
+    );
+    setTotalSum(totPrice);
+  }, [services]);
 
   const handlePetSelect = (petId) => {
     setSelectedPet(petId);
@@ -101,13 +104,13 @@ console.log(services);
   const handleSubmit = async () => {
     try {
       const response = await axiosInstance.post(
-        `${VITE_API}/petsitterbooking/${sitterId}`,
+        `${VITE_API}/booking/${sitterId}`,
         {
-          totalPrice: 100,
+          totalPrice: totalSum,
           startdate: dates.startDate,
           enddate: dates.endDate,
           petId: selectedPet,
-          services: services.filter(service => service.checked)
+          services: services.filter((service) => service.checked),
         }
       );
       console.log("забронировано", response.data);
@@ -142,7 +145,6 @@ console.log(services);
       <Box display="flex" gap="150px" margin="50px">
         <Image
           boxSize="500px"
-          
           // src="https://i.pinimg.com/736x/f3/e5/46/f3e5465a61c0fe010a28af98ca3a5922.jpg"
           src={petsitterInfo.photo}
         />
@@ -153,19 +155,25 @@ console.log(services);
           </Heading>
           <Stack pl={6} mt={1} spacing={3}>
             {services.map((service, index) => {
-              console.log(service.checked);
-              
               return (
-              <Checkbox
-                key={service.id}
-                isChecked={!!service.checked}
-                onChange={(e) => handleCheckboxChange(service.id)}
-                name={service.title}
-              >
-                {service.title}
-              </Checkbox>
-            )})}
+                <Checkbox
+                  key={service.id}
+                  isChecked={!!service.checked}
+                  onChange={(e) => handleCheckboxChange(service.id)}
+                  name={service.title}
+                >
+                  {service.title}
+                  {service.price}
+                </Checkbox>
+              );
+            })}
           </Stack>
+          <Text as="h4" size="md" mb={4}>
+          Общая сумма: {totalSum}
+        </Text>
+          {/* <div>
+Общая сумма: {totalSum}
+          </div> */}
           <Button mt={6} onClick={onOpen}>
             Забронировать
           </Button>

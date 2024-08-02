@@ -4,14 +4,14 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class BookedService extends Model {
-    static associate({ Booking, PetsitterService }) {
+    static associate({ Booking, Service }) {
       this.belongsTo(Booking, { foreignKey: 'bookingId' });
-      this.belongsTo(PetsitterService, { foreignKey: 'petsitterserviceId' });
+      this.belongsTo(Service, { foreignKey: 'serviceId' });
     }
   }
   BookedService.init({
     bookingId: DataTypes.INTEGER,
-    petsitterserviceId: DataTypes.INTEGER
+    serviceId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'BookedService',
