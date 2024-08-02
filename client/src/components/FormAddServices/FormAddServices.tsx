@@ -59,7 +59,18 @@ const { data } = await axiosInstance.post(`${import.meta.env.VITE_API}/petsitter
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={addServiceHandler}>
-            <FormControl>
+              <FormControl>
+                <FormLabel color='blue'>Pet Type</FormLabel>
+                <Select
+                  color='blue'
+                  placeholder='Select pet type'
+                  value={petType}
+                  onChange={(e) => setPetType(e.target.value)}
+                >
+                  <option value='кошки'>Кошки</option>
+                  <option value='собаки'>Собаки</option>
+                              </Select>
+                              <FormControl>
                 <FormLabel color='blue'>Service type</FormLabel>
                <CheckboxGroup colorScheme='blue'>
              {services.map((service)=> 
@@ -72,17 +83,6 @@ const { data } = await axiosInstance.post(`${import.meta.env.VITE_API}/petsitter
                 )}
               </CheckboxGroup> 
             </FormControl>
-              <FormControl>
-                <FormLabel color='blue'>Pet Type</FormLabel>
-                <Select
-                  color='blue'
-                  placeholder='Select pet type'
-                  value={petType}
-                  onChange={(e) => setPetType(e.target.value)}
-                >
-                  <option value='кошки'>Кошки</option>
-                  <option value='собаки'>Собаки</option>
-                </Select>
               </FormControl>
                <FormControl>
                 <FormLabel color='blue'>Price</FormLabel>
