@@ -5,17 +5,37 @@ module.exports = {
   async up (queryInterface, Sequelize) {
 
       await queryInterface.bulkInsert('Services', [{
-        title: 'прогулка',
+        title: 'Погулять',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        title: 'кормление',
+        title: 'Покормить',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        title: 'игра',
+        title: 'Поиграть',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'Помощь в транспортировке (ветеринар/аэропорт/др.)',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'Груминг',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'Медицинский уход',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'Телемост',
         createdAt: new Date(),
         updatedAt: new Date()
       }
