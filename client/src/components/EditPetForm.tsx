@@ -35,7 +35,7 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
     };
 
     const validateForm = () => {
-        let formErrors = {};
+        const formErrors = {};
         if (!pet.name) formErrors.name = "Заполните поле Имя";
         if (!pet.breed) formErrors.breed = "Заполните поле Порода";
         if (!pet.type) formErrors.type = "Заполните поле Вид";

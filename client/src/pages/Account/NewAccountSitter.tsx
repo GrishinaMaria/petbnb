@@ -1,32 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
 
 const { VITE_API } = import.meta.env;
 
-export default function NewAccountSitter({ user }) {
+export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
+
+ 
+  
   const [showModal, setShowModal] = useState(false);
   const [currentSitter, setCurrentSitter] = useState({
-    username: user.username || "",
-    // age: user.age || "",
-    description: user.description || "",
-    experience: user.experience,
-    photo: user.photo || "",
-    geoX: user.geoX,
-    geoY: user.geoY,
-    city: user.city || "",
-    phone: user.phone || "",
+    username:  "",
+    description:  "",
+    experience: "",
+    photo: "",
+    geoX: "",
+    geoY: "",
+    city: "",
+    phone: "",
   });
-
+  useEffect(() => {
+    setCurrentSitter({
+    username: oneSitter?.username || "",
+    description: oneSitter?.description || "",
+    experience: oneSitter?.experience,
+    photo: oneSitter?.photo || "",
+    geoX: oneSitter?.geoX,
+    geoY: oneSitter?.geoY,
+    city: oneSitter?.city || "",
+    phone: oneSitter?.phone || "",
+  }); 
+  }, [oneSitter])
   const handleInputChange = (e) => {
-    setCurrentSitter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    e.preventDefault();
+    setOneSitter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSaveSitter = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.patch(`${VITE_API}/petsitter`, currentSitter);
+      const { data } = await axiosInstance.patch(`${VITE_API}/petsitter`, currentSitter);
+      console.log(data);
+      
+      setOneSitter((prev)=> ({...prev, data}))
       setShowModal(false);
+      
     } catch (error) {
       console.error('ошибка handleSaveSitter', error);
     }
@@ -36,7 +54,7 @@ export default function NewAccountSitter({ user }) {
     <Container>
       <Row className="my-4">
         <Col>
-          <h2>Добро пожаловать, {user.username}</h2>
+          <h2>Добро пожаловать, {oneSitter?.username}</h2>
           <Button onClick={() => setShowModal(true)}>
             Редактировать информацию о себе
           </Button>
@@ -54,7 +72,7 @@ export default function NewAccountSitter({ user }) {
               <Form.Control
                 type="text"
                 name="username"
-                value={currentSitter.username}
+                value={currentSitter?.username}
                 onChange={handleInputChange}
                 placeholder="Имя"
                 // required
@@ -64,7 +82,7 @@ export default function NewAccountSitter({ user }) {
               <Form.Control
                 type="text"
                 name="experience"
-                value={currentSitter.experience}
+                value={currentSitter?.experience}
                 onChange={handleInputChange}
                 placeholder="Опыт работы"
                 // required
@@ -75,7 +93,7 @@ export default function NewAccountSitter({ user }) {
                 as="textarea"
                 rows={3}
                 name="description"
-                value={currentSitter.description}
+                value={currentSitter?.description}
                 onChange={handleInputChange}
                 placeholder="Описание"
                 // required
@@ -85,7 +103,7 @@ export default function NewAccountSitter({ user }) {
               <Form.Control
                 type="text"
                 name="phone"
-                value={currentSitter.phone}
+                value={currentSitter?.phone}
                 onChange={handleInputChange}
                 placeholder="Контактный номер"
                 // required
@@ -95,7 +113,7 @@ export default function NewAccountSitter({ user }) {
               <Form.Control
                 type="text"
                 name="city"
-                value={currentSitter.city}
+                value={currentSitter?.city}
                 onChange={handleInputChange}
                 placeholder="Город"
                 // required
@@ -105,7 +123,7 @@ export default function NewAccountSitter({ user }) {
               <Form.Control
                 type="text"
                 name="photo"
-                value={currentSitter.photo}
+                value={currentSitter?.photo}
                 onChange={handleInputChange}
                 placeholder="Ссылка на фото"
               />
