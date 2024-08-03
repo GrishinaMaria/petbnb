@@ -5,6 +5,7 @@ import axiosInstance from '../../axiosInstance';
 import AccountSitterCard from '../../components/AccountSitterCard/AccountSitterCard';
 import AccountSitterServices from '../../components/AccountSitterServices/AccountSitterServices';
 import FormAddServices from '../../components/FormAddServices/FormAddServices';
+import SitterBookings from '../../components/SitterBookings';
 
 
 const AccountSitterPage = ({ user}): JSX.Element => {
@@ -39,7 +40,7 @@ return (
       <AccountSitterServices oneSitter={oneSitter}/>
     </TabPanel>
     <TabPanel>
-      <p>three!</p>
+      <SitterBookings/>
     </TabPanel>
   </TabPanels>
 </Tabs>
