@@ -43,7 +43,7 @@ router.get("/all", async (req, res) => {
 });
 
 // один петситтер по айди
-router.get("/:id", verifyAccessToken, async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   // if (res.locals.user.role !== "owner") {
   //   return res.sendStatus(403);
