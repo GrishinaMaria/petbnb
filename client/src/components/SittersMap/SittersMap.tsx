@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 const SittersMap = ({ sitters }) => {
   
   useEffect(() => {
-    if (sitters) {
+    if (sitters.length) {
       ymaps.ready(init);
       console.log('Карта загрузилась', ymaps);
       function init() {

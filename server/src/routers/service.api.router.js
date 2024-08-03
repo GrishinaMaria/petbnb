@@ -6,7 +6,7 @@ router
         try {
             const services = await Service.findAll({include: {model: PetsitterService}});
             if (services) {
-                res.status(200).json(services);
+                res.status(200).json(services.sort((a,b)=> a.id - b.id));
                 return;
             }
             res.status(400).json({ message: 'services not found' })
