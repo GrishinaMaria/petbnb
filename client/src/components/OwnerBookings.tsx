@@ -63,7 +63,7 @@ export default function OwnerBookings() {
               <p>Имя: {booking.sitter.username}</p>
               <p>Контактный номер: {booking.sitter.phone}</p>
               <h4>Питомец</h4>
-              <p>Кличка: {booking.pet.name}</p>
+              <p>{booking.pet.name}</p>
               <img src={booking.pet.photo} style={{ width: "250px" }}></img>
             </div>
           );

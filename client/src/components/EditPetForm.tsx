@@ -68,7 +68,6 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
                 );
                 savedPet = data;
             }
-            onSave(savedPet);
             onHide();
         } catch (error) {
             console.error("Ошибка при сохранении питомца", error);

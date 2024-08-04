@@ -132,7 +132,7 @@ export default function InfoPetsitterPage() {
       });
 
       const placemark = new ymaps.Placemark([sitter.geoX, sitter.geoY], {
-        balloonContent: `<strong>${sitter.username}</strong><br>${sitter.description}`,
+        balloonContent: `<strong>${sitter.username}</strong><br>${sitter.city}<br>${sitter.email}`,
         hintContent: sitter.username,
       });
 
@@ -195,7 +195,7 @@ export default function InfoPetsitterPage() {
           <ModalHeader color="#3182ce">Забронировать</ModalHeader>
           <ModalCloseButton />
           <ModalBody color="#3182ce">
-            {<CalendarForm onDatesChange={dateChangeHandler} />}
+            {<CalendarForm />}
             {<ChoosePet onPetSelect={handlePetSelect} />}
             {/* {<EditPetForm />} */}
           </ModalBody>
