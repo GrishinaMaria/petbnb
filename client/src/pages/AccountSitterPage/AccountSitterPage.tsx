@@ -25,9 +25,9 @@ const AccountSitterPage = ({ user}): JSX.Element => {
 return (
 <Tabs variant='soft-rounded' colorScheme='green'>
   <TabList aria-orientation='vertical'>
-    <Tab>Tab 1</Tab>
-    <Tab>Tab 2</Tab>
-    <Tab>Tab 3</Tab>
+    <Tab>Мой профиль</Tab>
+    <Tab>Мои услуги</Tab>
+    <Tab>Мои бронирования</Tab>
   </TabList>
   <TabPanels>
     <TabPanel>

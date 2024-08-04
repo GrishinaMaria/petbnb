@@ -111,13 +111,8 @@ const PeSittersList = (): JSX.Element => {
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      setValue(event.target.name);
+      setValue(event.target.value);
     } else {
-      setValue("");
-    }
-  };
-  const had = (event) => {
-    if (event.target.checked) {
       setValue("");
     }
   };
@@ -153,18 +148,21 @@ const PeSittersList = (): JSX.Element => {
     })
     .filter((sitter) => {
       return (
-        servicesFilter === "" ||
-        sitter.availableServices.some((availableService) => {
-          console.log(availableService);
-
-          return (
+        (servicesFilter === "" &&
+          sitter.availableServices.some(
+            (availableService) =>
+              availableService.price >= minPrice &&
+              availableService.price <= maxPrice
+          )) ||
+        sitter.availableServices.some(
+          (availableService) =>
             availableService.service.title === servicesFilter &&
             availableService.price >= minPrice &&
             availableService.price <= maxPrice
-          );
-        })
+        )
       );
-    })
+    });
+  console.log(value);
 
   return (
     <>
@@ -212,98 +210,95 @@ const PeSittersList = (): JSX.Element => {
                 
                 <SittersMap sitters={sitters} />
  </div> */}
-      <Flex direction="column">
-        <form style={{ width: "400px" }}>
-          <FormControl>
-            <FormLabel>Выберите вид питомца:</FormLabel>
-            <RadioGroup>
-              <Stack direction="row">
-                <Radio
-                  name="все"
-                  value="все"
-                  checked={value == "" ? true : false}
-                  onChange={had}
-                >
-                  Все
-                </Radio>
-                <Radio
-                  name="кошки"
-                  value="кошки"
-                  checked={value == "кошки" ? true : false}
-                  onChange={handleCheckboxChange}
-                >
-                  Кошки
-                </Radio>
-                <Radio
-                  name="собаки"
-                  value="собаки"
-                  checked={value == "собаки" ? true : false}
-                  onChange={handleCheckboxChange}
-                >
-                  Собаки
-                </Radio>
-              </Stack>
-            </RadioGroup>
-          </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>Выберите вид услуг:</FormLabel>
-            {/* <Select value={servicesFilter} onChange={handleServicesSelectChange}>
-              <option value="">Все виды услуг</option>
-              <option value="прогулка">Прогулка</option>
-              <option value="кормление">Кормление</option>
-              <option value="игра">Игра</option>
-            </Select> */}
 
-            <Select
-              value={servicesFilter}
-              onChange={handleServicesSelectChange}
-            >
-              <option value="">Все виды услуг</option>
-              {services.map((service) => (
-                <option key={service.id} value={service.title}>
-                  {service.title}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
+<Flex direction="column" align="center" width="100%">
+      <form style={{ width: "400px" }}>
+        <FormControl>
+          <FormLabel>Выберите вид питомца:</FormLabel>
+          <RadioGroup>
+            <Stack direction="row">
+              <Radio
+                name="все"
+                value=""
+                checked={value === ""}
+                onChange={handleCheckboxChange}
+              >
+                Все
+              </Radio>
+              <Radio
+                name="кошки"
+                value="кошки"
+                checked={value === "кошки"}
+                onChange={handleCheckboxChange}
+              >
+                Кошки
+              </Radio>
+              <Radio
+                name="собаки"
+                value="собаки"
+                checked={value === "собаки"}
+                onChange={handleCheckboxChange}
+              >
+                Собаки
+              </Radio>
+            </Stack>
+          </RadioGroup>
+        </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>
-              Цена от {minPrice} до {maxPrice} руб/час
-            </FormLabel>
-            <Slider
-              min={0}
-              max={3000}
-              value={maxPrice}
-              onChange={(value) => setMaxPrice(value)}
-            >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb boxSize={4}>
-                <Box color="tomato" />
-              </SliderThumb>
-            </Slider>
-          </FormControl>
-        </form>
+        <FormControl mt={4}>
+          <FormLabel>Выберите вид услуг:</FormLabel>
+          <Select
+            value={servicesFilter}
+            onChange={handleServicesSelectChange}
+          >
+            <option value="">Все виды услуг</option>
+            {services.map((service) => (
+              <option key={service.id} value={service.title}>
+                {service.title}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Box ml={8} flex={1}>
-          <Stack spacing={4}>
-            {filteredSitters.length > 0 ? (
-              <SimpleGrid columns={3} spacing={4}>
-                {filteredSitters.map((sitter) => (
-                  <PetSitterCard key={sitter.id} sitter={sitter} />
-                ))}
-              </SimpleGrid>
-            ) : (
-              <Text>Не найдено ситтеров по заданным параметрам</Text>
-            )}
-          </Stack>
+        <FormControl mt={4}>
+          <FormLabel>
+            Цена от {minPrice} до {maxPrice} руб/час
+          </FormLabel>
+          <Slider
+            min={0}
+            max={3000}
+            value={maxPrice}
+            onChange={(value) => setMaxPrice(value)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb boxSize={4}>
+              <Box color="tomato" />
+            </SliderThumb>
+          </Slider>
+        </FormControl>
+      </form>
+
+      <Flex width="100%" justifyContent="center" mt={8}>
+        <SimpleGrid columns={3} spacing={4} width="60%">
+          {filteredSitters.length > 0 ? (
+            filteredSitters.map((sitter) => (
+              <PetSitterCard key={sitter.id} sitter={sitter} />
+            ))
+          ) : (
+            <Text>Не найдено ситтеров по заданным параметрам</Text>
+          )}
+        </SimpleGrid>
+
+        <Box ml={8} width="40%">
+          {sitters.length > 0 && <SittersMap sitters={sitters} />}
         </Box>
       </Flex>
-      {sitters ? <SittersMap sitters={sitters} /> : null}
+    </Flex>
     </>
   );
 };
+
 export default PeSittersList;
