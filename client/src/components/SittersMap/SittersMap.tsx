@@ -1,25 +1,23 @@
 /* eslint-disable no-inner-declarations */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 // import ymaps, { Map } from 'yandex-maps';
 
-
 const SittersMap = ({ sitters }) => {
-  
   useEffect(() => {
-    if (sitters) {
+    if (sitters.length) {
       ymaps.ready(init);
-      console.log('Карта загрузилась', ymaps);
+      console.log("Карта загрузилась", ymaps);
       function init() {
         const myMap = new ymaps.Map(
-          'map',
-          {
-            center: [55.8, 36.8],
-            zoom: 3,
-          },
-          {
-            searchControlProvider: 'yandex#search',
-          }
-        ),
+            "map",
+            {
+              center: [55.8, 36.8],
+              zoom: 4,
+            },
+            {
+              searchControlProvider: "yandex#search",
+            }
+          ),
           objectManager = new ymaps.ObjectManager({
             // Чтобы метки начали кластеризоваться, выставляем опцию.
             clusterize: true,
@@ -30,44 +28,39 @@ const SittersMap = ({ sitters }) => {
 
         // Чтобы задать опции одиночным объектам и кластерам,
         // обратимся к дочерним коллекциям ObjectManager.
-        objectManager.objects.options.set('preset', 'islands#greenDotIcon');
+        objectManager.objects.options.set("preset", "islands#greenDotIcon");
         objectManager.clusters.options.set(
-          'preset',
-          'islands#greenClusterIcons'
+          "preset",
+          "islands#greenClusterIcons"
         );
         myMap.geoObjects.add(objectManager);
-          
-          
-          
+
         const dataSitters = sitters.map((el) => ({
-          type: 'Feature',
+          type: "Feature",
           id: el.id,
-          geometry: { type: 'Point', coordinates: [el.geoX, el.geoY] },
+          geometry: { type: "Point", coordinates: [el.geoX, el.geoY] },
           properties: {
-            balloonContentHeader: `<font size=3><b><a target='_blank' href= /tea/${el.id} > ${el.username}  </a></b></font>`,
+            balloonContentHeader: `<font size=3><b><a target='_blank' href= /aboutpetsitter/${el.id} style='color: #1b5212;'> ${el.username}  </a></b></font>`,
             hintContent: el.username,
           },
         }));
-          
+
         const data = {
-          type: 'FeatureCollection',
+          type: "FeatureCollection",
           features: dataSitters,
         };
-      
+
         objectManager.add(data);
       }
     }
-    }, [sitters])
-  
+  }, [sitters]);
+
   if (sitters) {
-  return (
-<>
-    <div id='map' style={{width: '400px', height: '400px'}}></div>
-      
-</>
- );
-
-  } 
-
-}
-export default SittersMap
+    return (
+      <>
+        <div id="map" style={{ width: "600px", height: "1000px" }}></div>
+      </>
+    );
+  }
+};
+export default SittersMap;

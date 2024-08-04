@@ -5,7 +5,10 @@ import PetCard from '../../components/PetCard';
 //import PetModal from '../../components/PetModal';
 import EditPetForm from "../../components/EditPetForm";
  
- 
+import { Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react";
+import SitterBookings from "../../components/SitterBookings";
+import OwnerBookings from "../../components/OwnerBookings";
+
 
 const { VITE_API } = import.meta.env;
 
@@ -64,6 +67,20 @@ const handleDeletePet = async (petId) => {
 
 
   return (
+<>
+
+    <Tabs variant='soft-rounded' colorScheme='green'>
+  <TabList aria-orientation='vertical'>
+    <Tab>Мои питомцы</Tab>
+    <Tab>Мои бронирования</Tab>
+    <Tab>Сообщения</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
+
+ 
+
+
     <Container>
       <Row className="my-4">
         <Col>
@@ -97,5 +114,17 @@ const handleDeletePet = async (petId) => {
         </Modal.Body>
       </Modal>
     </Container>
+
+    </TabPanel>
+
+<TabPanel>
+  <OwnerBookings/>
+</TabPanel>
+<TabPanel>
+
+</TabPanel>
+</TabPanels>
+</Tabs>
+    </>
   );
 }

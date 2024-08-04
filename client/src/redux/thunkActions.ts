@@ -48,6 +48,8 @@ export const fetchAuthUser: AsyncThunk<
   return response.data;
 });
 
+
+
 export const fetchLogoutUser: AsyncThunk<boolean, void, AsyncThunkConfig> =
   createAsyncThunk('users/logout', async () => {
     await axiosInstance.get(`${import.meta.env.VITE_API}/auth/logout`);

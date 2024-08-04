@@ -43,15 +43,16 @@ router.get("/all", async (req, res) => {
 });
 
 // один петситтер по айди
-router.get("/:id", verifyAccessToken, async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  if (res.locals.user.role !== "owner") {
-    return res.sendStatus(403);
-  }
+  // if (res.locals.user.role !== "owner") {
+  //   return res.sendStatus(403);
+  // }
   try {
     const oneSitter = await User.findOne({
       where: { id, role: "sitter" },
-      attributes: ["id", "username", "email", "description", "experience", "photo", "geoX", "geoY", "city", "phone" ], 
+      attributes: ["id", "username", "email", "description", "experience", "photo", "geoX", "geoY", "city", "phone"], 
+      include: {model: PetsitterService, as: "availableServices", include: {model: Service, as: 'service'}}
     });
     res.status(200).json({ oneSitter });
   } catch (error) {
