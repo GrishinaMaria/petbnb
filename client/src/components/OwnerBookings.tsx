@@ -18,7 +18,7 @@ export default function OwnerBookings() {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const day = date.getUTCDate();
+    const day = date.getDate();
     const month = date.getUTCMonth() + 1;
     const year = date.getUTCFullYear();
 
