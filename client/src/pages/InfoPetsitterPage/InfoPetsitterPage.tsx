@@ -21,6 +21,7 @@ import EditPetForm from "../../components/EditPetForm";
 import ChoosePet from "../../components/ChoosePet";
 import CalendarForm from "../../components/CalendarForm";
 import axiosInstance from "../../axiosInstance";
+import { CalendarSelected } from "@demark-pro/react-booking-calendar/dist/cjs/types";
 const { VITE_API } = import.meta.env;
 
 export default function InfoPetsitterPage() {
@@ -32,7 +33,9 @@ export default function InfoPetsitterPage() {
   const [sitter, setSitter] = useState(null);
 
   const [selectedPet, setSelectedPet] = useState(null);
-  const [dates, setDates] = useState({ startDate: "", endDate: "" });
+  // const [dates, setDates] = useState({ startDate: "", endDate: "" });
+  const [selectedDates, setSelectedDates] = useState<CalendarSelected[]>([]);
+
 
   const [totalSum, setTotalSum] = useState(0);
 
@@ -107,8 +110,8 @@ export default function InfoPetsitterPage() {
         `${VITE_API}/booking/${sitterId}`,
         {
           totalPrice: totalSum,
-          startdate: dates.startDate,
-          enddate: dates.endDate,
+          startdate: selectedDates[0],
+          enddate: selectedDates[1],
           petId: selectedPet,
           services: services.filter((service) => service.checked),
         }
@@ -195,7 +198,7 @@ export default function InfoPetsitterPage() {
           <ModalHeader color="#3182ce">Забронировать</ModalHeader>
           <ModalCloseButton />
           <ModalBody color="#3182ce">
-            {<CalendarForm />}
+            {<CalendarForm setSelectedDates={setSelectedDates} selectedDates={selectedDates}/>}
             {<ChoosePet onPetSelect={handlePetSelect} />}
             {/* {<EditPetForm />} */}
           </ModalBody>
