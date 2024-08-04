@@ -25,6 +25,7 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
     email: '',
     password: '',
     role: type === "signup" ? "owner" : undefined,
+    //role?: "owner" | "sitter",
   });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -40,13 +41,13 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
       .then(unwrapResult)
       .then((result) => {
         setAccessToken(result.accessToken);
-        if (inputs.role === "owner") {
-          navigate("/account/owner");
-      } else if (inputs.role === "sitter") {
-          navigate("/account/sitter");
-      } else {
+      //   if (inputs.role === "owner") {
+      //     navigate("/account/owner");
+      // } else if (inputs.role === "sitter") {
+      //     navigate("/account/sitter");
+      // } else {
           navigate("/");
-      }
+      //}
 });
 };
 
