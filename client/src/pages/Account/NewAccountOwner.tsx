@@ -4,9 +4,11 @@ import { Modal, Container, Row, Col, Button } from "react-bootstrap";
 import PetCard from '../../components/PetCard';
 //import PetModal from '../../components/PetModal';
 import EditPetForm from "../../components/EditPetForm";
+ 
 import { Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react";
 import SitterBookings from "../../components/SitterBookings";
 import OwnerBookings from "../../components/OwnerBookings";
+
 
 const { VITE_API } = import.meta.env;
 
