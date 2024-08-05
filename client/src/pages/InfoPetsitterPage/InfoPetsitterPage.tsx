@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Image,
   Checkbox,
@@ -25,6 +25,7 @@ import { CalendarSelected } from "@demark-pro/react-booking-calendar/dist/cjs/ty
 const { VITE_API } = import.meta.env;
 
 export default function InfoPetsitterPage() {
+  const navigate = useNavigate();
   const { sitterId } = useParams();
 
   const [services, setServices] = useState([]);
@@ -118,6 +119,7 @@ export default function InfoPetsitterPage() {
       );
       console.log("забронировано", response.data);
       onClose();
+      navigate('/account/owner');
     } catch (error) {
       console.error("ошибка", error);
     }
@@ -142,6 +144,10 @@ export default function InfoPetsitterPage() {
       map.geoObjects.add(placemark);
     }
   }, [sitter]);
+
+  const deleteSpaces = petsitterInfo.description
+  ? petsitterInfo.description.replace(/<br\s*\/?>/g, '\n\n')
+  : '';
 
   return (
     <>
@@ -186,9 +192,19 @@ export default function InfoPetsitterPage() {
         <Heading as="h3" size="lg" mb={4}>
           Обо мне
         </Heading>
-        <Text as="h4" size="md" mb={4}>
+        {/* <Text as="h4" size="md" mb={4}>
           {petsitterInfo.description}
+        </Text> */}
+
+<Text as="h4" size="md" mb={4}>
+          {deleteSpaces.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
         </Text>
+
         <div id="map" style={{ width: "100%", height: "300px" }}></div>
       </Box>
 
@@ -205,7 +221,7 @@ export default function InfoPetsitterPage() {
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              Сохранить
+              Забронировать
             </Button>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Отмена
