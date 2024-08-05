@@ -1,59 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
-
 const { VITE_API } = import.meta.env;
 
-export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
 
+const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
+ const [showModal, setShowModal] = useState(false);
+    const  [username, setUserName] = useState(oneSitter?.username || "")
+    const [description, setDescription] = useState(oneSitter?.description || "")
+    const [experience, setExperience] = useState(oneSitter?.experience || "")
+    const [photo, setPhoto] = useState(oneSitter?.photo || "")
+    const [geoX, setGeoX] = useState(oneSitter?.geoX)
+    const [geoY, setGeoY] = useState(oneSitter?.geoY)
+    const [city, setCity] = useState(oneSitter?.city || "")
+    const [phone, setPhone] = useState(oneSitter?.phone || "")
+    
+   useEffect(() => {
+    if (oneSitter) {
+        setUserName(oneSitter.username || "");
+        setDescription(oneSitter.description || "");
+        setExperience(oneSitter.experience || "");
+        setPhoto(oneSitter.photo || "");
+        setGeoX(oneSitter.geoX);
+        setGeoY(oneSitter.geoY);
+        setCity(oneSitter.city || "");
+        setPhone(oneSitter.phone || "");
+    }
+}, [oneSitter]);
  
-  
-  const [showModal, setShowModal] = useState(false);
-  const [currentSitter, setCurrentSitter] = useState({
-    username:  "",
-    description:  "",
-    experience: "",
-    photo: "",
-    geoX: "",
-    geoY: "",
-    city: "",
-    phone: "",
-  });
-  useEffect(() => {
-    setCurrentSitter({
-    username: oneSitter?.username || "",
-    description: oneSitter?.description || "",
-    experience: oneSitter?.experience,
-    photo: oneSitter?.photo,
-    geoX: oneSitter?.geoX,
-    geoY: oneSitter?.geoY,
-    city: oneSitter?.city || "",
-    phone: oneSitter?.phone || "",
-  }); 
-  }, [oneSitter])
-  // const handleInputChange = (e) => {
-  //   e.preventDefault();
-  //   setOneSitter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  // };
- const handleInputChange = (e) => {
-    e.preventDefault();
-    setOneSitter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
   const handleSaveSitter = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axiosInstance.patch(`${VITE_API}/petsitter`, currentSitter);
-      console.log(data);
+      const { data } = await axiosInstance.patch(`${VITE_API}/petsitter`, {username, description, experience, photo, geoX, geoY, city, phone});
+        console.log('dataaaa', data);
       
-      setOneSitter((prev)=> ({...prev, data}))
+      setOneSitter(data)
       setShowModal(false);
       
     } catch (error) {
       console.error('ошибка handleSaveSitter', error);
     }
   };
-
-  return (
+const handleImageChange = (e) => {
+ const file = e.target.files[0];
+ if (file) {
+ const reader = new FileReader();
+ reader.onload = () => {
+    //  setPhoto(reader.result);
+     console.log(reader.result);
+     
+ };
+ reader.readAsDataURL(file);
+  }
+};
+return (
     <Container>
       <Row className="my-4">
         <Col>
@@ -75,8 +75,8 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
               <Form.Control
                 type="text"
                 name="username"
-                value={currentSitter?.username}
-                onChange={handleInputChange}
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
                 placeholder="Имя"
                 // required
               />
@@ -85,8 +85,8 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
               <Form.Control
                 type="text"
                 name="experience"
-                value={currentSitter?.experience}
-                onChange={handleInputChange}
+                value={experience}
+                onChange={(e)=> setExperience(e.target.value)}
                 placeholder="Опыт работы"
                 // required
               />
@@ -96,8 +96,8 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
                 as="textarea"
                 rows={3}
                 name="description"
-                value={currentSitter?.description}
-                onChange={handleInputChange}
+                value={description}
+                onChange={(e)=> setDescription(e.target.value)}
                 placeholder="Описание"
                 // required
               />
@@ -106,8 +106,8 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
               <Form.Control
                 type="text"
                 name="phone"
-                value={currentSitter?.phone}
-                onChange={handleInputChange}
+                value={phone}
+                onChange={(e)=> setPhone(e.target.value)}
                 placeholder="Контактный номер"
                 // required
               />
@@ -116,8 +116,8 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
               <Form.Control
                 type="text"
                 name="city"
-                value={currentSitter?.city}
-                onChange={handleInputChange}
+                value={city}
+                onChange={(e)=> setCity(e.target.value)}
                 placeholder="Город"
                 // required
               />
@@ -126,8 +126,8 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
               <Form.Control
                 type="text"
                 name="photo"
-                value={currentSitter?.photo}
-                onChange={handleInputChange}
+                value={photo}
+                onChange={(e)=> setPhoto(e.target.value)}
                 placeholder="Ссылка на фото"
               />
             </Form.Group>
@@ -138,6 +138,7 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
         </Modal.Body>
       </Modal>
     </Container>
-  );
-}
+)
 
+}
+export default FormUpdSitter

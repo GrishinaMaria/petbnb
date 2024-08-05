@@ -1,7 +1,9 @@
 import React from 'react';
 
 
-const AccountSitterCard= ({oneSitter}): JSX.Element =>{
+const AccountSitterCard = ({ oneSitter }): JSX.Element => {
+  console.log(oneSitter, 'onesitter from accountCard');
+  
 return (
     <>
       {oneSitter  ? (  <div>

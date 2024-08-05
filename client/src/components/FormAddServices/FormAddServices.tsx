@@ -27,7 +27,7 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
   const [error, setError] = useState(null);
   const [services, setServices] = useState([]);
   const [service, setService] = useState({});
-  console.log(service);
+  
   
   const axiosServices = async () => {
     const { data } = await axiosInstance.get(
