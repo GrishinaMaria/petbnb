@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Image,
   Checkbox,
@@ -21,9 +21,11 @@ import EditPetForm from "../../components/EditPetForm";
 import ChoosePet from "../../components/ChoosePet";
 import CalendarForm from "../../components/CalendarForm";
 import axiosInstance from "../../axiosInstance";
+import { CalendarSelected } from "@demark-pro/react-booking-calendar/dist/cjs/types";
 const { VITE_API } = import.meta.env;
 
 export default function InfoPetsitterPage() {
+  const navigate = useNavigate();
   const { sitterId } = useParams();
 
   const [services, setServices] = useState([]);
@@ -32,7 +34,9 @@ export default function InfoPetsitterPage() {
   const [sitter, setSitter] = useState(null);
 
   const [selectedPet, setSelectedPet] = useState(null);
-  const [dates, setDates] = useState({ startDate: "", endDate: "" });
+  // const [dates, setDates] = useState({ startDate: "", endDate: "" });
+  const [selectedDates, setSelectedDates] = useState<CalendarSelected[]>([]);
+
 
   const [totalSum, setTotalSum] = useState(0);
 
@@ -107,14 +111,15 @@ export default function InfoPetsitterPage() {
         `${VITE_API}/booking/${sitterId}`,
         {
           totalPrice: totalSum,
-          startdate: dates.startDate,
-          enddate: dates.endDate,
+          startdate: selectedDates[0],
+          enddate: selectedDates[1],
           petId: selectedPet,
           services: services.filter((service) => service.checked),
         }
       );
       console.log("забронировано", response.data);
       onClose();
+      navigate('/account/owner');
     } catch (error) {
       console.error("ошибка", error);
     }
@@ -139,6 +144,10 @@ export default function InfoPetsitterPage() {
       map.geoObjects.add(placemark);
     }
   }, [sitter]);
+
+  const deleteSpaces = petsitterInfo.description
+  ? petsitterInfo.description.replace(/<br\s*\/?>/g, '\n\n')
+  : '';
 
   return (
     <>
@@ -183,9 +192,19 @@ export default function InfoPetsitterPage() {
         <Heading as="h3" size="lg" mb={4}>
           Обо мне
         </Heading>
-        <Text as="h4" size="md" mb={4}>
+        {/* <Text as="h4" size="md" mb={4}>
           {petsitterInfo.description}
+        </Text> */}
+
+<Text as="h4" size="md" mb={4}>
+          {deleteSpaces.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
         </Text>
+
         <div id="map" style={{ width: "100%", height: "300px" }}></div>
       </Box>
 
@@ -195,14 +214,14 @@ export default function InfoPetsitterPage() {
           <ModalHeader color="#3182ce">Забронировать</ModalHeader>
           <ModalCloseButton />
           <ModalBody color="#3182ce">
-            {<CalendarForm />}
+            {<CalendarForm setSelectedDates={setSelectedDates} selectedDates={selectedDates}/>}
             {<ChoosePet onPetSelect={handlePetSelect} />}
             {/* {<EditPetForm />} */}
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              Сохранить
+              Забронировать
             </Button>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Отмена
