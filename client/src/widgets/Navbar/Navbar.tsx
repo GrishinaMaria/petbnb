@@ -2,7 +2,6 @@ import { setAccessToken } from '../../axiosInstance';
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-
 import { fetchLogoutUser } from '../../redux/thunkActions';
 
 export default function Navbar() {
@@ -19,6 +18,7 @@ export default function Navbar() {
       <div className={styles.left}>
         <Link to="/">На главную</Link>
         <Link to="/search">Найти ситтера</Link>
+        <Link to="/chat">Чат</Link>
       </div>
       <div className={styles.right}>
         {user?.username ? (
