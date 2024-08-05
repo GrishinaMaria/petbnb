@@ -29,6 +29,10 @@ export default function NewAccountOwner({ user }) {
     fetchPets();
   }, []);
 
+  useEffect(() => {
+  console.log('pets', pets)
+  }, [pets]);
+
   const handleAddPet = () => {
     setCurrentPet(null);
     setShowModal(true);
@@ -43,10 +47,10 @@ export default function NewAccountOwner({ user }) {
     try {
         if (currentPet) {
             const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`,savedPet);
-            setPets((prevPets) =>prevPets.map((pet) => (pet.id === data.id ? data : pet)));
+            setPets(pets.map((pet) => (pet.id === data.id ? data : pet)));
+            //console.log('petssssss' , pets)
         } else {
-            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`,
-savedPet);
+            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`,savedPet);
             setPets((prevPets) => [...prevPets, data]);
         }
         setShowModal(false);
@@ -64,11 +68,8 @@ const handleDeletePet = async (petId) => {
   }
 };
 
-
-
   return (
 <>
-
     <Tabs variant='soft-rounded' colorScheme='green'>
   <TabList aria-orientation='vertical'>
     <Tab>Мои питомцы</Tab>
@@ -77,10 +78,6 @@ const handleDeletePet = async (petId) => {
   </TabList>
   <TabPanels>
     <TabPanel>
-
- 
-
-
     <Container>
       <Row className="my-4">
         <Col>

@@ -20,6 +20,7 @@ import SittersMap from './components/SittersMap/SittersMap';
 import NewAccountSitter from './pages/Account/NewAccountSitter';
 import NewAccountOwner from './pages/Account/NewAccountOwner';
 import AccountSitterPage from './pages/AccountSitterPage/AccountSitterPage';
+import ChatPage from './pages/ChatPage/ChatPage';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -52,6 +53,11 @@ const dispatch = useAppDispatch();
           ) : (
             <p>Зарегистрируйтесь или войдите</p>
           ),
+        },
+        {
+          path: '/chat',
+          element: <ProtectedRoute isAllowed={!!user} redirect="/login"><ChatPage user={user} /></ProtectedRoute>,
+          //element: <ChatPage />,
         },
         {
           path: '/signin',
