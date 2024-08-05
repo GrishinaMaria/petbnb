@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from 'react-bootstrap';
-import DotOnlineIcon from '../../../ui/icons/DotOnlineIcon';
+import DotOnlineIcon from '../../../widgets/icons/DotOnlineIcon';
 
 export default function UsersList({ users }) {
   return (

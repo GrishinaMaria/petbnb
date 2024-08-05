@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
+import { Button, Input } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { Button, Form, InputGroup } from 'react-bootstrap';
-import SendIcon from '../../../ui/icons/SendIcon';
+import styles from './MessageForm.module.css';
+// import { Button, Form, InputGroup } from 'react-bootstrap';
+// import SendIcon from '../../../widgets/icons/SendIcon';
 
 export default function MessageForm({ submitHandler, socketRef }) {
   const [input, setInput] = useState('');
@@ -19,25 +21,50 @@ export default function MessageForm({ submitHandler, socketRef }) {
       socket.send(JSON.stringify({ type: 'STOP_TYPING_FROM_CLIENT' }));
     }, 1000);
 
-    return () => { clearTimeout(time); };
+    return () => {
+      clearTimeout(time);
+    };
   }, [input]);
 
   return (
-    <Form
+    // <Form
+    //   onSubmit={(event) => {
+    //     event.preventDefault();
+    //     submitHandler(input);
+    //     setInput('');
+    //   }}
+    // >
+    //   <InputGroup className="mb-3">
+    //     <Form.Control placeholder="Your message" value={input} onChange={changeHandler} />
+    //     <InputGroup.Text id="basic-addon2">
+    //       <Button variant="outline-primary" type="submit">
+    //         отправить
+    //       </Button>
+    //     </InputGroup.Text>
+    //   </InputGroup>
+    // </Form>
+
+    <form
       onSubmit={(event) => {
         event.preventDefault();
         submitHandler(input);
         setInput('');
       }}
+      className={styles.wrapper}
     >
-      <InputGroup className="mb-3">
-        <Form.Control placeholder="Your message" value={input} onChange={changeHandler} />
-        <InputGroup.Text id="basic-addon2">
-          <Button variant="outline-primary" type="submit">
-            <SendIcon />
-          </Button>
-        </InputGroup.Text>
-      </InputGroup>
-    </Form>
+      <div className={styles.inputs}>
+        <Input
+          onChange={changeHandler}
+          borderColor="#3f3e3e"
+          name="name"
+          value={input}
+        />
+      </div>
+      <div className={styles.btns}>
+        <Button type="submit" colorScheme="blue">
+          отправить
+        </Button>
+      </div>
+    </form>
   );
 }

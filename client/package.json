@@ -14,6 +14,7 @@
     "@demark-pro/react-booking-calendar": "^4.0.3",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-redux": "^7.1.33",
     "axios": "^1.7.2",

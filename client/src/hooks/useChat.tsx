@@ -2,21 +2,36 @@
 //! === 4 ===
 import { useEffect, useRef, useState } from 'react';
 import axiosInstance from '../axiosInstance';
+import { useAppSelector } from "../redux/hooks";
 
 export default function useChat() {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
+  console.log("useChat  users:", users);
   const [typing, setTyping] = useState(false);
+  //!ПОНЯТЬ ДЛЯ ЧЕГО ЭТА ЗАПИСЬ
+  const { user } = useAppSelector((store) => store.userSlice);
 
   const socketRef = useRef(null);
 
   useEffect(() => {
-    axiosInstance('/messages').then(({ data }) => setMessages(data));
-  }, []);
+    axiosInstance(`${import.meta.env.VITE_API}/messages/${user.id}`).then(
+        ({ data }) => setMessages(data)
+    );
+}, []);
+
+    // useEffect(() => {
+    //   axiosInstance(`${import.meta.env.VITE_API}/messages/`).then(({ data }) => {
+    //     const filteredMessages = data.filter(
+    //       (message) => message.User.isAdmin === true
+    //     );
+    //     setMessages(filteredMessages);
+    //   });
+    // }, [user.id]);
+
 
   useEffect(() => {
-    socketRef.current = new WebSocket('ws://localhost:3000');
-
+    socketRef.current = new WebSocket('ws://localhost:3100');
     const socket = socketRef.current;
 
     socket.onmessage = (event) => {
@@ -44,6 +59,9 @@ export default function useChat() {
           break;
       }
     };
+    return () => {
+      socket.close();
+  };
   }, []);
 
   const submitMessage = (input) => {

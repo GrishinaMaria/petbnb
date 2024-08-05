@@ -1,4 +1,4 @@
- const router = require('express').Router();
+const router = require('express').Router();
 const authRouter = require('./auth.api.router');
 const petsitterRouter = require('./petsitter.api.router');
 const bookingRouter = require('./booking.api.router');

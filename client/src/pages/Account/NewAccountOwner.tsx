@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../axiosInstance';
-import { Modal, Container, Row, Col, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../axiosInstance";
+import { Modal, Container, Row, Col, Button } from "react-bootstrap";
 import PetCard from '../../components/PetCard';
-//import PetModal from '../../components/PetModal';
-import EditPetForm from '../../components/EditPetForm';
-
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import SitterBookings from '../../components/SitterBookings';
-import OwnerBookings from '../../components/OwnerBookings';
+import EditPetForm from "../../components/EditPetForm";
+ 
+import { Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react";
+import OwnerBookings from "../../components/OwnerBookings";
 import { Link } from 'react-router-dom';
+
 
 const { VITE_API } = import.meta.env;
 
@@ -33,6 +32,7 @@ export default function NewAccountOwner({ user }) {
     console.log('pets', pets)
     }, [pets]);
 
+
   const handleAddPet = () => {
     setCurrentPet(null);
     setShowModal(true);
@@ -42,7 +42,6 @@ export default function NewAccountOwner({ user }) {
     setCurrentPet(pet);
     setShowModal(true);
   };
-
 
   const handleSavePet = async (savedPet) => {
     try {
@@ -60,14 +59,14 @@ export default function NewAccountOwner({ user }) {
     }
 };
 
-  const handleDeletePet = async (petId) => {
-    try {
-      await axiosInstance.delete(`${VITE_API}/owneraccount/${petId}`);
-      setPets((prev) => prev.filter((pet) => pet.id !== petId));
-    } catch (error) {
-      console.log('Ошибка удалени питомца', error);
-    }
-  };
+const handleDeletePet = async (petId) => {
+  try {
+    await axiosInstance.delete(`${VITE_API}/owneraccount/${petId}`);
+    setPets((prev) => prev.filter((pet) => pet.id !== petId));
+  } catch (error) {
+    console.log("Ошибка удалени питомца", error);
+  }
+};
 
   return (
     <>

@@ -54,13 +54,13 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
             return;
         }
         try {
-
             onSave(pet);
             onHide();
         } catch (error) {
             console.error("Ошибка при сохранении питомца", error);
         }
     };
+
     return (
         <>
             <Form onSubmit={handleSave}>
