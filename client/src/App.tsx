@@ -20,6 +20,7 @@ import SittersMap from './components/SittersMap/SittersMap';
 import NewAccountSitter from './pages/Account/NewAccountSitter';
 import NewAccountOwner from './pages/Account/NewAccountOwner';
 import AccountSitterPage from './pages/AccountSitterPage/AccountSitterPage';
+import Room from './pages/Room/Room';
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -95,7 +96,10 @@ const dispatch = useAppDispatch();
           path: '/aboutpetsitter/:sitterId',
           element: <InfoPetsitterPage/>,
         },
-     
+        {
+          path: '/room/:id',
+          element: <Room />,
+        },
       ],
     },
   ]);

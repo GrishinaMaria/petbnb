@@ -8,6 +8,7 @@ import EditPetForm from '../../components/EditPetForm';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import SitterBookings from '../../components/SitterBookings';
 import OwnerBookings from '../../components/OwnerBookings';
+import { Link } from 'react-router-dom';
 
 const { VITE_API } = import.meta.env;
 
@@ -28,6 +29,10 @@ export default function NewAccountOwner({ user }) {
     fetchPets();
   }, []);
 
+  useEffect(() => {
+    console.log('pets', pets)
+    }, [pets]);
+
   const handleAddPet = () => {
     setCurrentPet(null);
     setShowModal(true);
@@ -38,28 +43,22 @@ export default function NewAccountOwner({ user }) {
     setShowModal(true);
   };
 
+
   const handleSavePet = async (savedPet) => {
     try {
-      if (currentPet) {
-        const { data } = await axiosInstance.patch(
-          `${VITE_API}/owneraccount/${currentPet.id}`,
-          savedPet,
-        );
-        setPets((prevPets) =>
-          prevPets.map((pet) => (pet.id === data.id ? data : pet)),
-        );
-      } else {
-        const { data } = await axiosInstance.post(
-          `${VITE_API}/owneraccount`,
-          savedPet,
-        );
-        setPets((prevPets) => [...prevPets, data]);
-      }
-      setShowModal(false);
+        if (currentPet) {
+            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`, savedPet);
+            setPets(pets.map((pet) => (pet.id === data.id ? data : pet)));
+            //console.log('petssssss' , pets)
+        } else {
+            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`, savedPet);
+            setPets((prevPets) => [...prevPets, data]);
+        }
+        setShowModal(false);
     } catch (error) {
-      console.error('Ошибка при сохранении питомца', error);
+        console.error("Ошибка при сохранении питомца", error);
     }
-  };
+};
 
   const handleDeletePet = async (petId) => {
     try {
@@ -76,6 +75,7 @@ export default function NewAccountOwner({ user }) {
         <TabList aria-orientation="vertical">
           <Tab>Мои бронирования</Tab>
           <Tab>Мои питомцы</Tab>
+          <Tab>Видео</Tab>
           <Tab>Сообщения</Tab>
         </TabList>
         <TabPanels>
@@ -121,7 +121,16 @@ export default function NewAccountOwner({ user }) {
               </Modal>
             </Container>
           </TabPanel>
-          <TabPanel></TabPanel>
+          <TabPanel>
+       
+            <Link to={`/room/1}`}><Button>Телемост</Button></Link>
+            
+          </TabPanel>
+
+
+          <TabPanel>
+       
+     </TabPanel>
         </TabPanels>
       </Tabs>
     </>

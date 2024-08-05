@@ -14,6 +14,7 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
     });
     const [errors, setErrors] = useState({});
 
+
     useEffect(() => {
         if (petToEdit) {
             setPet(petToEdit);
@@ -21,13 +22,14 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
             setPet({
                 name: "",
                 breed: "",
-                type: "",
+                type:  "",
                 description: "",
                 photo: "",
-                age: "",
+                age:"",
             });
         }
     }, [petToEdit]);
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -39,8 +41,7 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
         if (!pet.name) formErrors.name = "Заполните поле Имя";
         if (!pet.breed) formErrors.breed = "Заполните поле Порода";
         if (!pet.type) formErrors.type = "Заполните поле Вид";
-        if (!pet.description)
-            formErrors.description = "Заполните поле Описание";
+        if (!pet.description) formErrors.description = "Заполните поле Описание";
         if (!pet.age) formErrors.age = "Заполните поле Возраст";
         return formErrors;
     };
@@ -52,28 +53,14 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
             setErrors(formErrors);
             return;
         }
-
         try {
-            let savedPet;
-            if (petToEdit) {
-                const { data } = await axiosInstance.patch(
-                    `${VITE_API}/owneraccount/${petToEdit.id}`,
-                    pet
-                );
-                savedPet = data;
-            } else {
-                const { data } = await axiosInstance.post(
-                    `${VITE_API}/owneraccount`,
-                    pet
-                );
-                savedPet = data;
-            }
+
+            onSave(pet);
             onHide();
         } catch (error) {
             console.error("Ошибка при сохранении питомца", error);
         }
     };
-
     return (
         <>
             <Form onSubmit={handleSave}>
