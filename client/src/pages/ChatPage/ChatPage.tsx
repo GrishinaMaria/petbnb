@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React from "react";
 import { Box, Button, Container, FormControl, HStack, Heading, Input, InputGroup, InputRightElement, Text, VStack, Divider, Avatar, Tooltip, useColorModeValue } from '@chakra-ui/react';
 //import UserContext from '../../contexts/UserContext';
 // import { DotOnlineIcon, SendIcon } from '../../../ui/icons';

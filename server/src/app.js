@@ -11,7 +11,7 @@ const connectionCb = require('./ws/connectionCb');
 const express = require('express');
 
 const app = express();
-const { PORT } = process.env;
+const { PORT } = process.env || 3100;
 
 //! http сервер +
 const server = http.createServer(app);

@@ -3,8 +3,8 @@
 import { Button, Input } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import styles from './MessageForm.module.css';
-// import { Button, Form, InputGroup } from 'react-bootstrap';
-// import SendIcon from '../../../widgets/icons/SendIcon';
+//import { Button, Form, InputGroup } from 'react-bootstrap';
+//import SendIcon from '../../../widgets/icons/SendIcon';
 
 export default function MessageForm({ submitHandler, socketRef }) {
   const [input, setInput] = useState('');
@@ -27,23 +27,6 @@ export default function MessageForm({ submitHandler, socketRef }) {
   }, [input]);
 
   return (
-    // <Form
-    //   onSubmit={(event) => {
-    //     event.preventDefault();
-    //     submitHandler(input);
-    //     setInput('');
-    //   }}
-    // >
-    //   <InputGroup className="mb-3">
-    //     <Form.Control placeholder="Your message" value={input} onChange={changeHandler} />
-    //     <InputGroup.Text id="basic-addon2">
-    //       <Button variant="outline-primary" type="submit">
-    //         отправить
-    //       </Button>
-    //     </InputGroup.Text>
-    //   </InputGroup>
-    // </Form>
-
     <form
       onSubmit={(event) => {
         event.preventDefault();
