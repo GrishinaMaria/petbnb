@@ -6,21 +6,27 @@ import AccountSitterCard from '../../components/AccountSitterCard/AccountSitterC
 import AccountSitterServices from '../../components/AccountSitterServices/AccountSitterServices';
 import FormAddServices from '../../components/FormAddServices/FormAddServices';
 import SitterBookings from '../../components/SitterBookings';
+import FormUpdSitter from '../../components/FormUpdSitter/FormUpdSitter';
 
 
 const AccountSitterPage = ({ user}): JSX.Element => {
-    const [oneSitter, setOneSitter] = useState(null);
-        const axiosOneSitter = async () => {
+  const [oneSitter, setOneSitter] = useState({});
+  console.log(user.id, 'user id from page');
+  
+  useEffect(() => {
+    const axiosOneSitter = async () => {
         const { data } = await axiosInstance.get(`${import.meta.env.VITE_API}/petsitter/${user.id}`)
-        console.log(data.oneSitter, 'mmm');
-        
         setOneSitter(data.oneSitter);
        
         
  }
-  useEffect(() => {
       axiosOneSitter();
   }, []);
+  
+  useEffect(() => {
+    console.log('onesitter', oneSitter);
+     
+   },[oneSitter])
     
 return (
 <Tabs variant='soft-rounded' colorScheme='green'>
@@ -31,7 +37,8 @@ return (
   </TabList>
   <TabPanels>
     <TabPanel>
-    <NewAccountSitter oneSitter={oneSitter} user={user} setOneSitter={setOneSitter } />
+    {/* <NewAccountSitter oneSitter={oneSitter} user={user} setOneSitter={setOneSitter } /> */}
+    <FormUpdSitter oneSitter={oneSitter} setOneSitter={setOneSitter}/>
     <AccountSitterCard oneSitter={oneSitter}/>
     </TabPanel>
     <TabPanel>

@@ -8,10 +8,10 @@ import { Badge, Box, Flex, Text } from '@chakra-ui/react';
 const AccountSitterServices = ({ oneSitter }): JSX.Element => {
     const [oneSitterServices, setOneSitterServices] = useState(null)
     const axiosServices = async () => {
-        if (oneSitter) {
+        if (oneSitter.id) {
                 
         const { data } = await axiosInstance.get(`${import.meta.env.VITE_API}/petsitterServices/${oneSitter.id}`)
-        console.log(data, '--------------------');
+        
         
         setOneSitterServices(data)
    }

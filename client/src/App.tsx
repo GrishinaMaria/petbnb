@@ -91,7 +91,8 @@ const dispatch = useAppDispatch();
         },
          {
           path: '/account/sitter',
-           element: (
+           element: 
+             (
              <ProtectedRoute isAllowed={user?.role === 'sitter'}>
                <AccountSitterPage user={user} />
                </ProtectedRoute>

@@ -18,6 +18,7 @@ import {
   Flex,
   SimpleGrid,
 } from "@chakra-ui/react";
+import MapFunc from "../Map/MapFunc";
 
 const arraySitters = [
   {
@@ -101,7 +102,6 @@ const PeSittersList = (): JSX.Element => {
     const { data } = await axiosInstance.get(
       `${import.meta.env.VITE_API}/petsitter/all`
     );
-    console.log(data);
 
     setSitters(data.allSitters);
   };
@@ -162,56 +162,12 @@ const PeSittersList = (): JSX.Element => {
         )
       );
     });
-  console.log(value);
+    console.log(filteredSitters, '------');
+    
+ 
 
   return (
     <>
-      {/* <form>
-               <label>
-                <input type='radio' value={'все'} name='все' checked={value == '' ? true : false} onChange={had}/>
-                <p>все</p>
-            </label>
-            <label>
-                <input type='radio' value={'кошки'} name='кошки' checked={value == 'кошки' ? true : false} onChange={handleCheckboxChange}/>
-                <p>кошки</p>
-            </label>
-               <label>
-                <input type='radio' value={'собаки'} name='собаки' checked={value == 'собаки' ? true : false} onChange={handleCheckboxChange}/>
-                <p>собаки</p>
-            </label>
-            <label>
-                    
-                    <select  value={servicesFilter} onChange={handleServicesSelectChange} style={{color: 'black', width: '200px'}}>
-                        <option value=''>все виды услуг</option>
-                        <option value='прогулка'>прогулка</option>
-                        <option value='кормление'>кормление</option>
-                        <option value='игра'>игра</option>
-                    </select>
-                </label>
-                <label>
-    Цена от {minPrice} до {maxPrice}
-    <input
-        type="range"
-        min={0}
-        max={400}
-        value={maxPrice}
-        onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-        style={{ marginLeft: '10px' }}
-    />
-</label>
-        </form>
-  
-        <div style={{display: 'flex'}}>
-        
-        <div style={{marginRight: '200px', backgroundColor: 'white', minWidth: '800px'}}>
-            {filteredSitters.length > 0 ? (filteredSitters.map((sitter)=> <PetSitterCard key={sitter.id} sitter={sitter}/>)) : <p style={{color: 'black'}}>Не найдено ситтеров по заданным параметрам</p>}
-
-        </div>
-                
-                <SittersMap sitters={sitters} />
- </div> */}
-
-
 <Flex direction="column" align="center" width="100%">
       <form style={{ width: "400px" }}>
         <FormControl>
@@ -293,7 +249,8 @@ const PeSittersList = (): JSX.Element => {
         </SimpleGrid>
 
         <Box ml={8} width="40%">
-          {sitters.length > 0 && <SittersMap sitters={sitters} />}
+            {/* {sitters.length > 0 && <SittersMap sitters={sitters} />} */}
+            <MapFunc filteredSitters={filteredSitters} />
         </Box>
       </Flex>
     </Flex>
