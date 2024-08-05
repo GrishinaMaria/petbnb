@@ -26,59 +26,6 @@ router.post('/', verifyAccessToken, async (req, res) => {
   }
 });
 
-// router.post('/owneraccount', async (req, res) => {
-//   const { name, breed, type, description, photo, age } = req.body;
-//   const newPet = new Pet({
-//     name,
-//     breed,
-//     type,
-//     description,
-//     photo,
-//     age,
-//     owner: req.user._id,
-//   });
-//   try {
-//     await newPet.save();
-//     res.status(201).json(newPet);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// });
-
-// router.post('/', verifyAccessToken, async (req, res) => {
-//   const { name, breed, type, description, photo, age } = req.body;
-//   if (res.locals.user.role !== 'owner') {
-//     return res.sendStatus(403);
-//   }
-//   try {
-//     const newPet = Pet.build({
-//       name,
-//       breed,
-//       type,
-//       description,
-//       photo,
-//       age,
-//       ownerId: res.locals.user.id,
-//     });
-//     await newPet.save();
-//     res.status(201).json(newPet);
-//   } catch (error) {
-//     console.error(error);
-//     res.sendStatus(400);
-//   }
-// });
-
-router.patch('/owneraccount/:id', async (req, res) => {
-  const { id } = req.params;
-  const updates = req.body;
-  try {
-    const updatedPet = await Pet.findByIdAndUpdate(id, updates, { new: true });
-    res.status(200).json(updatedPet);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
 // редактируем инфу о питомце
 router.patch('/:petId', verifyAccessToken, async (req, res) => {
   const { petId } = req.params;
