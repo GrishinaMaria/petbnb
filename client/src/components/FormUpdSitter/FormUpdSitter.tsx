@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
+import { Button } from '@chakra-ui/react';
 const { VITE_API } = import.meta.env;
 
 
@@ -47,7 +48,8 @@ return (
       <Row className="my-4">
         <Col>
           <h2>Добро пожаловать, {oneSitter?.username}</h2>
-          <Button onClick={() => setShowModal(true)}>
+          <Button onClick={() => setShowModal(true)} bgColor='#00A3C9' color='black' fontWeight='1px' colorScheme="cyan" border='none'
+              variant="outline">
             Редактировать информацию о себе
           </Button>
         </Col>
