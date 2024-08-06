@@ -7,7 +7,7 @@ import AccountSitterServices from '../../components/AccountSitterServices/Accoun
 import FormAddServices from '../../components/FormAddServices/FormAddServices';
 import SitterBookings from '../../components/SitterBookings';
 import FormUpdSitter from '../../components/FormUpdSitter/FormUpdSitter';
-
+import {Link} from 'react-router-dom';
 
 const AccountSitterPage = ({ user}): JSX.Element => {
   const [oneSitter, setOneSitter] = useState({});
@@ -32,6 +32,7 @@ return (
     <Tab onClick={()=>setTab(1)}>Мой профиль</Tab>
     <Tab onClick={()=>setTab(2)}>Мои услуги</Tab>
     <Tab onClick={()=>setTab(3)}>Мои бронирования</Tab>
+    <Tab onClick={()=>setTab(4)}>Чат</Tab>
   </TabList>
   <TabPanels>
     <TabPanel>
@@ -46,6 +47,9 @@ return (
     </TabPanel>
     <TabPanel>
       <SitterBookings/>
+    </TabPanel>
+    <TabPanel>
+      
     </TabPanel>
   </TabPanels>
 </Tabs>

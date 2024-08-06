@@ -17,7 +17,7 @@ const AccountSitterCard = ({ oneSitter }): JSX.Element => {
 
         <Box>
           <Heading size='sm'>{oneSitter.username}</Heading>
-          <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'><Icon as={MdWorkHistory} /></Circle><Text>{oneSitter.experience} years</Text></Flex>
+          <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'><Icon as={MdWorkHistory} /></Circle><Text>{oneSitter.experience} лет опыта</Text></Flex>
           <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'><Icon as={CgHomeAlt} /></Circle><Text>{oneSitter.city}</Text></Flex>
           <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'>
      <PhoneIcon />

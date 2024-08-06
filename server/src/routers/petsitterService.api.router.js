@@ -59,19 +59,40 @@ router.delete('/:id', async (req, res) => {
         const { id } = req.params;
         const result = await PetsitterService.destroy({
                         
-      where: { id},
-    });
+            where: { id },
+        });
 
-    if (result > 0) {
-      res.status(200).json({ message: 'success' });
-      return;
-    }
+        if (result > 0) {
+            res.status(200).json({ message: 'success' });
+            return;
+        }
 
-    res.status(400).json({ message: 'Can not delete service' });
+        res.status(400).json({ message: 'Can not delete service' });
     } catch ({ message }) {
         res.status(500).json({ error: message });
     }
-})
+});
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { sitterId, serviceId, inputPrice, petType } = req.body;
+
+    const result = await PetsitterService.update(
+      { sitterId, serviceId, price: inputPrice, petType },
+      { where: { id} }
+    );
+  
+    if (result[0] > 0) {
+      const petsitterService = await PetsitterService.findOne({ where: { id} , include: {model: Service, as: 'service'}});
+      res.status(200).json({ message: 'success', petsitterService });
+      return;
+    }
+
+    res.status(400).json({ message: 'Something went wrong' });
+  } catch ({ message }) {
+    res.status(500).json({ error: message });
+  }
+});
 
 
 module.exports = router;
