@@ -54,7 +54,24 @@ router.get('/:sitterId', async (req, res) => {
         res.status(500).json({ error: message });
     }
 });
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await PetsitterService.destroy({
+                        
+      where: { id},
+    });
 
+    if (result > 0) {
+      res.status(200).json({ message: 'success' });
+      return;
+    }
+
+    res.status(400).json({ message: 'Can not delete service' });
+    } catch ({ message }) {
+        res.status(500).json({ error: message });
+    }
+})
 
 
 module.exports = router;

@@ -4,7 +4,7 @@ import axiosInstance from '../../axiosInstance';
 import { Link } from 'react-router-dom';
 
 
-const MapFunc= ({}): JSX.Element =>{
+const MapFunc= ({filteredSitters}): JSX.Element =>{
 const [sitters, setSitters] = useState([]);
 
 
@@ -25,7 +25,7 @@ useEffect(() => {
   };
 const collection = {
     type: "FeatureCollection",
-    features: sitters?.map((el, id) => {
+    features: filteredSitters?.map((el, id) => {
       return {
         id: id,
         type: "Feature",

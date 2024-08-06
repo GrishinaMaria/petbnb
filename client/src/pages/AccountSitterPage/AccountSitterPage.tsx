@@ -24,10 +24,10 @@ const AccountSitterPage = ({ user}): JSX.Element => {
  }
       axiosOneSitter();
   }, [tab]);
-    console.log(tab);
+    
     
 return (
-<Tabs variant='soft-rounded' colorScheme='green'>
+<Tabs variant='soft-rounded' color='#00A3C4'>
   <TabList aria-orientation='vertical'>
     <Tab onClick={()=>setTab(1)}>Мой профиль</Tab>
     <Tab onClick={()=>setTab(2)}>Мои услуги</Tab>
