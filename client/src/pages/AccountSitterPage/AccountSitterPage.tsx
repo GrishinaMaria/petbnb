@@ -11,29 +11,27 @@ import FormUpdSitter from '../../components/FormUpdSitter/FormUpdSitter';
 
 const AccountSitterPage = ({ user}): JSX.Element => {
   const [oneSitter, setOneSitter] = useState({});
-  console.log(user.id, 'user id from page');
+  const [tab, setTab] = useState(1)
   
   useEffect(() => {
     const axiosOneSitter = async () => {
-        const { data } = await axiosInstance.get(`${import.meta.env.VITE_API}/petsitter/${user.id}`)
+      const { data } = await axiosInstance.get(`${import.meta.env.VITE_API}/petsitter/${user.id}`)
+     
+      
         setOneSitter(data.oneSitter);
        
         
  }
       axiosOneSitter();
-  }, []);
-  
-  useEffect(() => {
-    console.log('onesitter', oneSitter);
-     
-   },[oneSitter])
+  }, [tab]);
+    console.log(tab);
     
 return (
 <Tabs variant='soft-rounded' colorScheme='green'>
   <TabList aria-orientation='vertical'>
-    <Tab>Мой профиль</Tab>
-    <Tab>Мои услуги</Tab>
-    <Tab>Мои бронирования</Tab>
+    <Tab onClick={()=>setTab(1)}>Мой профиль</Tab>
+    <Tab onClick={()=>setTab(2)}>Мои услуги</Tab>
+    <Tab onClick={()=>setTab(3)}>Мои бронирования</Tab>
   </TabList>
   <TabPanels>
     <TabPanel>

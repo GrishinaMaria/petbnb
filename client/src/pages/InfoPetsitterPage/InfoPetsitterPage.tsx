@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Image,
   Checkbox,
@@ -16,17 +16,27 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  Accordion,
+  AccordionItem,
+  AccordionIcon,
+  AccordionPanel,
+  AccordionButton,
+  CardBody,
+  Divider,
+  CardFooter,
+  ButtonGroup,
+  Card,
 } from '@chakra-ui/react';
 import EditPetForm from '../../components/EditPetForm';
 import ChoosePet from '../../components/ChoosePet';
 import CalendarForm from '../../components/CalendarForm';
 import axiosInstance from '../../axiosInstance';
-import { useAppSelector } from '../../redux/hooks';
 import { CalendarSelected } from '@demark-pro/react-booking-calendar/dist/cjs/types';
 const { VITE_API } = import.meta.env;
+import { YMaps, Map, ObjectManager } from '@pbe/react-yandex-maps';
+import styles from './InfoPetsitterPage.module.css';
 
 export default function InfoPetsitterPage() {
-  const user = useAppSelector((store) => store.userSlice.user);
   const navigate = useNavigate();
   const { sitterId } = useParams();
 
@@ -36,19 +46,22 @@ export default function InfoPetsitterPage() {
   const [sitter, setSitter] = useState(null);
 
   const [selectedPet, setSelectedPet] = useState(null);
-  // const [dates, setDates] = useState({ startDate: "", endDate: "" });
+
   const [selectedDates, setSelectedDates] = useState<CalendarSelected[]>([]);
 
   const [totalSum, setTotalSum] = useState(0);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [pets, setPets] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [currentPet, setCurrentPet] = useState(null);
+
   useEffect(() => {
     axiosInstance
       .get(`${VITE_API}/petsitterServices/${sitterId}`)
       .then((response) => {
         const petsitterServices = response.data;
-        console.log(petsitterServices);
 
         const servicesData = petsitterServices.map((ps) => ({
           ...ps.service,
@@ -57,7 +70,6 @@ export default function InfoPetsitterPage() {
         }));
 
         setServices(servicesData);
-        // setCheckedItems(new Array(servicesData.length).fill(false));
       })
       .catch((error) => {
         console.error(error);
@@ -124,39 +136,63 @@ export default function InfoPetsitterPage() {
     }
   };
 
-  useEffect(() => {
-    if (sitter) {
-      ymaps.ready(init);
-    }
-
-    function init() {
-      const map = new ymaps.Map('map', {
-        center: [sitter.geoX, sitter.geoY],
-        zoom: 10,
-      });
-
-      const placemark = new ymaps.Placemark([sitter.geoX, sitter.geoY], {
-        balloonContent: `<strong>${sitter.username}</strong><br>${sitter.city}<br>${sitter.email}`,
-        hintContent: sitter.username,
-      });
-
-      map.geoObjects.add(placemark);
-    }
-  }, [sitter]);
-
   const deleteSpaces = petsitterInfo.description
     ? petsitterInfo.description.replace(/<br\s*\/?>/g, '\n\n')
     : '';
-  console.log(sitter);
 
+
+
+  const handleSavePet = async (savedPet) => {
+    try {
+        if (currentPet) {
+            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`, savedPet);
+            setPets((prevPets) => prevPets.map((pet) => (pet.id === data.id ? data : pet)));
+        } else {
+            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`, savedPet);
+            setPets((prevPets) => [...prevPets, data]);
+        }
+        setShowModal(false);
+    } catch (error) {
+        console.error("Ошибка при сохранении питомца", error);
+    }
+};
+
+  
   return (
     <>
-      <Box display="flex" gap="150px" margin="50px">
-        <Image
-          boxSize="500px"
-          // src="https://i.pinimg.com/736x/f3/e5/46/f3e5465a61c0fe010a28af98ca3a5922.jpg"
-          src={petsitterInfo.photo}
-        />
+      <Box className={styles.photobox}>
+
+
+        {/* <Image boxSize="500px" src={petsitterInfo.photo} /> */}
+
+        <Card>
+  <CardBody>
+    <Image
+    boxSize="450px"
+    src={petsitterInfo.photo}
+          alt='Green double couch with wooden legs'
+      borderRadius='lg'
+    />
+    <Stack mt='6' spacing='3'>
+      <Heading size='md'>{petsitterInfo.username}</Heading>
+      
+      <Text color='blue.600' fontSize='2xl'>
+        $450
+      </Text>
+    </Stack>
+  </CardBody>
+  <Divider />
+  <CardFooter>
+    <ButtonGroup spacing='2'>
+      <Button variant='solid' colorScheme='blue'>
+        Buy now
+      </Button>
+      <Button variant='ghost' colorScheme='blue'>
+        Add to cart
+      </Button>
+    </ButtonGroup>
+  </CardFooter>
+</Card>
 
         <Box>
           <Heading as="h3" size="lg" mb={4}>
@@ -180,35 +216,19 @@ export default function InfoPetsitterPage() {
           <Text as="h4" size="md" mb={4}>
             Общая сумма: {totalSum}
           </Text>
-          {/* <div>
-Общая сумма: {totalSum}
-          </div> */}
-          {user?.role === 'owner' && (
-            <Button mt={6} onClick={onOpen}>
-              Забронировать
-            </Button>
-          )}
+
+          <Button colorScheme="cyan" variant="solid" mt={6} onClick={onOpen}>
+            Забронировать
+          </Button>
         </Box>
       </Box>
-      <Box width="full" p={6} mt={6} borderRadius="md" boxShadow="md">
-        <Heading as="h3" size="lg" mb={4}>
-          {petsitterInfo.username}
+      <Box className={styles.secondbox} >
+      <Heading as="h3" size="lg" mb={4}>
+         {petsitterInfo.username}
         </Heading>
-
-        <Text as="h4" size="md" mb={4}>
-          Город: {petsitterInfo.city}
-        </Text>
-
-        <Text as="h4" size="md" mb={4}>
-          Опыт петситтера: {petsitterInfo.experience} лет
-        </Text>
-
         <Heading as="h3" size="lg" mb={4}>
           Обо мне
         </Heading>
-        {/* <Text as="h4" size="md" mb={4}>
-          {petsitterInfo.description}
-        </Text> */}
 
         <Text as="h4" size="md" mb={4}>
           {deleteSpaces.split('\n').map((line, index) => (
@@ -219,7 +239,56 @@ export default function InfoPetsitterPage() {
           ))}
         </Text>
 
-        <div id="map" style={{ width: '100%', height: '300px' }}></div>
+        {sitter && (
+          <div style={{ width: '100%', height: '400px' }}>
+            <YMaps>
+              <Map
+                width="100%"
+                height="400px"
+                defaultState={{
+                  center: [sitter.geoX, sitter.geoY],
+                  zoom: 10,
+                }}
+              >
+                <ObjectManager
+                  objects={{
+                    openBalloonOnClick: true,
+                  }}
+                  options={{
+                    clusterize: false,
+                  }}
+                  defaultFeatures={{
+                    type: 'FeatureCollection',
+                    features: [
+                      {
+                        type: 'Feature',
+                        id: 1,
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [sitter.geoX, sitter.geoY],
+                        },
+                        properties: {
+                          balloonContent: `
+                    <div style="max-width: 100%;">
+                      <img src="${sitter.photo}" alt="${sitter.username}" style="width: 100%; height: auto; margin-bottom: 10px;" />
+                      <strong>${sitter.username}</strong><br>
+                      ${sitter.city}<br>
+                      ${sitter.email}
+                    </div>`,
+                          hintContent: sitter.username,
+                        },
+                      },
+                    ],
+                  }}
+                  modules={[
+                    'objectManager.addon.objectsBalloon',
+                    'objectManager.addon.clustersBalloon',
+                  ]}
+                />
+              </Map>
+            </YMaps>
+          </div>
+        )}
       </Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -234,8 +303,31 @@ export default function InfoPetsitterPage() {
                 selectedDates={selectedDates}
               />
             }
-            {<ChoosePet onPetSelect={handlePetSelect} />}
-            {/* {<EditPetForm />} */}
+            {<ChoosePet  pets={pets} setPets={setPets} onPetSelect={handlePetSelect}/>}
+
+            <Accordion allowToggle>
+  <AccordionItem>
+    <h2>
+      <AccordionButton>
+        <Box as='span' flex='1' textAlign='left'>
+          Добавить информацию о питомце
+        </Box>
+        <AccordionIcon />
+      </AccordionButton>
+    </h2>
+    <AccordionPanel pb={4}>
+    <EditPetForm
+    onSave={
+      handleSavePet
+    }
+    // onHide={onHide}
+    petToEdit={null} 
+  />
+    </AccordionPanel>
+  </AccordionItem>
+</Accordion>
+
+            
           </ModalBody>
 
           <ModalFooter>
