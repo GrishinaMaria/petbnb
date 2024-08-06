@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axiosInstance from ".././axiosInstance";
 const { VITE_API } = import.meta.env;
 
-export default function ChoosePet({ onPetSelect }) {
-    const [mypets, setPets] = useState([]);
+export default function ChoosePet({ pets, setPets, onPetSelect }) {
+    // const [mypets, setPets] = useState([]);
     const [chosenPet, setChosenPet] = useState(null); 
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function ChoosePet({ onPetSelect }) {
           }
         };
         fetchPets();
-      }, []);
+      }, [setPets]);
       console.log(chosenPet);
 
       const onePetHandler = async (petId) => {
@@ -30,7 +30,7 @@ export default function ChoosePet({ onPetSelect }) {
 
     <label> Выберите питомца:</label>
           <div style={{ display: "flex", gap: "10px", marginBottom: "20px"  }}>
-            {mypets.map((pet) => (
+            {pets.map((pet) => (
               <div
               key={pet.id}
               onClick={() => onePetHandler(pet.id)}
@@ -38,7 +38,6 @@ export default function ChoosePet({ onPetSelect }) {
                   backgroundImage: `url("${pet.photo}")`,
               
                 border: chosenPet === pet.id ? "solid 5px black" : "solid 5px #ccc",
-                // border: "solid 5px red",
                   borderRadius: "50px",
                   width: "150px",
                   height: "80px",
@@ -50,7 +49,6 @@ export default function ChoosePet({ onPetSelect }) {
               />
             ))}
           </div>
-
 
     </>
   )

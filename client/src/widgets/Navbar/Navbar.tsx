@@ -3,6 +3,8 @@ import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchLogoutUser } from '../../redux/thunkActions';
+import { Search2Icon } from '@chakra-ui/icons';
+import { Avatar, Button } from '@chakra-ui/react';
 
 export default function Navbar() {
   const user = useAppSelector((store) => store.userSlice.user);
@@ -14,28 +16,52 @@ export default function Navbar() {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <nav className={styles.wrapper}>
       <div className={styles.left}>
-        <Link to="/">На главную</Link>
-        <Link to="/search">Найти ситтера</Link>
-        <Link to="/chat">Чат</Link>
+        <Link to="/" className={styles.logo}>
+          PETBNB
+        </Link>
+      </div>
+      <div className={styles.center}>
+        <Link to="/search" className={styles.searchLink}>
+          Найти петситтера
+          <Search2Icon className={styles.searchIcon} />
+        </Link>
       </div>
       <div className={styles.right}>
         {user?.username ? (
           <>
-            {user.role === "owner" && <Link to="/account/owner">{user.username} Owner</Link>}
-            {user.role === "sitter" && <Link to="/account/sitter">{user.username} Sitter</Link>}
-            <p className={styles.fake__link} onClick={logoutHandler}>
+            <Link to={`/account/${user.role}`} className={styles.userLink}>
+              <Avatar
+                size="md"
+                bg="#00A3C4"
+                src={user.photo}
+                name={user.username}
+              />
+            </Link>
+            <Button
+              colorScheme="cyan"
+              variant="outline"
+              onClick={logoutHandler}
+            >
               Выйти
-            </p>
+            </Button>
           </>
         ) : (
           <>
-            <Link to="/signin">Войти</Link>
-            <Link to="/signup">Регистрация</Link>
+            <Link to="/signin">
+              <Button colorScheme="cyan" variant="solid">
+                Войти
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button colorScheme="cyan" variant="outline">
+                Регистрация
+              </Button>
+            </Link>
           </>
         )}
       </div>
-    </div>
+    </nav>
   );
 }

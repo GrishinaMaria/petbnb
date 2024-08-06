@@ -1,0 +1,10 @@
+.photobox {
+    display: flex;
+    margin: 150px;
+    gap: 50px;
+  }
+
+  .secondbox {
+    margin: 150px;
+    gap: 50px;
+  }
