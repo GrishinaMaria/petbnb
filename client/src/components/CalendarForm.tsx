@@ -4,6 +4,7 @@ import {
 } from "@demark-pro/react-booking-calendar";
 
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
+import './CalendarForm.module.css';
 
 const oneDay = 86400000;
 const today = new Date().getTime() + oneDay;
@@ -21,10 +22,9 @@ const reserved: CalendarReserved[] = Array.from({ length: 3 }, (_, i) => {
 const weekDays = [0, 1, 2];
 
 export default function CalendarForm({selectedDates, setSelectedDates}) {
-  // const [selected, setSelected] = useState<CalendarSelected[]>([]);
 
   return (
-    <div>
+    <div >
       <Calendar
         selected={selectedDates}
         reserved={reserved}
