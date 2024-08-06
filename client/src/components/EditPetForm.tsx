@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
 import axiosInstance from ".././axiosInstance";
+import { Button } from "@chakra-ui/react";
 const { VITE_API } = import.meta.env;
 
 export default function EditPetForm({ onHide, petToEdit, onSave }) {
@@ -148,7 +149,8 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
                     />
                 </Form.Group>
                 <Button
-                    variant="primary"
+                    colorScheme="cyan"
+                    variant="outline"
                     type="submit"
                     style={{ marginTop: "30px" }}
                 >

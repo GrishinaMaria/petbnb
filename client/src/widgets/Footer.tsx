@@ -59,7 +59,7 @@ const Footer = () => {
       as="footer"
       bg="#EDFDFD"
       borderTop="1px solid"
-      borderColor="#EDFDFD"
+      borderColor="#C4F1F9"
       py="1.5rem"
       fontSize="0.875rem"
     >

@@ -1,11 +1,20 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import styles from './AuthForm.module.css';
-import { Input, Button, Select } from '@chakra-ui/react';
+// import styles from './AuthForm.module.css';
+import {
+  Input,
+  Button,
+  Heading,
+  Select,
+  Flex,
+  Image,
+  Link as ChakraLink,
+  Box,
+} from '@chakra-ui/react';
 import { setAccessToken } from '../../axiosInstance';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
 import { fetchAuthUser } from '../../redux/thunkActions';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 type Inputs = {
   username?: string;
@@ -41,86 +50,130 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
       .then((result) => {
         setAccessToken(result.accessToken);
       });
-      navigate("/search");
-};
+    navigate('/search');
+  };
 
   return (
-    <form onSubmit={submitHandler} className={styles.wrapper}>
-      <h3 className={styles.head}>{title}</h3>
-      <div className={styles.inputs}>
-        {type === 'signin' && (
-          <>
-            <Input
-              onChange={changeHandler}
-              borderColor="#3f3e3e"
-              type="email"
-              name="email"
-              value={inputs?.email}
-              placeholder="Эл.почта"
-            />
-            <Input
-              onChange={changeHandler}
-              borderColor="#3f3e3e"
-              type="password"
-              name="password"
-              value={inputs?.password}
-              placeholder="Пароль"
-        
-            />
-          </>
-        )}
-        {type === 'signup' && (
-          <>
-            <Input
-              onChange={changeHandler}
-              borderColor="#3f3e3e"
-              name="username"
-              value={inputs?.username}
-              placeholder="Имя пользователя"
-          
-            />
-            <Input
-              onChange={changeHandler}
-              borderColor="#3f3e3e"
-              type="email"
-              name="email"
-              value={inputs?.email}
-              placeholder="Эл.почта"
-             
-            />
-            <Input
-              onChange={changeHandler}
-              borderColor="#3f3e3e"
-              type="password"
-              name="password"
-              value={inputs?.password}
-              placeholder="Пароль"
-            />
+    <Flex
+      // minH="1000vh"
+      // minW="100vw"
+      align="center"
+      justify="center"
+      mt="50px"
+      w="100%"
+    >
+      <Flex direction="row" m="70px">
+        <Box
+          flex="1"
+          borderTopLeftRadius="16px"
+          borderBottomLeftRadius="16px"
+          overflow="hidden"
+          boxShadow="lg"
+        >
+          <img
+            src="https://i.pinimg.com/564x/aa/a2/59/aaa2597050b0d98b8a7244c833f4b272.jpg"
+            alt="Auth"
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </Box>
+
+        <Box
+          as="form"
+          onSubmit={submitHandler}
+          p="8"
+          borderWidth="1px"
+          borderRadius="md"
+          boxShadow="md"
+          flex="1"
+          maxW="460px"
+        >
+          <Heading as="h3" mb="6">
+            {title}
+          </Heading>
+
+          {type === 'signin' && (
+            <>
+              <Input
+                onChange={changeHandler}
+                type="email"
+                name="email"
+                value={inputs?.email}
+                placeholder="Введите email"
+                mb="4"
+              />
+              <Input
+                onChange={changeHandler}
+                type="password"
+                name="password"
+                value={inputs?.password}
+                placeholder="Введите пароль"
+                mb="4"
+              />
+            </>
+          )}
+
+          {type === 'signup' && (
+            <>
+              <Input
+                onChange={changeHandler}
+                name="username"
+                value={inputs?.username}
+                placeholder="Ваше имя"
+                mb="4"
+              />
+              <Input
+                onChange={changeHandler}
+                type="email"
+                name="email"
+                value={inputs?.email}
+                placeholder="Email"
+                mb="4"
+              />
+              <Input
+                onChange={changeHandler}
+                type="password"
+                name="password"
+                value={inputs?.password}
+                placeholder="Пароль"
+                mb="4"
+              />
               <Select
-              onChange={changeHandler}
-              value={inputs.role}
-              name="role"
-              placeholder="роль"
-              style={{backgroundColor: "#2D3748"}}
-            >
-              <option value="owner" style={{backgroundColor: "#4A5568"}}>owner</option>
-              <option value="sitter" style={{backgroundColor: "#4A5568"}}>sitter</option>
-            </Select>
-          </>
-        )}
-      </div>
-      <div className={styles.btns}>
-        {type === 'signin' && (
-          <Button type="submit" colorScheme="blue">
-            Вход
+                onChange={changeHandler}
+                value={inputs.role}
+                name="role"
+                placeholder="Выберите роль"
+                mb="4"
+              >
+                <option value="owner">Владелец</option>
+                <option value="sitter">Петситтер</option>
+              </Select>
+            </>
+          )}
+
+          <Button
+            type="submit"
+            bg="#00B5D8"
+            color="white"
+            _hover={{ bg: '#00A3C4' }}
+            rounded="md"
+            width="full"
+          >
+            {type === 'signin' ? 'Вход' : 'Регистрация'}
           </Button>
-        )}
-        {type === 'signup' && (
-          <Button type="submit" colorScheme="blue">
-            Регистрация
-          </Button>
-        )}
-      </div>
-    </form>
+
+          <Flex justify="space-between" mt="4">
+            {type === 'signup' ? (
+              <ChakraLink as={RouterLink} to="/signin" color="#00A3C4">
+                Уже есть аккаунт? Войти
+              </ChakraLink>
+            ) : (
+              <ChakraLink as={RouterLink} to="/signup" color="#00A3C4">
+                Нет аккаунта? Зарегистрироваться
+              </ChakraLink>
+            )}
+          </Flex>
+        </Box>
+      </Flex>
+    </Flex>
   );
 }

@@ -342,7 +342,7 @@ export default function InfoPetsitterPage() {
             </Button>
             <Button
               colorScheme="cyan"
-              variant="outline"
+              variant="ghost"
               mr={3}
               onClick={onClose}
             >
