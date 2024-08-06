@@ -1,10 +1,31 @@
 .photobox {
     display: flex;
-    margin: 150px;
+    padding-top: 100px;
+    margin: 50px 250px 50px 250px;
     gap: 50px;
   }
 
   .secondbox {
-    margin: 150px;
+    margin: 50px 250px 150px 250px;
     gap: 50px;
   }
+
+  .sitterphoto {
+    border-radius: 5%;
+  }
+
+  .checkbox {
+    display: flex;
+    justify-content: space-between;
+    width: 600px; 
+  }
+  
+  .checkbox span:first-child {
+    margin-right: auto; 
+  }
+  
+  .checkbox span:last-child {
+    margin-left: auto; 
+    font-weight: bold;
+  }
+  

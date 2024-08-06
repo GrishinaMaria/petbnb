@@ -26,6 +26,8 @@ import {
   CardFooter,
   ButtonGroup,
   Card,
+  Tag,
+  Badge,
 } from '@chakra-ui/react';
 import EditPetForm from '../../components/EditPetForm';
 import ChoosePet from '../../components/ChoosePet';
@@ -56,6 +58,18 @@ export default function InfoPetsitterPage() {
   const [pets, setPets] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentPet, setCurrentPet] = useState(null);
+
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        const { data } = await axiosInstance.get(`${VITE_API}/owneraccount`);
+        setPets(data.myPets);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPets();
+  }, []);
 
   useEffect(() => {
     axiosInstance
@@ -112,10 +126,6 @@ export default function InfoPetsitterPage() {
     setSelectedPet(petId);
   };
 
-  const dateChangeHandler = (dates) => {
-    setDates(dates);
-  };
-
   const handleSubmit = async () => {
     try {
       const response = await axiosInstance.post(
@@ -140,91 +150,85 @@ export default function InfoPetsitterPage() {
     ? petsitterInfo.description.replace(/<br\s*\/?>/g, '\n\n')
     : '';
 
-
-
   const handleSavePet = async (savedPet) => {
     try {
-        if (currentPet) {
-            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`, savedPet);
-            setPets((prevPets) => prevPets.map((pet) => (pet.id === data.id ? data : pet)));
-        } else {
-            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`, savedPet);
-            setPets((prevPets) => [...prevPets, data]);
-        }
-        setShowModal(false);
+      if (currentPet) {
+        const { data } = await axiosInstance.patch(
+          `${VITE_API}/owneraccount/${currentPet.id}`,
+          savedPet,
+        );
+        setPets((prevPets) =>
+          prevPets.map((pet) => (pet.id === data.id ? data : pet)),
+        );
+      } else {
+        const { data } = await axiosInstance.post(
+          `${VITE_API}/owneraccount`,
+          savedPet,
+        );
+        setPets((prevPets) => [...prevPets, data]);
+      }
+      setShowModal(false);
     } catch (error) {
-        console.error("Ошибка при сохранении питомца", error);
+      console.error('Ошибка при сохранении питомца', error);
     }
-};
+  };
 
-  
+  const formatter = new Intl.NumberFormat('ru-RU', {
+    style: 'unit',
+    unit: 'year',
+    unitDisplay: 'long',
+  });
+  const formattedExperience = formatter.format(petsitterInfo.experience);
+
   return (
     <>
       <Box className={styles.photobox}>
+        <Image
+          boxSize="500px"
+          src={petsitterInfo.photo}
+          className={styles.sitterphoto}
+        />
 
-
-        {/* <Image boxSize="500px" src={petsitterInfo.photo} /> */}
-
-        <Card>
-  <CardBody>
-    <Image
-    boxSize="450px"
-    src={petsitterInfo.photo}
-          alt='Green double couch with wooden legs'
-      borderRadius='lg'
-    />
-    <Stack mt='6' spacing='3'>
-      <Heading size='md'>{petsitterInfo.username}</Heading>
-      
-      <Text color='blue.600' fontSize='2xl'>
-        $450
-      </Text>
-    </Stack>
-  </CardBody>
-  <Divider />
-  <CardFooter>
-    <ButtonGroup spacing='2'>
-      <Button variant='solid' colorScheme='blue'>
-        Buy now
-      </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
-    </ButtonGroup>
-  </CardFooter>
-</Card>
-
-        <Box>
+        <Box pl={16}>
           <Heading as="h3" size="lg" mb={4}>
             Услуги:
           </Heading>
-          <Stack pl={6} mt={1} spacing={3}>
+          <Stack mt={10} spacing={6}>
             {services.map((service, index) => {
               return (
                 <Checkbox
+                  colorScheme="cyan"
+                  size="lg"
                   key={service.id}
                   isChecked={!!service.checked}
                   onChange={(e) => handleCheckboxChange(service.id)}
                   name={service.title}
                 >
-                  {service.title}
-                  {service.price}
+                  <div className={styles.checkbox}>
+                    <span>{service.title}</span>
+                    <span>{service.price} ₽</span>
+                  </div>
                 </Checkbox>
               );
             })}
           </Stack>
-          <Text as="h4" size="md" mb={4}>
-            Общая сумма: {totalSum}
+          <Text as="h4" size="md" mb={8} mt={8}>
+            Общая стоимость: {totalSum}
           </Text>
 
-          <Button colorScheme="cyan" variant="solid" mt={6} onClick={onOpen}>
+          <Button colorScheme="cyan" variant="solid" onClick={onOpen}>
             Забронировать
           </Button>
         </Box>
       </Box>
-      <Box className={styles.secondbox} >
-      <Heading as="h3" size="lg" mb={4}>
-         {petsitterInfo.username}
+      <Box className={styles.secondbox}>
+        <Heading as="h2" size="xl" mb={4}>
+          {petsitterInfo.username}
+          <Badge ml="3" colorScheme="cyan" className={styles.badge}>
+            {formattedExperience} опыта
+          </Badge>
+
+          <Divider />
         </Heading>
         <Heading as="h3" size="lg" mb={4}>
           Обо мне
@@ -240,14 +244,14 @@ export default function InfoPetsitterPage() {
         </Text>
 
         {sitter && (
-          <div style={{ width: '100%', height: '400px' }}>
+          <div style={{ width: '100%', height: '400px', marginTop: '50px' }}>
             <YMaps>
               <Map
                 width="100%"
                 height="400px"
                 defaultState={{
                   center: [sitter.geoX, sitter.geoY],
-                  zoom: 10,
+                  zoom: 12,
                 }}
               >
                 <ObjectManager
@@ -270,7 +274,7 @@ export default function InfoPetsitterPage() {
                         properties: {
                           balloonContent: `
                     <div style="max-width: 100%;">
-                      <img src="${sitter.photo}" alt="${sitter.username}" style="width: 100%; height: auto; margin-bottom: 10px;" />
+                      <img src="${sitter.photo}" alt="${sitter.username}" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 10px;" />
                       <strong>${sitter.username}</strong><br>
                       ${sitter.city}<br>
                       ${sitter.email}
@@ -294,47 +298,54 @@ export default function InfoPetsitterPage() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader color="#3182ce">Забронировать</ModalHeader>
+          <ModalHeader color="#0987A0">Забронировать</ModalHeader>
           <ModalCloseButton />
-          <ModalBody color="#3182ce">
+          <ModalBody>
             {
               <CalendarForm
                 setSelectedDates={setSelectedDates}
                 selectedDates={selectedDates}
               />
             }
-            {<ChoosePet  pets={pets} setPets={setPets} onPetSelect={handlePetSelect}/>}
+            {!!pets.length && (
+              <ChoosePet
+                pets={pets}
+                setPets={setPets}
+                onPetSelect={handlePetSelect}
+              />
+            )}
 
-            <Accordion allowToggle>
-  <AccordionItem>
-    <h2>
-      <AccordionButton>
-        <Box as='span' flex='1' textAlign='left'>
-          Добавить информацию о питомце
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4}>
-    <EditPetForm
-    onSave={
-      handleSavePet
-    }
-    // onHide={onHide}
-    petToEdit={null} 
-  />
-    </AccordionPanel>
-  </AccordionItem>
-</Accordion>
-
-            
+            <Accordion allowToggle key={`${pets.length}`}>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box as="span" flex="1" textAlign="left">
+                      Добавить информацию о питомце
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <EditPetForm
+                    onSave={handleSavePet}
+                    // onHide={onHide}
+                    petToEdit={null}
+                  />
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+            <Button colorScheme="cyan" mr={3} onClick={handleSubmit}>
               Забронировать
             </Button>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="cyan"
+              variant="ghost"
+              mr={3}
+              onClick={onClose}
+            >
               Отмена
             </Button>
           </ModalFooter>
