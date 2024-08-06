@@ -17,7 +17,6 @@ const { PORT } = process.env || 3100;
 // //! http сервер +
 // const server = http.createServer(app);
 
-
 //! Конфиг корса
 const corsConfig = {
   origin: [
@@ -49,7 +48,7 @@ server.on('upgrade', upgradeCb);
 wss.on('connection', connectionCb);
 
 //по лекции App поменяли на Server
-initSocket(server);
+//initSocket(server);
 server.listen(PORT, () => {
   console.log(`Server started at ${PORT} port`);
 });

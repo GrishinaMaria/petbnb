@@ -1,12 +1,12 @@
 import React from 'react';
-import { Stack } from 'react-bootstrap';
+import { Stack } from '@chakra-ui/react';
 import ChatMessage from './ChatMessage';
 // import { HStack } from '@chakra-ui/react';
 
 export default function MessagesList({ messages, loggedUser }) {
   console.log("MessagesList  MessagesList:")
   return (
-    <Stack>
+    <Stack spacing={4}>
       {messages.map((message) => (
         <ChatMessage
           message={message}

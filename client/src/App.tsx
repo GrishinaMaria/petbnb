@@ -93,10 +93,10 @@ const dispatch = useAppDispatch();
           path: '/aboutpetsitter/:sitterId',
           element: <InfoPetsitterPage/>,
         },
-        {
-          path: '/room/:id',
-          element: <Room />,
-        },
+        // {
+        //   path: '/room/:id',
+        //   element: <Room />,
+        // },
       ],
     },
   ]);

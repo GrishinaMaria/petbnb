@@ -16,6 +16,7 @@ export default function useChat() {
   const socketRef = useRef(null);
 
   useEffect(() => {
+    console.log(messages, "messages **************" )
     axiosInstance(`${import.meta.env.VITE_API}/messages/${user.id}`).then(
       ({ data }) => setMessages(data),
     );
@@ -24,16 +25,17 @@ export default function useChat() {
   useEffect(() => {
     socketRef.current = new WebSocket('ws://localhost:3100');
     const socket = socketRef.current;
-
+    //console.log(socket)
     socket.onmessage = (event) => {
       const { type, payload } = JSON.parse(event.data);
-
+    console.log({type, payload}, "type***************************")
       switch (type) {
         case 'SET_USERS_FROM_SERVER':
           setUsers(payload);
           break;
 
         case 'ADD_MESSAGE_FROM_SERVER':
+          //console.log('ADD_MESSAGE_FROM_SERVER', payload);
           setMessages((prev) => [...prev, payload]);
           break;
 
@@ -81,3 +83,5 @@ export default function useChat() {
     sendToUser,
   };
 }
+
+
