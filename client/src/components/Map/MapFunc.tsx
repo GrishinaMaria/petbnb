@@ -50,9 +50,9 @@ const collection = {
 console.log(collection, 'coll');
 
   return (
-    <div style={{width:'100%', height:'390px'}}>
+    <div style={{width:'100%', height:'990px'}}>
     <YMaps >
-      <Map width='100%' height='390px' defaultState={defaultState}>
+      <Map width='100%' height='990px' defaultState={defaultState}>
         <ObjectManager
             objects={{
               openBalloonOnClick: true

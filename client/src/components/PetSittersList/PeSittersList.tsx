@@ -17,6 +17,7 @@ import {
   Text,
   Flex,
   SimpleGrid,
+  Container,
 } from "@chakra-ui/react";
 import MapFunc from "../Map/MapFunc";
 
@@ -169,6 +170,7 @@ const PeSittersList = (): JSX.Element => {
 
   return (
     <>
+    <Container maxW='100%'>
 <Flex direction="column" align="center" width="100%">
       <form style={{ width: "400px" }}>
         <FormControl>
@@ -255,6 +257,7 @@ const PeSittersList = (): JSX.Element => {
         </Box>
       </Flex>
     </Flex>
+    </Container>
     </>
   );
 };
