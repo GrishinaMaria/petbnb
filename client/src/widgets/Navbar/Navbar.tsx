@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchLogoutUser } from '../../redux/thunkActions';
 import { Search2Icon } from '@chakra-ui/icons';
-import { Avatar, Button } from '@chakra-ui/react';
+import { Avatar, Button, IconButton } from '@chakra-ui/react';
 
 export default function Navbar() {
   const user = useAppSelector((store) => store.userSlice.user);
@@ -31,6 +31,8 @@ export default function Navbar() {
       <div className={styles.right}>
         {user?.username ? (
           <>
+          {/* <Link to="/chat" className={styles.logo}>
+          Chat </Link> */}
             <Link to={`/account/${user.role}`} className={styles.userLink}>
               <Avatar
                 size="md"

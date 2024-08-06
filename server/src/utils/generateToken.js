@@ -6,11 +6,11 @@ module.exports = (payload) => ({
   accessToken: jwt.sign(
     payload,
     process.env.ACCESS_TOKEN_SECRET,
-    jwtConfig.access
+    jwtConfig.access,
   ),
   refreshToken: jwt.sign(
     payload,
     process.env.REFRESH_TOKEN_SECRET,
-    jwtConfig.refresh
+    jwtConfig.refresh,
   ),
 });

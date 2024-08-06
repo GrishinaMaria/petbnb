@@ -23,7 +23,8 @@
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.3",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "yandex-maps": "^0.0.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

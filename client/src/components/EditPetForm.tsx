@@ -14,6 +14,7 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
     });
     const [errors, setErrors] = useState({});
 
+
     useEffect(() => {
         if (petToEdit) {
             setPet(petToEdit);
@@ -59,7 +60,6 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
             console.error("Ошибка при сохранении питомца", error);
         }
     };
-
 
     return (
         <>

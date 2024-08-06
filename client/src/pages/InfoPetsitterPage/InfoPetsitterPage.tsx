@@ -321,7 +321,7 @@ export default function InfoPetsitterPage() {
       handleSavePet
     }
     // onHide={onHide}
-    petToEdit={null} // Убедитесь, что здесь передается нужное значение, если это необходимо
+    petToEdit={null} 
   />
     </AccordionPanel>
   </AccordionItem>

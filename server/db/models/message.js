@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       text: DataTypes.TEXT,
       authorId: DataTypes.INTEGER,
+      to: DataTypes.INTEGER,
     },
     {
       sequelize,

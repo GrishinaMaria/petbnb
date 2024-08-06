@@ -17,21 +17,27 @@ const connectionCb = (socket, request, userFromJWT) => {
     );
   });
 
-  console.log(map);
+  // console.log(map);
 
   socket.on('error', (err) => {
     console.log(err);
   });
 
   socket.on('message', async (data) => {
-    const { type, payload } = JSON.parse(data);
+    const { type, payload, to } = JSON.parse(data);
 
     switch (type) {
       case 'ADD_MESSAGE_FROM_CLIENT':
         {
+          // console.log({
+          //   text: payload,
+          //   authorId: userFromJWT.id,
+          //   to: to,
+          // });
           const newMessage = await Message.create({
             text: payload,
             authorId: userFromJWT.id,
+            to: to,
           });
           const messageWithUser = await Message.findByPk(newMessage.id, {
             include: { model: User, attributes: ['username', 'id'] },
@@ -74,7 +80,7 @@ const connectionCb = (socket, request, userFromJWT) => {
     }
   });
 
-  //удаление пользователя из списка при отключении сокета 
+  //удаление пользователя из списка при отключении сокета
   socket.on('close', () => {
     map.delete(userFromJWT.id);
     map.forEach(({ ws }) => {
@@ -91,4 +97,3 @@ const connectionCb = (socket, request, userFromJWT) => {
 module.exports = connectionCb;
 
 //! далее пишем кастомный хук на клиенте
-
