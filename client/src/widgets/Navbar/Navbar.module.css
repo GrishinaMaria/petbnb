@@ -1,20 +1,61 @@
 .wrapper {
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 100%;
   height: 70px;
-  backdrop-filter: blur(10px);
-  
+  background-color: #ffffff; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  z-index: 1000;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
-
   padding: 0 20px;
+  gap: 50px;
 }
 
 .left, .right {
-  width: 160px;
-
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
+
+.logo {
+  font-weight: bold;
+  font-size: 2.2rem;
+  color: #00B5D8;
+  text-decoration: none;
+}
+
+.center {
+  flex: 1;
+  text-align: center;
+}
+
+.searchLink {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00B5D8;
+}
+
+
+.searchIcon {
+  margin-left: 6px;
+  font-size: 1.2rem; 
+}
+
+.right a {
+  margin-left: 15px;
+}
+
+.fake__link {
+  cursor: pointer;
+  color: #333;
+  margin-left: 15px;
+}
+
+.userLink {
+  color: #333; 
+  margin-right: 20px; 
+}
+
