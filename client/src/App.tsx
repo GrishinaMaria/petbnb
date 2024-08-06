@@ -20,7 +20,11 @@ import SittersMap from './components/SittersMap/SittersMap';
 import NewAccountSitter from './pages/Account/NewAccountSitter';
 import NewAccountOwner from './pages/Account/NewAccountOwner';
 import AccountSitterPage from './pages/AccountSitterPage/AccountSitterPage';
+
+import Room from './pages/Room/Room';
+
 import ChatPage from './pages/ChatPage/ChatPage';
+
 
 function App() {
 const user = useAppSelector((store) => store.userSlice.user);
@@ -34,11 +38,6 @@ const dispatch = useAppDispatch();
       });
   }, []);
 
-  // console.log("********user", user);
-  
-  // const userr ={...user, role: 'owner'}
- 
-  // console.log("********userr", user);
  
  
   const router = createBrowserRouter([
@@ -67,14 +66,6 @@ const dispatch = useAppDispatch();
           path: '/signup',
           element: <SignupPage />,
         },
-        // {
-        //   path: '/account/sitter',
-        //   element: (
-        //     <ProtectedRoute isAllowed={user?.role === 'sitter'}>
-        //       <NewAccountSitter user={user} />
-        //     </ProtectedRoute>
-        //   ),
-        // },
         {
           path: '/account/owner',
           element: (
@@ -102,7 +93,10 @@ const dispatch = useAppDispatch();
           path: '/aboutpetsitter/:sitterId',
           element: <InfoPetsitterPage/>,
         },
-     
+        {
+          path: '/room/:id',
+          element: <Room />,
+        },
       ],
     },
   ]);

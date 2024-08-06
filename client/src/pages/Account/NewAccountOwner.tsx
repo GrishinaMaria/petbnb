@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosInstance";
 import { Modal, Container, Row, Col, Button } from "react-bootstrap";
 import PetCard from '../../components/PetCard';
-//import PetModal from '../../components/PetModal';
 import EditPetForm from "../../components/EditPetForm";
  
 import { Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react";
-import SitterBookings from "../../components/SitterBookings";
 import OwnerBookings from "../../components/OwnerBookings";
+import { Link } from 'react-router-dom';
 
 
 const { VITE_API } = import.meta.env;
@@ -30,8 +29,9 @@ export default function NewAccountOwner({ user }) {
   }, []);
 
   useEffect(() => {
-  console.log('pets', pets)
-  }, [pets]);
+    console.log('pets', pets)
+    }, [pets]);
+
 
   const handleAddPet = () => {
     setCurrentPet(null);
@@ -43,14 +43,14 @@ export default function NewAccountOwner({ user }) {
     setShowModal(true);
   };
 
- const handleSavePet = async (savedPet) => {
+  const handleSavePet = async (savedPet) => {
     try {
         if (currentPet) {
-            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`,savedPet);
+            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`, savedPet);
             setPets(pets.map((pet) => (pet.id === data.id ? data : pet)));
             //console.log('petssssss' , pets)
         } else {
-            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`,savedPet);
+            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`, savedPet);
             setPets((prevPets) => [...prevPets, data]);
         }
         setShowModal(false);
@@ -69,59 +69,69 @@ const handleDeletePet = async (petId) => {
 };
 
   return (
-<>
-    <Tabs variant='soft-rounded' colorScheme='green'>
-  <TabList aria-orientation='vertical'>
-    <Tab>Мои питомцы</Tab>
-    <Tab>Мои бронирования</Tab>
-    <Tab>Сообщения</Tab>
-  </TabList>
-  <TabPanels>
-    <TabPanel>
-    <Container>
-      <Row className="my-4">
-        <Col>
-          <h2>Добро пожаловать, {user.username}</h2>
-          <Button onClick={handleAddPet}>Добавить описание о питомце</Button>
-        </Col>
-      </Row>
-      <h2>Ваши питомцы:</h2>
-      <Row>
-        {pets.map((pet) => (
-          <Col key={pet.id} md={3}>
-            <PetCard
-              pet={pet}
-              user={user}
-              onDelete={() => handleDeletePet(pet.id)}
-              onEdit={() => handleEditPet(pet)}
-            />
-          </Col>
-        ))}
-      </Row>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{currentPet ? "Редактировать питомца" : "Добавить питомца"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <EditPetForm
-            onHide={() => setShowModal(false)}
-            petToEdit={currentPet}
-            onSave={handleSavePet}
-          />
-        </Modal.Body>
-      </Modal>
-    </Container>
+    <>
+      <Tabs variant="soft-rounded" colorScheme="green">
+        <TabList aria-orientation="vertical">
+          <Tab>Мои бронирования</Tab>
+          <Tab>Мои питомцы</Tab>
+          <Tab>Видео</Tab>
+          <Tab>Сообщения</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <OwnerBookings />
+          </TabPanel>
+          <TabPanel>
+            <Container>
+              <Row className="my-4">
+                <Col>
+                  <h2>Добро пожаловать, {user.username}</h2>
+                  <Button onClick={handleAddPet}>
+                    Добавить описание о питомце
+                  </Button>
+                </Col>
+              </Row>
+              <h2>Ваши питомцы:</h2>
+              <Row>
+                {pets.map((pet) => (
+                  <Col key={pet.id} md={3}>
+                    <PetCard
+                      pet={pet}
+                      user={user}
+                      onDelete={() => handleDeletePet(pet.id)}
+                      onEdit={() => handleEditPet(pet)}
+                    />
+                  </Col>
+                ))}
+              </Row>
+              <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    {currentPet ? 'Редактировать питомца' : 'Добавить питомца'}
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <EditPetForm
+                    onHide={() => setShowModal(false)}
+                    petToEdit={currentPet}
+                    onSave={handleSavePet}
+                  />
+                </Modal.Body>
+              </Modal>
+            </Container>
+          </TabPanel>
+          <TabPanel>
+       
+            <Link to={`/room/1}`}><Button>Телемост</Button></Link>
+            
+          </TabPanel>
 
-    </TabPanel>
 
-<TabPanel>
-  <OwnerBookings/>
-</TabPanel>
-<TabPanel>
-
-</TabPanel>
-</TabPanels>
-</Tabs>
+          <TabPanel>
+       
+     </TabPanel>
+        </TabPanels>
+      </Tabs>
     </>
   );
 }
