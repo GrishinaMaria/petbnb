@@ -1,9 +1,23 @@
-
+import  { useEffect,  useState }  from 'react';
 import { YMaps, Map, Placemark, ObjectManager } from '@pbe/react-yandex-maps';
+import axiosInstance from '../../axiosInstance';
+import { Link } from 'react-router-dom';
 
 
+const MapFunc= ({}): JSX.Element =>{
+const [sitters, setSitters] = useState([]);
 
-const MapFunc= ({filteredSitters}): JSX.Element =>{
+
+useEffect(() => {
+    axiosInstance
+      .get(`${import.meta.env.VITE_API}/petsitter/all`)
+      .then((res) => {
+         
+        setSitters(res.data.allSitters);
+        
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const defaultState = {
     center: [55.677123, 35.616378],
@@ -11,7 +25,7 @@ const MapFunc= ({filteredSitters}): JSX.Element =>{
   };
 const collection = {
     type: "FeatureCollection",
-    features: filteredSitters?.map((el, id) => {
+    features: sitters?.map((el, id) => {
       return {
         id: id,
         type: "Feature",
