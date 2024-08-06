@@ -29,7 +29,7 @@ const AccountSitterCard = ({ oneSitter }): JSX.Element => {
     </Flex>
   </CardHeader>
   <CardBody>
-  <Accordion defaultIndex={[0]} allowMultiple>
+  <Accordion allowToggle>
    <AccordionItem>
      <h2>
        <AccordionButton bgColor='#00A3C9' color='black' border='none'>
