@@ -5,10 +5,19 @@ import { Badge, Box, Flex, Text } from '@chakra-ui/react';
 
 
 
-const AccountSitterServices = ({ oneSitter }): JSX.Element => {
-    const [oneSitterServices, setOneSitterServices] = useState(null)
-    const axiosServices = async () => {
-        if (oneSitter.id) {
+const AccountSitterServices = ({oneSitter}): JSX.Element => {
+  const [oneSitterServices, setOneSitterServices] = useState(null)
+  
+ 
+  
+
+
+  useEffect(() => {
+  const axiosServices = async () => {
+      console.log(oneSitter, 'eto onesitter---');
+      
+        if (oneSitter?.id) {
+        
                 
         const { data } = await axiosInstance.get(`${import.meta.env.VITE_API}/petsitterServices/${oneSitter.id}`)
         
@@ -16,18 +25,10 @@ const AccountSitterServices = ({ oneSitter }): JSX.Element => {
         setOneSitterServices(data)
    }
         }
-    useEffect(() => {
-        axiosServices();
+       axiosServices(); 
+      
  }, [oneSitter])
     
-// return (
-// <div>
-//         {/* {oneSitter?.availableServices && oneSitter?.availableServices?.map((availableService) => <div key={availableService?.id}><p>{availableService?.petType}</p><p>{availableService?.price}</p>
-//             <p>{availableService?.service?.title }</p>
-//         </div>)}   */}
-//         {oneSitterServices && oneSitterServices.map((oneSitterService) => <div key={oneSitterService.id}><p>{oneSitterService.petType}</p><p>{oneSitterService.service.title }</p><p>{oneSitterService.price }</p></div>)}
-//  </div>
-//  );
     return (
     <Flex >
   {oneSitterServices && oneSitterServices.map((oneSitterService)=> 

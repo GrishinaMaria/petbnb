@@ -13,6 +13,7 @@ router.patch("/", verifyAccessToken, async (req, res) => {
       { username, description, experience, photo, geoX, geoY, city, phone },
       {
         where: { id: res.locals.user.id },
+        include: {model: PetsitterService, as: "availableServices", include: {model: Service, as: 'service'}}
       }
     );
     if (updatedSitterInfo) {

@@ -55,18 +55,25 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
 
     const { data } = await axiosInstance.post(
       `${import.meta.env.VITE_API}/petsitterServices`,
-      { sitterId: oneSitter.id, serviceId: service.id, petType, price }
+      { sitterId: oneSitter?.id, serviceId: service.id, petType, price }
     );
-
+   
+   
     setOneSitter((prev) => {
-      return {
+      if (oneSitter.availableServices) {
+        return {
         ...prev,
         ["availableServices"]: [
           ...prev.availableServices,
           data.petsitterService,
         ],
-      };
+        };
+        
+     }
     });
+    console.log(oneSitter, 'posle dobavlenia');
+    
+    
     onClose();
     setPetType("");
     setPrice(0);
@@ -77,10 +84,10 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
     const newPrice = inputValue !== "" ? parseFloat(inputValue) : "";
     setPrice(newPrice);
   };
-
+  
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Добавить услугу</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
