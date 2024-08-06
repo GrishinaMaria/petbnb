@@ -1,23 +1,28 @@
-import  { useEffect,  useState }  from 'react';
+
 import { YMaps, Map, Placemark, ObjectManager } from '@pbe/react-yandex-maps';
-import axiosInstance from '../../axiosInstance';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
 
 
 const MapFunc= ({filteredSitters}): JSX.Element =>{
-const [sitters, setSitters] = useState([]);
+// const [sitters, setSitters] = useState([]);
 
 
-useEffect(() => {
-    axiosInstance
-      .get(`${import.meta.env.VITE_API}/petsitter/all`)
-      .then((res) => {
+// useEffect(() => {
+//     axiosInstance
+//       .get(`${import.meta.env.VITE_API}/petsitter/all`)
+//       .then((res) => {
          
-        setSitters(res.data.allSitters);
+//         setSitters(res.data.allSitters);
         
-      })
-      .catch((err) => console.error(err));
-  }, []);
+//       })
+//       .catch((err) => console.error(err));
+//   }, []);
+  console.log(filteredSitters, 'f');
+  useEffect(() => {
+  console.log(123);
+   
+  }, [filteredSitters])
 
   const defaultState = {
     center: [55.677123, 35.616378],
@@ -42,6 +47,7 @@ const collection = {
       };
     })
   };
+console.log(collection, 'coll');
 
   return (
     <div style={{width:'100%', height:'390px'}}>
@@ -56,7 +62,7 @@ const collection = {
               clusterize: true,
               gridSize: 32
             }}
-            defaultFeatures={collection}
+            features={collection}
             modules={[
               "objectManager.addon.objectsBalloon",
               "objectManager.addon.clustersBalloon"
