@@ -108,12 +108,12 @@ const AccountSitterServices = ({ oneSitter }): JSX.Element => {
   //     ))}
   //   </Flex>
   // );
-<TableContainer display='flex' >
+<TableContainer display='flex' marginTop={'30px'}>
   {groupedServices.map((group) => (
     <Table variant='simple' key={group.petType} color='black'  minWidth='400px' marginRight='80px' >
       
       <Thead>
-        <Heading>{group.petType === 'кошки' ? (
+        <>{group.petType === 'кошки' ? (
               <Circle size='45px' bg='#00A3C4' color='white'>
                 <Icon as={FaCat} boxSize={8}/>
               </Circle>
@@ -121,7 +121,7 @@ const AccountSitterServices = ({ oneSitter }): JSX.Element => {
               <Circle size='45px' bg='#00A3C4' color='white'>
                 <Icon as={FaDog} boxSize={8}/>
               </Circle>
-            )}</Heading>
+            )}</>
       </Thead>
       <>
         {group.services.map((oneSitterService) => (

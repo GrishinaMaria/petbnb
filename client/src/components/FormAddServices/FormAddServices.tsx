@@ -38,7 +38,19 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
   useEffect(() => {
     axiosServices();
   }, []);
+  // useEffect(() => {
+  //   if (petType) {
+  //       const serviceExists = oneSitter.availableServices.some(
+  //   availableService => availableService.petType === petType && availableService.service.id === service.id
+  // );
 
+  // if (serviceExists) {
+  //   setError(`This service (${service.id}) already exists for the selected pet type.`);
+  //   return;
+  //   };
+  //   }
+ 
+  // }, [petType])
   const addServiceHandler = async (e) => {
     e.preventDefault();
 
@@ -46,12 +58,15 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
       setError("Please fill the pet type field.");
       return;
     }
-    //   const isPetTypeUnique = oneSitter.availableServices.every(availableService => availableService.petType !== petType);
+    //   const isServiceByPetTypeUnique = oneSitter.availableServices.every(availableService => availableService.petType !== petType);
 
-    //   if (!isPetTypeUnique) {
+    //   if (!isServiceByPetTypeUnique) {
     //     setError('This service already exists.');
     //     return;
     //   }
+    console.log(petType, '========');
+    
+
 
     const { data } = await axiosInstance.post(
       `${import.meta.env.VITE_API}/petsitterServices`,

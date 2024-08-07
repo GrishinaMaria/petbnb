@@ -11,7 +11,7 @@ const AccountSitterCard = ({ oneSitter }): JSX.Element => {
   return (
     <>{oneSitter.id ? (<Card maxW='md'>
   <CardHeader>
-    <Flex spacing='4'>
+    <Flex >
       <Flex  flex='1' gap='4' alignItems='center' flexWrap='wrap'>
         <Avatar name='photo' src={oneSitter.photo} width='200px' height='200px' marginRight='40px'/>
 
