@@ -84,12 +84,15 @@ export default function PetCard({ pet, user, onEdit, onDelete }) {
         // </Card>
 
 
-        <Card maxW='sm' marginBottom={'20px'}>
+        <Card maxW='sm' marginBottom={'20px'} onClick={handlePetCardClick}>
   <CardBody>
     <Image
       src={pet.photo || "https://images.dog.ceo/breeds/hound-english/n02089973_846.jpg"}
       alt={pet.name}
       borderRadius='lg'
+      height={'210px'}
+      width={'100%'}
+      marginBottom={'10px'}
     />
     <Stack  spacing='1' minHeight={'220px'}>
       <Heading size='md'>{pet?.name}</Heading>

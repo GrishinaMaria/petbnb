@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form } from "react-bootstrap";
 import axiosInstance from ".././axiosInstance";
-import { Button } from "@chakra-ui/react";
+import { Button, Image } from "@chakra-ui/react";
 const { VITE_API } = import.meta.env;
 
 export default function EditPetForm({ onHide, petToEdit, onSave }) {
@@ -14,11 +14,12 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
         age: "",
     });
     const [errors, setErrors] = useState({});
-
+    const [imagePreview, setImagePreview] = useState(pet.photo);
 
     useEffect(() => {
         if (petToEdit) {
             setPet(petToEdit);
+            setImagePreview(petToEdit.photo);
         } else {
             setPet({
                 name: "",
@@ -61,6 +62,67 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
             console.error("Ошибка при сохранении питомца", error);
         }
     };
+//     const handleImageUpload = (e) => {
+//     const file = e.target.files?.[0];
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setImagePreview(reader.result as string);
+//         setPet.photo(`/profilePhoto/${file.name}`); 
+//       };
+//       reader.readAsDataURL(file);
+
+//       const formData = new FormData();
+//       formData.append('file', file);
+
+//       fetch(`http://localhost:3100${VITE_API}/owneraccount/upload`, {
+//         method: 'POST',
+//         body: formData,
+//       }).then((response) => {
+//         if (!response.ok) {
+//           console.error('Ошибка загрузки файла');
+//         }
+//       }).catch((error) => {
+//         console.error('Ошибка загрузки файла:', error);
+//       });  
+//     }
+    //   };
+    const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string); // Update image preview if needed
+        };
+        reader.readAsDataURL(file);
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        fetch(`http://localhost:3100${VITE_API}/owneraccount/upload`, {
+            method: 'POST',
+            body: formData,
+        })
+        .then((response) => {
+            if (!response.ok) {
+                console.error('Ошибка загрузки файла');
+                // Handle error state or feedback to the user
+            } else {
+                // Assuming successful upload, update pet.photo with the server response
+                response.json().then(data => {
+                    setPet(prevPet => ({
+                        ...prevPet,
+                        photo: `/profilePhoto/${file.name}` // Adjust to what your server returns as the image URL
+                    }));
+                });
+            }
+        })
+        .catch((error) => {
+            console.error('Ошибка загрузки файла:', error);
+            // Handle network errors or server-side errors
+        });
+    }
+};
 
     return (
         <>
@@ -139,7 +201,7 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
                         </Form.Text>
                     )}
                 </Form.Group>
-                <Form.Group controlId="photo" style={{ marginTop: "30px" }}>
+                {/* <Form.Group controlId="photo" style={{ marginTop: "30px" }}>
                     <Form.Control
                         type="text"
                         name="photo"
@@ -147,7 +209,21 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
                         onChange={handleInputChange}
                         placeholder="Ссылка на фото"
                     />
-                </Form.Group>
+                </Form.Group> */}
+                <Form.Group style={{marginTop: '20px', display: 'flex'}}>
+      <Button type="button" onClick={() => document.getElementById('imageUpload')?.click()} marginRight={'20px'}>
+        Загрузить фото
+      </Button>
+      <Image src={imagePreview} alt="Profile Preview" width={'50px'} height={'50px'}/>
+      <input
+        id="imageUpload"
+        type="file"
+        style={{ display: 'none' }}
+        accept="image/*"
+        onChange={handleImageUpload}
+      />
+      {/* {photo && <p>Ссылка на загруженное фото: {photo}</p>} */}
+    </Form.Group>
                 <Button
                     colorScheme="cyan"
                     variant="outline"
