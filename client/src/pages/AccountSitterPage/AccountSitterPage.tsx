@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Tab, TabList, TabPanel, TabPanels, Tabs, Button } from '@chakra-ui/react';
 import NewAccountSitter from '../Account/NewAccountSitter';
 import axiosInstance from '../../axiosInstance';
 import AccountSitterCard from '../../components/AccountSitterCard/AccountSitterCard';
@@ -8,6 +8,7 @@ import FormAddServices from '../../components/FormAddServices/FormAddServices';
 import SitterBookings from '../../components/SitterBookings';
 import FormUpdSitter from '../../components/FormUpdSitter/FormUpdSitter';
 import {Link} from 'react-router-dom';
+ 
 
 const AccountSitterPage = ({ user}): JSX.Element => {
   const [oneSitter, setOneSitter] = useState({});
@@ -35,21 +36,21 @@ return (
     <Tab onClick={()=>setTab(4)}>Чат</Tab>
   </TabList>
   <TabPanels>
-    <TabPanel>
+    <TabPanel minHeight={'700px'}>
     {/* <NewAccountSitter oneSitter={oneSitter} user={user} setOneSitter={setOneSitter } /> */}
     <FormUpdSitter oneSitter={oneSitter} setOneSitter={setOneSitter}/>
     <AccountSitterCard oneSitter={oneSitter}/>
     </TabPanel>
-    <TabPanel>
+    <TabPanel minHeight={'700px'}>
      <h2>Мои услуги</h2> 
-     <FormAddServices oneSitter={oneSitter} setOneSitter={setOneSitter } />
+     <FormAddServices oneSitter={oneSitter} setOneSitter={setOneSitter }/>
       <AccountSitterServices oneSitter={oneSitter}/>
     </TabPanel>
     <TabPanel>
       <SitterBookings/>
     </TabPanel>
     <TabPanel>
-      
+    <Link to={`/chat`}><Button>Чат</Button></Link>
     </TabPanel>
   </TabPanels>
 </Tabs>

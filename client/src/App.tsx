@@ -55,8 +55,8 @@ const dispatch = useAppDispatch();
         },
         {
           path: '/chat',
-          element: <ProtectedRoute isAllowed={!!user} redirect="/login"><ChatPage user={user} /></ProtectedRoute>,
-          //element: <ChatPage />,
+          //element: <ProtectedRoute isAllowed={!!user} redirect="/login"><ChatPage user={user} /></ProtectedRoute>,
+          element: <ChatPage />,
         },
         {
           path: '/signin',

@@ -14,7 +14,12 @@ router.post('/signup', async (req, res) => {
   try {
     const [user, isCreated] = await User.findOrCreate({
       where: { email },
-      defaults: { username, email, role, password: await bcrypt.hash(password, 10) },
+      defaults: {
+        username,
+        email,
+        role,
+        password: await bcrypt.hash(password, 10),
+      },
     });
 
     if (!isCreated) {
@@ -25,9 +30,12 @@ router.post('/signup', async (req, res) => {
       delete plainUser.createdAt;
       delete plainUser.updatedAt;
 
+      const jwtUser = { id: plainUser.id, email: plainUser.email };
+
       //! вот здесь передавался неправельный payload вида generateTokens(plainUser)
       //! а нужно было generateTokens({ user: plainUser })
-      const { accessToken, refreshToken } = generateTokens({ user: plainUser });
+
+      const { accessToken, refreshToken } = generateTokens({ user: jwtUser });
 
       res
         .cookie('refreshToken', refreshToken, cookieConfig.refresh)
@@ -57,8 +65,9 @@ router.post('/signin', async (req, res) => {
     delete plainUser.password;
     delete plainUser.createdAt;
     delete plainUser.updatedAt;
-    
-    const { accessToken, refreshToken } = generateTokens({ user: plainUser });
+
+    const jwtUser = { id: plainUser.id, email: plainUser.email };
+    const { accessToken, refreshToken } = generateTokens({ user: jwtUser });
 
     res
       .cookie('refreshToken', refreshToken, cookieConfig.refresh)

@@ -79,7 +79,7 @@ export default function NewAccountOwner({ user }) {
           <Tab>Мои бронирования</Tab>
           <Tab>Мои питомцы</Tab>
           <Tab>Видео</Tab>
-          <Tab>Сообщения</Tab>
+          <Tab>Чат</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -124,13 +124,19 @@ export default function NewAccountOwner({ user }) {
               </Modal>
             </Container>
           </TabPanel>
-          <TabPanel>
+
+         <TabPanel>
             <Link to={`/room/c392fd84-41ca-483e-af39-6483d67d85fd}`}>
               <Button>Телемост</Button>
             </Link>
           </TabPanel>
+          
+          <TabPanel>
+            <Link to={`/chat`}><Button>Чат</Button></Link>
+          </TabPanel>
+          
+         
 
-          <TabPanel></TabPanel>
         </TabPanels>
       </Tabs>
     </>
