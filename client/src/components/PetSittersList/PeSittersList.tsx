@@ -251,7 +251,7 @@ const PeSittersList = (): JSX.Element => {
 
         <Box ml={8} width="40%">
             {/* {sitters.length > 0 && <SittersMap sitters={sitters} />} */}
-            <MapFunc value={value} minPrice={minPrice} maxPrice={maxPrice} servicesFilter={servicesFilter } />
+            <MapFunc filteredSitters={filteredSitters} />
         </Box>
       </Flex>
     </Flex>

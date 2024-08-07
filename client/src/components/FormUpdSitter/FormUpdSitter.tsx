@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { Col, Container, Form, Image, Modal, Row } from 'react-bootstrap';
 import axiosInstance from '../../axiosInstance';
+import { Button } from '@chakra-ui/react';
 const { VITE_API } = import.meta.env;
+const { VITE_BASE_URL } = import.meta.env;
 
 
 const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
@@ -14,6 +16,7 @@ const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
     const [geoY, setGeoY] = useState(oneSitter?.geoY)
     const [city, setCity] = useState(oneSitter?.city || "")
     const [phone, setPhone] = useState(oneSitter?.phone || "")
+    const [imagePreview, setImagePreview] = useState(oneSitter?.photo);
     
    useEffect(() => {
     if (oneSitter) {
@@ -42,12 +45,69 @@ const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
     }
   };
 
+
+const locate = () => {
+  return new Promise((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(
+      resolve,
+      reject,
+      {
+        enableHighAccuracy: true,
+        timeout: 15000, 
+        maximumAge: 0
+      })
+  );
+}
+
+locate().then(res => {
+  const X = res.coords.latitude;
+  const Y = res.coords.longitude;
+ 
+  setGeoX(X);
+  setGeoY(Y);
+}).catch(error => {
+  console.error("Ошибка при получении геолокации:", error);
+});
+
+
+const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch(`${VITE_BASE_URL}${VITE_API}/petsitter/upload`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Ошибка загрузки файла');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setPhoto(`/profilePhoto/${file.name}`); 
+        })
+        .catch(error => {
+          console.error('Ошибка загрузки файла:', error);
+        });
+    }
+  };
+
 return (
     <Container>
       <Row className="my-4">
         <Col>
           <h2>Добро пожаловать, {oneSitter?.username}</h2>
-          <Button onClick={() => setShowModal(true)}>
+          <Button onClick={() => setShowModal(true)} bgColor='#00A3C9' color='black' fontWeight='1px' colorScheme="cyan" border='none'
+              variant="outline">
             Редактировать информацию о себе
           </Button>
         </Col>
@@ -111,7 +171,7 @@ return (
                 // required
               />
             </Form.Group>
-            <Form.Group controlId="photo" style={{ marginTop: "30px" }}>
+            {/* <Form.Group controlId="photo" style={{ marginTop: "30px" }}>
               <Form.Control
                 type="text"
                 name="photo"
@@ -119,7 +179,22 @@ return (
                 onChange={(e)=> setPhoto(e.target.value)}
                 placeholder="Ссылка на фото"
               />
-            </Form.Group>
+            </Form.Group> */}
+          
+          <Form.Group>
+      <Image src={imagePreview} alt="Profile Preview" />
+      <Button type="button" onClick={() => document.getElementById('imageUpload')?.click()}>
+        Загрузить фото
+      </Button>
+      <input
+        id="imageUpload"
+        type="file"
+        style={{ display: 'none' }}
+        accept="image/*"
+        onChange={handleImageUpload}
+      />
+      {photo && <p>Ссылка на загруженное фото: {photo}</p>}
+    </Form.Group>
             <Button variant="primary" type="submit" style={{ marginTop: "30px" }}>
               Обновить информацию
             </Button>
