@@ -70,34 +70,29 @@ locate().then(res => {
 });
 
 
-const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
+        setPhoto(`/profilePhoto/${file.name}`); 
       };
       reader.readAsDataURL(file);
 
       const formData = new FormData();
       formData.append('file', file);
 
-      fetch(`${VITE_BASE_URL}${VITE_API}/petsitter/upload`, {
+      fetch(`http://localhost:3100/${VITE_API}/petsitter/upload`, {
         method: 'POST',
         body: formData,
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Ошибка загрузки файла');
-          }
-          return response.json();
-        })
-        .then(data => {
-          setPhoto(`/profilePhoto/${file.name}`); 
-        })
-        .catch(error => {
-          console.error('Ошибка загрузки файла:', error);
-        });
+      }).then((response) => {
+        if (!response.ok) {
+          console.error('Ошибка загрузки файла');
+        }
+      }).catch((error) => {
+        console.error('Ошибка загрузки файла:', error);
+      });
     }
   };
 
