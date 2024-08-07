@@ -46,28 +46,28 @@ const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
   };
 
 
-const locate = () => {
-  return new Promise((resolve, reject) =>
-    navigator.geolocation.getCurrentPosition(
-      resolve,
-      reject,
-      {
-        enableHighAccuracy: true,
-        timeout: 15000, 
-        maximumAge: 0
-      })
-  );
-}
+// const locate = () => {
+//   return new Promise((resolve, reject) =>
+//     navigator.geolocation.getCurrentPosition(
+//       resolve,
+//       reject,
+//       {
+//         enableHighAccuracy: true,
+//         timeout: 15000, 
+//         maximumAge: 0
+//       })
+//   );
+// }
 
-locate().then(res => {
-  const X = res.coords.latitude;
-  const Y = res.coords.longitude;
+// locate().then(res => {
+//   const X = res.coords.latitude;
+//   const Y = res.coords.longitude;
  
-  setGeoX(X);
-  setGeoY(Y);
-}).catch(error => {
-  console.error("Ошибка при получении геолокации:", error);
-});
+//   setGeoX(X);
+//   setGeoY(Y);
+// }).catch(error => {
+//   console.error("Ошибка при получении геолокации:", error);
+// });
 
 
   const handleImageUpload = (e) => {

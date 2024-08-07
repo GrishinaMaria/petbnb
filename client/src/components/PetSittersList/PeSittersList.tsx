@@ -241,6 +241,7 @@ const PeSittersList = (): JSX.Element => {
                 min={0}
                 max={5000}
                 value={maxPrice}
+                colorScheme='cyan'
                 onChange={(value) => setMaxPrice(value)}
               >
                 <SliderTrack>

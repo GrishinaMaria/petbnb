@@ -138,13 +138,14 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
                 mb="4"
               />
               <Select
+              colorScheme="cyan"
                 onChange={changeHandler}
                 value={inputs.role}
                 name="role"
-                placeholder="Выберите роль"
+                placeholder="Буду пользоваться как ..."
                 mb="4"
               >
-                <option value="owner">Владелец</option>
+                <option value="owner">Владелец питомца</option>
                 <option value="sitter">Петситтер</option>
               </Select>
             </>
