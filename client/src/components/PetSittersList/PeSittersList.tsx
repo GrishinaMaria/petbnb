@@ -18,6 +18,7 @@ import {
   Flex,
   SimpleGrid,
   Container,
+  Button,
 } from "@chakra-ui/react";
 import MapFunc from "../Map/MapFunc";
 
@@ -97,7 +98,9 @@ const PeSittersList = (): JSX.Element => {
   const [servicesFilter, setServicesFilter] = useState("");
   const [value, setValue] = useState("");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(3000);
+  const [maxPrice, setMaxPrice] = useState(5000);
+
+  const [page, setPage] = useState(0);
 
   const axiosPetsitters = async () => {
     const { data } = await axiosInstance.get(
@@ -166,7 +169,23 @@ const PeSittersList = (): JSX.Element => {
   
 
     
- 
+    const paginatedSitters = filteredSitters.slice(
+      page * 6,
+      (page + 1) * 6
+    );
+  
+    const nextPageHandler = () => {
+      if ((page + 1) * 6 < filteredSitters.length) {
+        setPage(page + 1);
+      }
+    };
+  
+    const prevPageHandler = () => {
+      if (page > 0) {
+        setPage(page - 1);
+      }
+    };
+    
 
   return (
     <>
@@ -222,11 +241,11 @@ const PeSittersList = (): JSX.Element => {
 
         <FormControl mt={4}>
           <FormLabel>
-            Цена от {minPrice} до {maxPrice} руб/час
+            Цена от {minPrice} до {maxPrice} ₽
           </FormLabel>
           <Slider
             min={0}
-            max={3000}
+            max={5000}
             value={maxPrice}
             onChange={(value) => setMaxPrice(value)}
           >
@@ -241,9 +260,9 @@ const PeSittersList = (): JSX.Element => {
       </form>
 
       <Flex width="100%" justifyContent="center" mt={8}>
-        <SimpleGrid columns={3} spacing={4} width="60%">
-          {filteredSitters.length > 0 ? (
-            filteredSitters.map((sitter) => (
+        <SimpleGrid columns={3} spacing={2} width="60%">
+          {paginatedSitters.length > 0 ? (
+            paginatedSitters.map((sitter) => (
               <PetSitterCard key={sitter.id} sitter={sitter} />
             ))
           ) : (
@@ -251,13 +270,38 @@ const PeSittersList = (): JSX.Element => {
           )}
         </SimpleGrid>
 
-        <Box ml={8} width="40%">
+        {/* <Box ml={8} width="40%"> */}
             {/* {sitters.length > 0 && <SittersMap sitters={sitters} />} */}
-            <MapFunc filteredSitters={filteredSitters} />
-        </Box>
+            {/* <MapFunc filteredSitters={filteredSitters} /> */}
+        {/* </Box> */}
+      {/* </Flex> */}
+    {/* </Flex> */}
+    {/* </Container> */}
+
+
+    <Box ml={8} width="40%">
+            <MapFunc filteredSitters={paginatedSitters} />
+          </Box>
+        </Flex>
+
+        <Flex m={4} justifyContent="center">
+          <Button
+            onClick={prevPageHandler}
+            disabled={page === 0}
+            mr={4}
+          >
+            Назад
+          </Button>
+          <Button
+            onClick={nextPageHandler}
+            disabled={(page + 1) * 6 >= filteredSitters.length}
+          >
+            Вперёд
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
     </Container>
+    
     </>
   );
 };

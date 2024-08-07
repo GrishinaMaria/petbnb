@@ -7,6 +7,7 @@ const cors = require('cors');
 const http = require('http');
 const { wss, upgradeCb } = require('./ws/upgradeCb');
 const connectionCb = require('./ws/connectionCb');
+const { initSocket } = require('./socket/socket');
 
 const express = require('express');
 
@@ -17,8 +18,8 @@ const { PORT } = process.env || 3100;
 const server = http.createServer(app);
 
 //! папка ws для сокет-сервера и пишем 2 функции
-server.on('upgrade', upgradeCb);
-wss.on('connection', connectionCb);
+// server.on('upgrade', upgradeCb);
+// wss.on('connection', connectionCb);
 
 //! Конфиг корса
 const corsConfig = {
@@ -44,6 +45,7 @@ app.use('/api/v1', apiRouter);
 // });
 
 //по лекции App поменяли на Server
+initSocket(server);
 server.listen(PORT, () => {
   console.log(`Server started at ${PORT} port`);
 });

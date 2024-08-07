@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Booking, BookedService, Service, Pet, User, sequelize } = require("../../db/models");
 const { verifyAccessToken } = require("../middlewares/verifyToken");
-
+const { v4: uuid } = require('uuid');
 
 router.post("/:sitterId", verifyAccessToken, async (req, res) => {
   const { sitterId } = req.params;
@@ -22,16 +22,17 @@ router.post("/:sitterId", verifyAccessToken, async (req, res) => {
       totalPrice,
       startdate,
       enddate,
+      conference: uuid(),
     }, { transaction });
 
-    console.log("Services:", services);
+    // console.log("Services:", services);
 
     const bookedServices = services.map(service => ({
       bookingId: newBooking.id,
       serviceId: service.id,
     }));
 
-    console.log("BookedServices:", bookedServices);
+    // console.log("BookedServices:", bookedServices);
 
     await BookedService.bulkCreate(bookedServices, { transaction });
 
@@ -48,7 +49,7 @@ router.post("/:sitterId", verifyAccessToken, async (req, res) => {
 
 router.get("/", verifyAccessToken, async (req, res) => {
   try {
-    console.log(res.locals.user);
+    // console.log(res.locals.user);
     const bookings = await Booking.findAll({
       where: res.locals.user.role === "owner" ? { ownerId: res.locals.user.id } : { sitterId: res.locals.user.id },
       include: [

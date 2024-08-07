@@ -279,7 +279,7 @@ export default function InfoPetsitterPage() {
                       ${sitter.city}<br>
                       ${sitter.email}
                     </div>`,
-                          hintContent: sitter.username,
+                          // hintContent: sitter.username,
                         },
                       },
                     ],

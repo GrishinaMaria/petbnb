@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axiosInstance from "../../axiosInstance";
-import { Modal, Container, Row, Col, Button } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import axiosInstance from '../../axiosInstance';
+import { Modal, Container, Row, Col, Button } from 'react-bootstrap';
 import PetCard from '../../components/PetCard';
-import EditPetForm from "../../components/EditPetForm";
- 
-import { Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react";
-import OwnerBookings from "../../components/OwnerBookings";
-import { Link } from 'react-router-dom';
+import EditPetForm from '../../components/EditPetForm';
 
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import OwnerBookings from '../../components/OwnerBookings';
+import { Link } from 'react-router-dom';
 
 const { VITE_API } = import.meta.env;
 
@@ -29,9 +28,8 @@ export default function NewAccountOwner({ user }) {
   }, []);
 
   useEffect(() => {
-    console.log('pets', pets)
-    }, [pets]);
-
+    console.log('pets', pets);
+  }, [pets]);
 
   const handleAddPet = () => {
     setCurrentPet(null);
@@ -45,28 +43,34 @@ export default function NewAccountOwner({ user }) {
 
   const handleSavePet = async (savedPet) => {
     try {
-        if (currentPet) {
-            const { data } = await axiosInstance.patch(`${VITE_API}/owneraccount/${currentPet.id}`, savedPet);
-            setPets(pets.map((pet) => (pet.id === data.id ? data : pet)));
-            //console.log('petssssss' , pets)
-        } else {
-            const { data } = await axiosInstance.post(`${VITE_API}/owneraccount`, savedPet);
-            setPets((prevPets) => [...prevPets, data]);
-        }
-        setShowModal(false);
+      if (currentPet) {
+        const { data } = await axiosInstance.patch(
+          `${VITE_API}/owneraccount/${currentPet.id}`,
+          savedPet,
+        );
+        setPets(pets.map((pet) => (pet.id === data.id ? data : pet)));
+        //console.log('petssssss' , pets)
+      } else {
+        const { data } = await axiosInstance.post(
+          `${VITE_API}/owneraccount`,
+          savedPet,
+        );
+        setPets((prevPets) => [...prevPets, data]);
+      }
+      setShowModal(false);
     } catch (error) {
-        console.error("Ошибка при сохранении питомца", error);
+      console.error('Ошибка при сохранении питомца', error);
     }
-};
+  };
 
-const handleDeletePet = async (petId) => {
-  try {
-    await axiosInstance.delete(`${VITE_API}/owneraccount/${petId}`);
-    setPets((prev) => prev.filter((pet) => pet.id !== petId));
-  } catch (error) {
-    console.log("Ошибка удалени питомца", error);
-  }
-};
+  const handleDeletePet = async (petId) => {
+    try {
+      await axiosInstance.delete(`${VITE_API}/owneraccount/${petId}`);
+      setPets((prev) => prev.filter((pet) => pet.id !== petId));
+    } catch (error) {
+      console.log('Ошибка удалени питомца', error);
+    }
+  };
 
   return (
     <>
@@ -121,15 +125,12 @@ const handleDeletePet = async (petId) => {
             </Container>
           </TabPanel>
           <TabPanel>
-       
-            <Link to={`/room/1}`}><Button>Телемост</Button></Link>
-            
+            <Link to={`/room/c392fd84-41ca-483e-af39-6483d67d85fd}`}>
+              <Button>Телемост</Button>
+            </Link>
           </TabPanel>
 
-
-          <TabPanel>
-       
-     </TabPanel>
+          <TabPanel></TabPanel>
         </TabPanels>
       </Tabs>
     </>

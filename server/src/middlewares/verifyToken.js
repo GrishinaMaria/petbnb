@@ -7,7 +7,7 @@ const verifyAccessToken = (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1]; // Bearer token
     const { user } = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
     res.locals.user = user;
-    console.log('accessToken: ', accessToken);
+    // console.log('AccessToken: ', accessToken);
     next();
   } catch (err) {
     console.log('Invalid access token');
@@ -20,7 +20,7 @@ const verifyRefreshToken = (req, res, next) => {
     const { refreshToken } = req.cookies;
     const { user } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     res.locals.user = user;
-    console.log('refreshToken: ', refreshToken);
+    // console.log('refreshToken: ', refreshToken);
     next();
   } catch (err) {
     console.log('Invalid refresh token');
