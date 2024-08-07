@@ -35,14 +35,14 @@ return (
     <Tab onClick={()=>setTab(4)}>Чат</Tab>
   </TabList>
   <TabPanels>
-    <TabPanel>
+    <TabPanel minHeight={'700px'}>
     {/* <NewAccountSitter oneSitter={oneSitter} user={user} setOneSitter={setOneSitter } /> */}
     <FormUpdSitter oneSitter={oneSitter} setOneSitter={setOneSitter}/>
     <AccountSitterCard oneSitter={oneSitter}/>
     </TabPanel>
-    <TabPanel>
+    <TabPanel minHeight={'700px'}>
      <h2>Мои услуги</h2> 
-     <FormAddServices oneSitter={oneSitter} setOneSitter={setOneSitter } />
+     <FormAddServices oneSitter={oneSitter} setOneSitter={setOneSitter }/>
       <AccountSitterServices oneSitter={oneSitter}/>
     </TabPanel>
     <TabPanel>

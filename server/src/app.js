@@ -3,7 +3,7 @@ const apiRouter = require('./routers/api.router');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-
+const path = require('path');
 const http = require('http');
 const { wss, upgradeCb } = require('./ws/upgradeCb');
 const connectionCb = require('./ws/connectionCb');
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api/v1', apiRouter);
-
+app.use('/public', express.static(path.join(__dirname, 'public')));
 // app.listen(PORT, () => {
 //   console.log(`Server started at ${PORT} port`);
 // });

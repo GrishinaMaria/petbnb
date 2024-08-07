@@ -34,10 +34,10 @@ return (
             <Td borderBottom={'1px solid #00A3C4'} minWidth={'500px'} >
               {oneSitterService.service.title}
             </Td>
-            <Td minWidth={'100px'}>
+            <Td width={'100px'}>
                 {changePrice ? (<form onSubmit={changePriceHandler}><input style={{width: '100%', backgroundColor: '#edf2f7', color: '#00A3C4', outline: 'none'}} required placeholder='price' defaultValue={oneSitterService.price} onChange={(e)=> setInputPrice(e.target.value)}/><button type="submit" style={{border: 'none'}} ><CheckIcon color={'#00A3C4'}/></button></form>) : 
-                ( <Badge onClick={()=>setChangePrice((prev)=> !prev)} ml="1" color=" #00A3C4" display={'flex'} cursor={'pointer'}>
-                 {oneSitterService.price} <LiaRubleSignSolid size={'17px'}/>
+                ( <Badge onClick={()=>setChangePrice((prev)=> !prev)} ml="1" color=" #00A3C4" display={'flex'} cursor={'pointer'} width={'70px'}>
+                 {oneSitterService.price}<LiaRubleSignSolid size={'17px'}/>
                </Badge>)}
              
             </Td>
