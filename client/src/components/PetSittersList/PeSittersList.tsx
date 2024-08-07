@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import PetSitterCard from "../PetSitterCard/PetSitterCard";
-import SittersMap from "../SittersMap/SittersMap";
-import axiosInstance from "../../axiosInstance";
+import React, { useEffect, useState } from 'react';
+import PetSitterCard from '../PetSitterCard/PetSitterCard';
+import SittersMap from '../SittersMap/SittersMap';
+import axiosInstance from '../../axiosInstance';
 import {
   FormControl,
   FormLabel,
@@ -19,75 +19,75 @@ import {
   SimpleGrid,
   Container,
   Button,
-} from "@chakra-ui/react";
-import MapFunc from "../Map/MapFunc";
+} from '@chakra-ui/react';
+import MapFunc from '../Map/MapFunc';
 
 const arraySitters = [
   {
     id: 1,
-    title: "Катя",
-    animal: "кошки",
+    title: 'Катя',
+    animal: 'кошки',
     corX: 55.8,
     corY: 36.8,
     Services: [{ прогулка: true }, { кормление: true }, { игра: false }],
-    img: "https://upload.wikimedia.org/wikipedia/ru/5/55/%D0%93%D0%BD%D0%B5%D0%B2_%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%29.png",
-    createdAt: "2024-06-11T08:18:10.039Z",
-    updatedAt: "2024-06-11T08:18:10.039Z",
+    img: 'https://upload.wikimedia.org/wikipedia/ru/5/55/%D0%93%D0%BD%D0%B5%D0%B2_%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%29.png',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
   },
   {
     id: 2,
-    title: "Маша",
-    animal: "кошки",
+    title: 'Маша',
+    animal: 'кошки',
     corX: 54.8,
     corY: 37.8,
     Services: [{ прогулка: false }, { кормление: true }, { игра: false }],
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TaQhArLyOOaYf4lKogZWD8U6g-8aB0iHWw&s",
-    createdAt: "2024-06-11T08:18:10.039Z",
-    updatedAt: "2024-06-11T08:18:10.039Z",
+    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TaQhArLyOOaYf4lKogZWD8U6g-8aB0iHWw&s',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
   },
   {
     id: 3,
-    title: "Ира",
-    animal: "кошки",
+    title: 'Ира',
+    animal: 'кошки',
     corX: 55.9,
     corY: 37.8,
     Services: [{ прогулка: true }, { кормление: true }, { игра: false }],
-    img: "https://www.kino-teatr.ru/movie/posters/big/3/24073.jpg",
-    createdAt: "2024-06-11T08:18:10.039Z",
-    updatedAt: "2024-06-11T08:18:10.039Z",
+    img: 'https://www.kino-teatr.ru/movie/posters/big/3/24073.jpg',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
   },
   {
     id: 4,
-    title: "Дима",
-    animal: "собаки",
+    title: 'Дима',
+    animal: 'собаки',
     corX: 56.8,
     corY: 37.8,
     Services: [{ прогулка: true }, { кормление: false }, { игра: false }],
-    img: "https://upload.wikimedia.org/wikipedia/ru/4/4b/Avatar-2009.jpg",
-    createdAt: "2024-06-11T08:18:10.039Z",
-    updatedAt: "2024-06-11T08:18:10.039Z",
+    img: 'https://upload.wikimedia.org/wikipedia/ru/4/4b/Avatar-2009.jpg',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
   },
   {
     id: 5,
-    title: "Гоша",
-    animal: "собаки",
+    title: 'Гоша',
+    animal: 'собаки',
     corX: 55.8,
     corY: 37.9,
     Services: [{ прогулка: true }, { кормление: true }, { игра: false }],
-    img: "https://www.kino-teatr.ru/movie/posters/big/0/24930.jpg",
-    createdAt: "2024-06-11T08:18:10.039Z",
-    updatedAt: "2024-06-11T08:18:10.039Z",
+    img: 'https://www.kino-teatr.ru/movie/posters/big/0/24930.jpg',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
   },
   {
     id: 6,
-    title: "Паша",
-    animal: "кошки",
+    title: 'Паша',
+    animal: 'кошки',
     corX: 55.8,
     corY: 37.9,
     Services: [{ прогулка: true }, { кормление: true }, { игра: true }],
-    img: "https://www.kino-teatr.ru/movie/posters/big/0/24930.jpg",
-    createdAt: "2024-06-11T08:18:10.039Z",
-    updatedAt: "2024-06-11T08:18:10.039Z",
+    img: 'https://www.kino-teatr.ru/movie/posters/big/0/24930.jpg',
+    createdAt: '2024-06-11T08:18:10.039Z',
+    updatedAt: '2024-06-11T08:18:10.039Z',
   },
 ];
 
@@ -95,8 +95,8 @@ const PeSittersList = (): JSX.Element => {
   const [sitters, setSitters] = useState([]);
   // const [servicesFilter, setServicesFilter] = useState('')
   const [services, setServices] = useState([]);
-  const [servicesFilter, setServicesFilter] = useState("");
-  const [value, setValue] = useState("");
+  const [servicesFilter, setServicesFilter] = useState('');
+  const [value, setValue] = useState('');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5000);
 
@@ -104,7 +104,7 @@ const PeSittersList = (): JSX.Element => {
 
   const axiosPetsitters = async () => {
     const { data } = await axiosInstance.get(
-      `${import.meta.env.VITE_API}/petsitter/all`
+      `${import.meta.env.VITE_API}/petsitter/all`,
     );
 
     setSitters(data.allSitters);
@@ -117,7 +117,7 @@ const PeSittersList = (): JSX.Element => {
     if (event.target.checked) {
       setValue(event.target.value);
     } else {
-      setValue("");
+      setValue('');
     }
   };
 
@@ -125,18 +125,18 @@ const PeSittersList = (): JSX.Element => {
     const fetchServices = async () => {
       try {
         const response = await axiosInstance.get(
-          `${import.meta.env.VITE_API}/services`
+          `${import.meta.env.VITE_API}/services`,
         );
         setServices(response.data);
       } catch (error) {
-        console.error("Error fetching services:", error);
+        console.error('Error fetching services:', error);
       }
     };
     fetchServices();
   }, []);
 
   const handleServicesSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setServicesFilter(event.target.value);
   };
@@ -144,164 +144,144 @@ const PeSittersList = (): JSX.Element => {
   const filteredSitters = sitters
     .filter((sitter) => {
       return (
-        value === "" ||
+        value === '' ||
         sitter.availableServices.some(
-          (availableService) => availableService.petType === value
+          (availableService) => availableService.petType === value,
         )
       );
     })
     .filter((sitter) => {
       return (
-        (servicesFilter === "" &&
+        (servicesFilter === '' &&
           sitter.availableServices.some(
             (availableService) =>
               availableService.price >= minPrice &&
-              availableService.price <= maxPrice
+              availableService.price <= maxPrice,
           )) ||
         sitter.availableServices.some(
           (availableService) =>
             availableService.service.title === servicesFilter &&
             availableService.price >= minPrice &&
-            availableService.price <= maxPrice
+            availableService.price <= maxPrice,
         )
       );
     });
-  
 
-    
-    const paginatedSitters = filteredSitters.slice(
-      page * 6,
-      (page + 1) * 6
-    );
-  
-    const nextPageHandler = () => {
-      if ((page + 1) * 6 < filteredSitters.length) {
-        setPage(page + 1);
-      }
-    };
-  
-    const prevPageHandler = () => {
-      if (page > 0) {
-        setPage(page - 1);
-      }
-    };
-    
+  const paginatedSitters = filteredSitters.slice(page * 6, (page + 1) * 6);
+
+  const nextPageHandler = () => {
+    if ((page + 1) * 6 < filteredSitters.length) {
+      setPage(page + 1);
+    }
+  };
+
+  const prevPageHandler = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
 
   return (
     <>
-    <Container maxW='100%'>
-<Flex direction="column" align="center" width="100%">
-      <form style={{ width: "400px" }}>
-        <FormControl>
-          <FormLabel>Выберите вид питомца:</FormLabel>
-          <RadioGroup>
-            <Stack direction="row">
-              <Radio
-                name="все"
-                value=""
-                checked={value === ""}
-                onChange={handleCheckboxChange}
+      <Container maxW="100%">
+        <Flex direction="column" align="center" width="100%">
+          <form style={{ width: '400px' }}>
+            <FormControl>
+              <FormLabel>Выберите вид питомца:</FormLabel>
+              <RadioGroup>
+                <Stack direction="row">
+                  <Radio
+                    name="все"
+                    value=""
+                    checked={value === ''}
+                    onChange={handleCheckboxChange}
+                  >
+                    Все
+                  </Radio>
+                  <Radio
+                    name="кошки"
+                    value="кошки"
+                    checked={value === 'кошки'}
+                    onChange={handleCheckboxChange}
+                  >
+                    Кошки
+                  </Radio>
+                  <Radio
+                    name="собаки"
+                    value="собаки"
+                    checked={value === 'собаки'}
+                    onChange={handleCheckboxChange}
+                  >
+                    Собаки
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Выберите вид услуг:</FormLabel>
+              <Select
+                value={servicesFilter}
+                onChange={handleServicesSelectChange}
               >
-                Все
-              </Radio>
-              <Radio
-                name="кошки"
-                value="кошки"
-                checked={value === "кошки"}
-                onChange={handleCheckboxChange}
+                <option value="">Все виды услуг</option>
+                {services.map((service) => (
+                  <option key={service.id} value={service.title}>
+                    {service.title}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>
+                Цена от {minPrice} до {maxPrice} ₽
+              </FormLabel>
+              <Slider
+                min={0}
+                max={5000}
+                value={maxPrice}
+                onChange={(value) => setMaxPrice(value)}
               >
-                Кошки
-              </Radio>
-              <Radio
-                name="собаки"
-                value="собаки"
-                checked={value === "собаки"}
-                onChange={handleCheckboxChange}
-              >
-                Собаки
-              </Radio>
-            </Stack>
-          </RadioGroup>
-        </FormControl>
+                <SliderTrack>
+                  <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb boxSize={4}>
+                  <Box color="tomato" />
+                </SliderThumb>
+              </Slider>
+            </FormControl>
+          </form>
 
-        <FormControl mt={4}>
-          <FormLabel>Выберите вид услуг:</FormLabel>
-          <Select
-            value={servicesFilter}
-            onChange={handleServicesSelectChange}
-          >
-            <option value="">Все виды услуг</option>
-            {services.map((service) => (
-              <option key={service.id} value={service.title}>
-                {service.title}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+          <Flex width="100%" justifyContent="center" mt={8}>
+            <SimpleGrid columns={3} spacing={2} width="65%">
+              {paginatedSitters.length > 0 ? (
+                paginatedSitters.map((sitter) => (
+                  <PetSitterCard key={sitter.id} sitter={sitter} />
+                ))
+              ) : (
+                <Text>Не найдено петситтеров по заданным параметрам</Text>
+              )}
+               
+  <Flex m={4} justifyContent="center" gridColumn="span 3">
+    <Button onClick={prevPageHandler} disabled={page === 0} mr={4}>
+      Назад
+    </Button>
+    <Button
+      onClick={nextPageHandler}
+      disabled={(page + 1) * 6 >= filteredSitters.length}
+    >
+      Вперёд
+    </Button>
+  </Flex>
 
-        <FormControl mt={4}>
-          <FormLabel>
-            Цена от {minPrice} до {maxPrice} ₽
-          </FormLabel>
-          <Slider
-            min={0}
-            max={5000}
-            value={maxPrice}
-            onChange={(value) => setMaxPrice(value)}
-          >
-            <SliderTrack>
-              <SliderFilledTrack />
-            </SliderTrack>
-            <SliderThumb boxSize={4}>
-              <Box color="tomato" />
-            </SliderThumb>
-          </Slider>
-        </FormControl>
-      </form>
-
-      <Flex width="100%" justifyContent="center" mt={8}>
-        <SimpleGrid columns={3} spacing={2} width="60%">
-          {paginatedSitters.length > 0 ? (
-            paginatedSitters.map((sitter) => (
-              <PetSitterCard key={sitter.id} sitter={sitter} />
-            ))
-          ) : (
-            <Text>Не найдено ситтеров по заданным параметрам</Text>
-          )}
-        </SimpleGrid>
-
-        {/* <Box ml={8} width="40%"> */}
-            {/* {sitters.length > 0 && <SittersMap sitters={sitters} />} */}
-            {/* <MapFunc filteredSitters={filteredSitters} /> */}
-        {/* </Box> */}
-      {/* </Flex> */}
-    {/* </Flex> */}
-    {/* </Container> */}
-
-
-    <Box ml={8} width="40%">
-            <MapFunc filteredSitters={paginatedSitters} />
-          </Box>
+            </SimpleGrid>
+            <Box ml={8} width="35%">
+              <MapFunc filteredSitters={paginatedSitters} />
+            </Box>
+          </Flex>
         </Flex>
-
-        <Flex m={4} justifyContent="center">
-          <Button
-            onClick={prevPageHandler}
-            disabled={page === 0}
-            mr={4}
-          >
-            Назад
-          </Button>
-          <Button
-            onClick={nextPageHandler}
-            disabled={(page + 1) * 6 >= filteredSitters.length}
-          >
-            Вперёд
-          </Button>
-        </Flex>
-      </Flex>
-    </Container>
-    
+      </Container>
     </>
   );
 };
