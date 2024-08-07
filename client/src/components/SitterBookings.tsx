@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaDog } from "react-icons/fa";
 import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
 import { MdCheckCircle, MdSettings } from "react-icons/md";
+import { LiaRubleSignSolid } from "react-icons/lia";
 const { VITE_API } = import.meta.env;
 
 export default function SitterBookings() {
@@ -75,30 +76,34 @@ export default function SitterBookings() {
             //   <img src={booking.pet.photo} style={{ width: "250px" }}></img>
             // </div>
             <>
-               <TableContainer key={booking.id} width={'600px'}>
+  <TableContainer key={booking.id} width={'650px'} >
   <Table variant='simple' border={'2px solid'}>
     <Thead>
       <Tr>
-        <Th>Услуги</Th>
-       {booking.bookedServices.map((bookedService) => (
-  <Th key={bookedService.id}>
-    <Flex direction='column' width='200px'>
-      <Text>{bookedService.Service.title}</Text>
+        <Th bg={'#c2e9f730'}>Услуги</Th>
+       
+  <Th >
+    <Flex direction={'column'}>
+      {booking.bookedServices.map((bookedService) => (
+    <Flex key={bookedService.id}  >
+      <Text color={'#4a5568'} decoration={'underline #00A3C9 2px'}>{bookedService.Service.title}</Text>
+    </Flex>))}
     </Flex>
+    
   </Th>
-))}
+
         
       </Tr>
       <Tr>
-        <Th>Даты:</Th>
+        <Th bg={'#c2e9f730'}>Даты</Th>
         <Th>{formattedStartDate} - {formattedEndDate}</Th>
       </Tr>
       <Tr>
-        <Th>Общая стоимость:</Th>
-        <Th>{booking.totalPrice}</Th>
+        <Th bg={'#c2e9f730'}>Общая стоимость</Th>
+        <Th display={'flex'}>{booking.totalPrice}<LiaRubleSignSolid size={'17px'}/></Th>
       </Tr>
         <Tr borderBottom={'2px solid'}>
-        <Th>Питомец</Th>
+        <Th bg={'#c2e9f730'}>Питомец</Th>
         <Th height={'300px'}>
           <Card maxW='md' height={'90%'}>
   <CardHeader>
@@ -137,7 +142,7 @@ export default function SitterBookings() {
      <h2>
        <AccordionButton bgColor='#00A3C9' color='black' border='none' >
          <Box as='span' flex='1' textAlign='left' width={'170px'}>
-           More
+           Подробнее
          </Box>
          <AccordionIcon />
        </AccordionButton>
@@ -153,7 +158,7 @@ export default function SitterBookings() {
         </Th>
       </Tr>
       <Tr>
-        <Th>Владелец</Th>
+        <Th bg={'#c2e9f730'}>Владелец</Th>
         <Th>
           <Card maxW='md' height={'90%'}>
   <CardHeader>
@@ -163,7 +168,7 @@ export default function SitterBookings() {
 
         <Box minWidth={'100px'}>
           <Heading size='sm'>{booking.owner.username}</Heading>
-          <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'>
+          <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px' marginBottom={'10px'}>
      <PhoneIcon />
    </Circle>
    <Text color={'black'}>{booking.owner.phone}</Text>

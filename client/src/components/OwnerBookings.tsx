@@ -41,7 +41,7 @@ export default function OwnerBookings() {
 
   return (
     <>
-      <h2>Мои Брони</h2>
+      
       <div style={{ display: "flex", gap: "50px" }}>
         {bookings.map((booking) => {
           const formattedStartDate = formatDate(booking.startdate);
