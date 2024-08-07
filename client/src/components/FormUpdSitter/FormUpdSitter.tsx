@@ -83,7 +83,7 @@ locate().then(res => {
       const formData = new FormData();
       formData.append('file', file);
 
-      fetch(`http://localhost:3100/${VITE_API}/petsitter/upload`, {
+      fetch(`http://localhost:3100${VITE_API}/petsitter/upload`, {
         method: 'POST',
         body: formData,
       }).then((response) => {
@@ -92,7 +92,7 @@ locate().then(res => {
         }
       }).catch((error) => {
         console.error('Ошибка загрузки файла:', error);
-      });
+      });  
     }
   };
 
