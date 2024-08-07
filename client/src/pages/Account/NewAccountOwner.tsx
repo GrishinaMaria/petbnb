@@ -75,7 +75,7 @@ const handleDeletePet = async (petId) => {
           <Tab>Мои бронирования</Tab>
           <Tab>Мои питомцы</Tab>
           <Tab>Видео</Tab>
-          <Tab>Сообщения</Tab>
+          <Tab>Чат</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -121,14 +121,12 @@ const handleDeletePet = async (petId) => {
             </Container>
           </TabPanel>
           <TabPanel>
-       
             <Link to={`/room/1}`}><Button>Телемост</Button></Link>
-            
           </TabPanel>
-
-
           <TabPanel>
-       
+            <Link to={`/chat`}><Button>Чат</Button></Link>
+          </TabPanel>
+          <TabPanel>
      </TabPanel>
         </TabPanels>
       </Tabs>

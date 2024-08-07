@@ -21,6 +21,9 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: false,
       },
+      to: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

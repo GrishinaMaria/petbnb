@@ -13,12 +13,12 @@ const express = require('express');
 const app = express();
 const { PORT } = process.env || 3100;
 
-//! http сервер +
-const server = http.createServer(app);
+// //! http сервер +
+// const server = http.createServer(app);
 
-//! папка ws для сокет-сервера и пишем 2 функции
-server.on('upgrade', upgradeCb);
-wss.on('connection', connectionCb);
+// //! папка ws для сокет-сервера и пишем 2 функции
+// server.on('upgrade', upgradeCb);
+// wss.on('connection', connectionCb);
 
 //! Конфиг корса
 const corsConfig = {
@@ -42,6 +42,13 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 // app.listen(PORT, () => {
 //   console.log(`Server started at ${PORT} port`);
 // });
+
+//! http сервер +
+const server = http.createServer(app);
+
+//! папка ws для сокет-сервера и пишем 2 функции
+server.on('upgrade', upgradeCb);
+wss.on('connection', connectionCb);
 
 //по лекции App поменяли на Server
 server.listen(PORT, () => {

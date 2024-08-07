@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Tab, TabList, TabPanel, TabPanels, Tabs, Button } from '@chakra-ui/react';
 import NewAccountSitter from '../Account/NewAccountSitter';
 import axiosInstance from '../../axiosInstance';
 import AccountSitterCard from '../../components/AccountSitterCard/AccountSitterCard';
@@ -8,6 +8,7 @@ import FormAddServices from '../../components/FormAddServices/FormAddServices';
 import SitterBookings from '../../components/SitterBookings';
 import FormUpdSitter from '../../components/FormUpdSitter/FormUpdSitter';
 import {Link} from 'react-router-dom';
+ 
 
 const AccountSitterPage = ({ user}): JSX.Element => {
   const [oneSitter, setOneSitter] = useState({});
@@ -49,7 +50,7 @@ return (
       <SitterBookings/>
     </TabPanel>
     <TabPanel>
-      
+    <Link to={`/chat`}><Button>Чат</Button></Link>
     </TabPanel>
   </TabPanels>
 </Tabs>
