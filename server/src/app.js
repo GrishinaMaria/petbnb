@@ -49,7 +49,7 @@ server.on('upgrade', upgradeCb);
 wss.on('connection', connectionCb);
 
 //по лекции App поменяли на Server
-initSocket(server);
+// initSocket(server);
 server.listen(PORT, () => {
   console.log(`Server started at ${PORT} port`);
 });
