@@ -42,7 +42,7 @@ const connectionCb = (socket, request, userFromJWT) => {
           const messageWithUser = await Message.findByPk(newMessage.id, {
             include: { model: User, attributes: ['username', 'id'] },
           });
-
+          //console.log(messageWithUser);
           map.forEach(({ ws }) => {
             ws.send(
               JSON.stringify({
@@ -79,7 +79,6 @@ const connectionCb = (socket, request, userFromJWT) => {
         break;
     }
   });
-
   //удаление пользователя из списка при отключении сокета
   socket.on('close', () => {
     map.delete(userFromJWT.id);

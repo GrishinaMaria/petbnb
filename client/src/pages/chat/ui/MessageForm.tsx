@@ -35,7 +35,7 @@ export default function MessageForm({ submitHandler, socketRef }) {
       }}
       className={styles.wrapper}
     >
-      <div className={styles.inputs}>
+      <div className={styles.inputs} >
         <Input
           onChange={changeHandler}
           borderColor="#3f3e3e"
