@@ -214,7 +214,8 @@ export default function EditPetForm({ onHide, petToEdit, onSave }) {
       <Button type="button" onClick={() => document.getElementById('imageUpload')?.click()} marginRight={'20px'}>
         Загрузить фото
       </Button>
-      <Image src={imagePreview} alt="Profile Preview" width={'50px'} height={'50px'}/>
+      {petToEdit && (<Image src={imagePreview} alt="Profile Preview" width={'50px'} height={'50px'}/>)}
+      
       <input
         id="imageUpload"
         type="file"

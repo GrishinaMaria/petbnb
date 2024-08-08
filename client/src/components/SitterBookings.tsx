@@ -82,7 +82,7 @@ export default function SitterBookings() {
             //   <img src={booking.pet.photo} style={{ width: "250px" }}></img>
             // </div>
             <>
-  <TableContainer key={booking.id} width={'650px'} >
+  <TableContainer key={booking.id} width={'700px'} >
   <Table variant='simple' border={'2px solid'}>
     <Thead>
       <Tr>
@@ -164,8 +164,8 @@ export default function SitterBookings() {
         </Th>
       </Tr>
       <Tr>
-        <Th bg={'#c2e9f730'}>Владелец</Th>
-        <Th>
+        <Th bg={'#c2e9f730'} borderBottom={'2px solid #00A3C4'}>Владелец</Th>
+        <Th borderBottom={'2px solid #00A3C4'}>
           <Card minW='md' height={'90%'}>
   <CardHeader>
     <Flex >
