@@ -36,7 +36,7 @@ return (
     <Tab onClick={()=>setTab(4)}>Чат</Tab>
   </TabList>
   <TabPanels>
-    <TabPanel minHeight={'700px'}>
+    <TabPanel minHeight={'1000px'} display={'flex'} justifyContent={'flex-start'} flexDirection={'column'}>
     {/* <NewAccountSitter oneSitter={oneSitter} user={user} setOneSitter={setOneSitter } /> */}
     <FormUpdSitter oneSitter={oneSitter} setOneSitter={setOneSitter}/>
     <AccountSitterCard oneSitter={oneSitter}/>

@@ -39,7 +39,7 @@ const AccountSitterCard = ({ oneSitter }): JSX.Element => {
      <h2>
        <AccordionButton bgColor='#00A3C9' color='black' border='none'>
          <Box as='span' flex='1' textAlign='left'>
-           About me
+           Обо мне
          </Box>
          <AccordionIcon />
        </AccordionButton>

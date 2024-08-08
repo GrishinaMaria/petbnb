@@ -110,7 +110,7 @@ const AccountSitterServices = ({ oneSitter }): JSX.Element => {
   // );
 <TableContainer display='flex' marginTop={'30px'}>
   {groupedServices.map((group) => (
-    <Table variant='simple' key={group.petType} color='black'  minWidth='400px' marginRight='80px' >
+    <Table variant='simple' key={group.petType} color='black'  minWidth='400px' >
       
       <Thead>
         <>{group.petType === 'кошки' ? (
