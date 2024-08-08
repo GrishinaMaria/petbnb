@@ -66,7 +66,7 @@ export default function NewAccountSitter({ user, oneSitter, setOneSitter }) {
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title className="text-dark">
-            Редактировать информацию о ситтере
+            Редактировать информацию о себе
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
