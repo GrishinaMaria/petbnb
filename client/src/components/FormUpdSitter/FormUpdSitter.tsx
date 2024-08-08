@@ -73,8 +73,8 @@ const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
   };
 
 return (
-    <Container>
-      <Row className="my-4">
+    <Container style={{marginLeft: '0'}}>
+      <Row className="my-4" >
         <Col>
           <h2>Добро пожаловать, {oneSitter?.username}</h2>
           <Button onClick={() => setShowModal(true)} bgColor='#00A3C9' color='black' fontWeight='1px' colorScheme="cyan" border='none'

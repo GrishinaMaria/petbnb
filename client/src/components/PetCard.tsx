@@ -88,9 +88,9 @@ export default function PetCard({ pet, user, onEdit, onDelete }) {
     <Image
       src={pet.photo || "https://images.dog.ceo/breeds/hound-english/n02089973_846.jpg"}
       alt={pet.name}
+      boxSize={'250px'}
       borderRadius='lg'
-      height={'210px'}
-      width={'100%'}
+      
       marginBottom={'10px'}
     />
     <Stack  spacing='1' minHeight={'220px'}>
