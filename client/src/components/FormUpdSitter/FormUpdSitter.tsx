@@ -86,7 +86,7 @@ return (
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title className="text-dark">
-            Редактировать информацию о ситтере
+            Редактировать информацию о себе
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -166,7 +166,7 @@ return (
       />
       {/* {photo && <p>Ссылка на загруженное фото: {photo}</p>} */}
     </Form.Group>
-            <Button variant="primary" type="submit" style={{ marginTop: "30px" }}>
+            <Button colorScheme='cyan' type="submit" style={{ marginTop: "30px" }}>
               Обновить информацию
             </Button>
           </Form>
