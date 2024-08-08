@@ -3,8 +3,7 @@ import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchLogoutUser } from '../../redux/thunkActions';
-import { Search2Icon } from '@chakra-ui/icons';
-import { Avatar, Button, IconButton } from '@chakra-ui/react';
+import { Avatar, Button } from '@chakra-ui/react';
 
 export default function Navbar() {
   const user = useAppSelector((store) => store.userSlice.user);
@@ -18,24 +17,16 @@ export default function Navbar() {
   return (
     <nav className={styles.wrapper}>
       <div className={styles.left}>
-        <Link to="/search" className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           PETBNB
-        </Link>
-      </div>
-      <div className={styles.center}>
-        <Link to="/search" className={styles.searchLink}>
-          Найти петситтера
-          <Search2Icon className={styles.searchIcon} />
         </Link>
       </div>
       <div className={styles.right}>
         {user?.username ? (
           <>
-          {/* <Link to="/chat" className={styles.logo}>
-          Chat </Link> */}
             <Link to={`/account/${user.role}`} className={styles.userLink}>
               <Avatar
-                size="md"
+                size="lg"
                 bg="#00A3C4"
                 src={user.photo}
                 name={user.username}

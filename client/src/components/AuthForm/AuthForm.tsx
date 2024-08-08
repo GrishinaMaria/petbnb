@@ -50,7 +50,7 @@ export default function AuthForm({ title, type = 'signin' }: AuthFormProps) {
       .then((result) => {
         setAccessToken(result.accessToken);
       });
-    navigate('/search');
+    navigate('/');
   };
 
   return (
