@@ -49,7 +49,7 @@ return (
     <TabPanel>
       <SitterBookings/>
     </TabPanel>
-    <TabPanel>
+    <TabPanel minHeight={'700px'}>
     <Link to={`/chat`}><Button>Чат</Button></Link>
     </TabPanel>
   </TabPanels>
