@@ -65,7 +65,7 @@ const dispatch = useAppDispatch();
         {
           path: '/account/owner',
           element: (
-            <ProtectedRoute isAllowed={user?.role === 'owner'}>
+            <ProtectedRoute isAllowed={user?.role === 'owner' }>
               <NewAccountOwner user={user} />
             </ProtectedRoute>
           ),

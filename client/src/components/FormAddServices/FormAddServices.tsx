@@ -114,7 +114,7 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
               <FormControl>
                 <FormLabel color="#00A3C9">Вид животного</FormLabel>
                 <Select
-                  color="#00A3C9"
+                  color="black"
                   placeholder="Выбрать вид животного"
                   value={petType}
                   onChange={(e) => setPetType(e.target.value)}
@@ -149,7 +149,7 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
                 <Input
                   type="number"
                   htmlSize={4}
-                  color="#00A3C9"
+                  color="black"
                   width="auto"
                   value={price}
                   onChange={handlePriceChange}

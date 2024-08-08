@@ -81,7 +81,7 @@ export default function NewAccountOwner({ user }) {
           <Tab>Видео</Tab>
           <Tab>Чат</Tab>
         </TabList>
-        <TabPanels>
+        <TabPanels minHeight={'700px'}>
           <TabPanel>
             <OwnerBookings />
           </TabPanel>
@@ -126,19 +126,14 @@ export default function NewAccountOwner({ user }) {
               </Modal>
             </Container>
           </TabPanel>
-
-         <TabPanel>
+         <TabPanel minHeight={'700px'}>
             <Link to={`/room/c392fd84-41ca-483e-af39-6483d67d85fd}`}>
               <Button>Телемост</Button>
             </Link>
           </TabPanel>
-          
-          <TabPanel>
+          <TabPanel minHeight={'700px'}>
             <Link to={`/chat`}><Button>Чат</Button></Link>
           </TabPanel>
-          
-         
-
         </TabPanels>
       </Tabs>
     </>
