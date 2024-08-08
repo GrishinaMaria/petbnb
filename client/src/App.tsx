@@ -46,11 +46,12 @@ const dispatch = useAppDispatch();
       element: <Root />,
       children: [
         {
-          path: '/',
+          path: '/search',
           element: user.username ? (
-            <HomePage />
+            <PeSittersList />
           ) : (
-            <p>Зарегистрируйтесь или войдите</p>
+          <PeSittersList />
+            // <p>Зарегистрируйтесь или войдите</p>
           ),
         },
         {

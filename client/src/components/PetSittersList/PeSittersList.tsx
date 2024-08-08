@@ -185,12 +185,15 @@ const PeSittersList = (): JSX.Element => {
     <>
       <Container maxW="100%">
         <Flex direction="column" align="center" width="100%">
-          <form style={{ width: '400px' }}>
-            <FormControl>
-              <FormLabel>Выберите вид питомца:</FormLabel>
-              <RadioGroup>
-                <Stack direction="row">
+    
+
+          <form style={{ display: "flex", width: '90%', marginTop: "26px", justifyContent: 'space-between' }}>
+            <FormControl width="30%" >
+              <FormLabel fontSize='1.2rem'>Выберите вид питомца:</FormLabel>
+              <RadioGroup colorScheme='cyan' size='lg'>
+                <Stack direction="row" >
                   <Radio
+                  
                     name="все"
                     value=""
                     checked={value === ''}
@@ -218,9 +221,10 @@ const PeSittersList = (): JSX.Element => {
               </RadioGroup>
             </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Выберите вид услуг:</FormLabel>
+            <FormControl width="30%">
+              <FormLabel fontSize='1.2rem'>Выберите вид услуги:</FormLabel>
               <Select
+              size='lg'
                 value={servicesFilter}
                 onChange={handleServicesSelectChange}
               >
@@ -233,11 +237,12 @@ const PeSittersList = (): JSX.Element => {
               </Select>
             </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>
-                Цена от {minPrice} до {maxPrice} ₽
+            <FormControl width="30%">
+              <FormLabel fontSize='1.2rem'>
+                Стоимость от {minPrice} до {maxPrice} ₽
               </FormLabel>
               <Slider
+              
                 min={0}
                 max={5000}
                 value={maxPrice}
@@ -247,12 +252,13 @@ const PeSittersList = (): JSX.Element => {
                 <SliderTrack>
                   <SliderFilledTrack />
                 </SliderTrack>
-                <SliderThumb boxSize={4}>
-                  <Box color="tomato" />
+                <SliderThumb boxSize={6}>
+                  <Box  />
                 </SliderThumb>
               </Slider>
             </FormControl>
           </form>
+     
 
           <Flex width="100%" justifyContent="center" mt={8}>
             <SimpleGrid columns={3} spacing={2} width="65%">

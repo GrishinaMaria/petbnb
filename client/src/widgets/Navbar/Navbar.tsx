@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <nav className={styles.wrapper}>
       <div className={styles.left}>
-        <Link to="/" className={styles.logo}>
+        <Link to="/search" className={styles.logo}>
           PETBNB
         </Link>
       </div>
