@@ -187,7 +187,7 @@ const PeSittersList = (): JSX.Element => {
         <Flex direction="column" align="center" width="100%">
     
 
-          <form style={{ display: "flex", width: '90%', marginTop: "26px", justifyContent: 'space-between' }}>
+          <form style={{ display: "flex", width: '90%', marginTop: "36px", justifyContent: 'space-between' }}>
             <FormControl width="30%" >
               <FormLabel fontSize='1.2rem'>Выберите вид питомца:</FormLabel>
               <RadioGroup colorScheme='cyan' size='lg'>

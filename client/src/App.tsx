@@ -46,13 +46,8 @@ const dispatch = useAppDispatch();
       element: <Root />,
       children: [
         {
-          path: '/search',
-          element: user.username ? (
-            <PeSittersList />
-          ) : (
-          <PeSittersList />
-            // <p>Зарегистрируйтесь или войдите</p>
-          ),
+          path: '/',
+          element: <PeSittersList />
         },
         {
           path: '/chat',
@@ -76,11 +71,6 @@ const dispatch = useAppDispatch();
           ),
         },
         { path: '*', element: <NotFoundPage /> },
-
-         {
-          path: '/search',
-          element: <PeSittersList/>,
-        },
          {
           path: '/account/sitter',
            element: 

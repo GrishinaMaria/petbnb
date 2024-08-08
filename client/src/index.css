@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Meow";
+  src: url("../public/Meows-VGWjy.ttf");
+}
+
+@font-face {
+  font-family: "Oriental";
+  src: url("../public/OrientalCatsLight-2OzB8.otf");
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
