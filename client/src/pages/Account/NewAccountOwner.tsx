@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
-import { Modal, Container, Row, Col, Button } from 'react-bootstrap';
+import { Modal, Container, Row, Col } from 'react-bootstrap';
 import PetCard from '../../components/PetCard';
 import EditPetForm from '../../components/EditPetForm';
 
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Button, ButtonGroup, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import OwnerBookings from '../../components/OwnerBookings';
 import { Link } from 'react-router-dom';
 
@@ -74,7 +74,7 @@ export default function NewAccountOwner({ user }) {
 
   return (
     <>
-      <Tabs variant="soft-rounded" colorScheme="green">
+      <Tabs variant="soft-rounded" color="#00A3C4" padding={'50px'}>
         <TabList aria-orientation="vertical">
           <Tab>Мои бронирования</Tab>
           <Tab>Мои питомцы</Tab>
@@ -90,9 +90,11 @@ export default function NewAccountOwner({ user }) {
               <Row className="my-4">
                 <Col>
                   <h2>Добро пожаловать, {user.username}</h2>
-                  <Button onClick={handleAddPet}>
-                    Добавить описание о питомце
+                  <ButtonGroup>
+                    <Button bg={'#00A3C4'} onClick={handleAddPet}>
+                    Добавить нового питомца
                   </Button>
+                  </ButtonGroup> 
                 </Col>
               </Row>
               <h2>Ваши питомцы:</h2>
