@@ -54,8 +54,8 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
   const addServiceHandler = async (e) => {
     e.preventDefault();
 
-    if (!petType) {
-      setError("Please fill the pet type field.");
+    if (!petType || !service || !price) {
+      setError("Пожалуйства заполните все поля.");
       return;
     }
     //   const isServiceByPetTypeUnique = oneSitter.availableServices.every(availableService => availableService.petType !== petType);
@@ -107,15 +107,15 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader color="blue">Add Service</ModalHeader>
+          <ModalHeader color="#00A3C9">Добавить услугу</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={addServiceHandler}>
               <FormControl>
-                <FormLabel color="blue">Pet Type</FormLabel>
+                <FormLabel color="#00A3C9">Вид животного</FormLabel>
                 <Select
-                  color="blue"
-                  placeholder="Select pet type"
+                  color="#00A3C9"
+                  placeholder="Выбрать вид животного"
                   value={petType}
                   onChange={(e) => setPetType(e.target.value)}
                 >
@@ -123,8 +123,8 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
                   <option value="собаки">Собаки</option>
                 </Select>
                 <FormControl>
-                  <FormLabel color="blue">Service type</FormLabel>
-                  <CheckboxGroup colorScheme="blue">
+                  <FormLabel color="#00A3C9">Услуга</FormLabel>
+                  <CheckboxGroup colorScheme="#00A3C9">
                     {services.map((current) => (
                       <Stack
                         key={current.id}
@@ -145,24 +145,24 @@ const FormAddServices = ({ oneSitter, setOneSitter }): JSX.Element => {
                 </FormControl>
               </FormControl>
               <FormControl>
-                <FormLabel color="blue">Price</FormLabel>
+                <FormLabel color="#00A3C9">Цена</FormLabel>
                 <Input
                   type="number"
                   htmlSize={4}
-                  color="blue"
+                  color="#00A3C9"
                   width="auto"
                   value={price}
                   onChange={handlePriceChange}
                 />
               </FormControl>
-              {error && <p style={{ color: "red" }}>{error}</p>}
+              {error && <p style={{ color: "#00A3C9" }}>{error}</p>}
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
-                  Close
+                <Button variant="ghost" color="#00A3C9" mr={3} onClick={onClose}>
+                  Закрыть
                 </Button>
-                <Button variant="ghost" colorScheme="blue" type="submit">
-                  Add Service
+                <Button bg="#00A3C9" type="submit">
+                  Добавить
                 </Button>
               </ModalFooter>
             </form>

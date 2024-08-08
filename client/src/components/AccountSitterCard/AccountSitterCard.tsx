@@ -5,7 +5,12 @@ import { MdWorkHistory } from "react-icons/md";
 
 
 const AccountSitterCard = ({ oneSitter }): JSX.Element => {
-  console.log(oneSitter, 'onesitter fron card');
+  const formatter = new Intl.NumberFormat('ru-RU', {
+    style: 'unit',
+    unit: 'year',
+    unitDisplay: 'long',
+  });
+  const formattedExp = formatter.format(oneSitter.experience);
   
   
   return (
@@ -17,7 +22,7 @@ const AccountSitterCard = ({ oneSitter }): JSX.Element => {
 
         <Box>
           <Heading size='sm'>{oneSitter.username}</Heading>
-          <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'><Icon as={MdWorkHistory} /></Circle><Text>{oneSitter.experience} лет опыта</Text></Flex>
+          <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'><Icon as={MdWorkHistory} /></Circle><Text>{formattedExp} опыта</Text></Flex>
           <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'><Icon as={CgHomeAlt} /></Circle><Text>{oneSitter.city}</Text></Flex>
           <Flex><Circle size='25px' bg='#00A3C4' color='white' marginRight='5px'>
      <PhoneIcon />

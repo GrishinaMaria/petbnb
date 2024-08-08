@@ -92,7 +92,7 @@ export default function NewAccountOwner({ user }) {
                   <h2>Добро пожаловать, {user.username}</h2>
                   <ButtonGroup>
                     <Button bg={'#00A3C4'} onClick={handleAddPet}>
-                    Добавить описание о питомце
+                    Добавить нового питомца
                   </Button>
                   </ButtonGroup> 
                 </Col>

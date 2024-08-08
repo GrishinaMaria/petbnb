@@ -28,6 +28,7 @@ const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
         setGeoY(oneSitter.geoY);
         setCity(oneSitter.city || "");
         setPhone(oneSitter.phone || "");
+        setImagePreview(oneSitter.photo);
     }
 }, [oneSitter]);
  
@@ -44,32 +45,7 @@ const FormUpdSitter= ({oneSitter, setOneSitter}): JSX.Element =>{
       console.error('ошибка handleSaveSitter', error);
     }
   };
-
-
-// const locate = () => {
-//   return new Promise((resolve, reject) =>
-//     navigator.geolocation.getCurrentPosition(
-//       resolve,
-//       reject,
-//       {
-//         enableHighAccuracy: true,
-//         timeout: 15000, 
-//         maximumAge: 0
-//       })
-//   );
-// }
-
-// locate().then(res => {
-//   const X = res.coords.latitude;
-//   const Y = res.coords.longitude;
- 
-//   setGeoX(X);
-//   setGeoY(Y);
-// }).catch(error => {
-//   console.error("Ошибка при получении геолокации:", error);
-// });
-
-
+  
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -176,11 +152,11 @@ return (
               />
             </Form.Group> */}
           
-          <Form.Group>
-      <Image src={imagePreview} alt="Profile Preview" />
-      <Button type="button" onClick={() => document.getElementById('imageUpload')?.click()}>
+          <Form.Group style={{marginTop: '20px', display: 'flex'}}>
+      <Button type="button" onClick={() => document.getElementById('imageUpload')?.click()} marginRight={'20px'}>
         Загрузить фото
       </Button>
+      <Image src={imagePreview} alt="Profile Preview" width={'50px'} height={'50px'}/>
       <input
         id="imageUpload"
         type="file"
@@ -188,7 +164,7 @@ return (
         accept="image/*"
         onChange={handleImageUpload}
       />
-      {photo && <p>Ссылка на загруженное фото: {photo}</p>}
+      {/* {photo && <p>Ссылка на загруженное фото: {photo}</p>} */}
     </Form.Group>
             <Button variant="primary" type="submit" style={{ marginTop: "30px" }}>
               Обновить информацию
