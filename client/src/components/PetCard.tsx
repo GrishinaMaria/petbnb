@@ -1,13 +1,12 @@
-import React from "react";
-// import { Card, Button,  } from "react-bootstrap";
+
 import { useNavigate } from "react-router-dom";
 import "../pages/Account/Cart.css";
-import {EditPetForm} from "../components/EditPetForm";
-import { Button, ButtonGroup, Card, CardBody, CardFooter, Circle, Divider, Flex, Heading, Icon, Image, Stack, Text } from "@chakra-ui/react";
-import { FaCat, FaDog } from "react-icons/fa6";
+
+import { ButtonGroup, Card, CardBody, CardFooter, Circle, Divider, Flex, Heading, Icon, Image, Stack, Text } from "@chakra-ui/react";
+
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { PiCat, PiDog } from "react-icons/pi";
-import { SiDatadog } from "react-icons/si";
+
 import { FaClipboardList } from "react-icons/fa";
 
 
@@ -84,12 +83,15 @@ export default function PetCard({ pet, user, onEdit, onDelete }) {
         // </Card>
 
 
-        <Card maxW='sm' marginBottom={'20px'}>
+        <Card maxW='sm' marginBottom={'20px'} onClick={handlePetCardClick}>
   <CardBody>
     <Image
       src={pet.photo || "https://images.dog.ceo/breeds/hound-english/n02089973_846.jpg"}
       alt={pet.name}
       borderRadius='lg'
+      height={'210px'}
+      width={'100%'}
+      marginBottom={'10px'}
     />
     <Stack  spacing='1' minHeight={'220px'}>
       <Heading size='md'>{pet?.name}</Heading>
